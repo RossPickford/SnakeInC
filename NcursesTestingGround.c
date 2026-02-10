@@ -6,11 +6,13 @@
 
 void helloWorld();
 void boldChar();
+void printBox();
 
 int main(void)
 {
     // helloWorld();
-    boldChar();
+    // boldChar();
+    printBox();
     return 0;
 }
 
@@ -51,4 +53,27 @@ void boldChar()
     refresh(); /* Print it on to the real screen */
     getch();   /* Wait for user input */
     endwin();  /* End curses mode		  */
+}
+
+void printBox()
+{
+    initscr();
+    raw();
+
+    mvaddch(0,0, ACS_ULCORNER);
+    mvaddch(10,0, ACS_LLCORNER);
+    mvaddch(0,10, ACS_URCORNER);
+    mvaddch(10,10, ACS_LRCORNER);
+
+    for (int i = 1; i < 10; i++)
+    {
+        mvaddch(0,i, ACS_HLINE);
+        mvaddch(i,0, ACS_VLINE);
+        mvaddch(i,10, ACS_VLINE);
+        mvaddch(10,i, ACS_HLINE);
+    }
+
+    refresh();
+    getch();
+    endwin();
 }
