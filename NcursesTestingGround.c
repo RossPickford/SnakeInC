@@ -167,10 +167,11 @@ void drawWindow()
 {
     initscr();
     cbreak();
-
+    keypad(stdscr, TRUE);
+    refresh();
     WINDOW *myWin;
 
-    myWin = newwin(LINES - 1, COLS - 1, 0, 0);
+    myWin = newwin(LINES, COLS, 0, 0);
 
     box(myWin, 0, 0);
 
