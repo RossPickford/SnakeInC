@@ -3,3 +3,5 @@ gcc -I/mingw64/include/ncurses -o nHelloWorld nCursesTestingGround.c -lncurses -
 gcc -I/mingw64/include/ncurses -o nBoldChar nCursesTestingGround.c -lncurses -L/mingw64/bin -DNCURSES_STATIC
 
 gcc -I/mingw64/include/ncurses -o nDrawBox nCursesTestingGround.c -lncurses -L/mingw64/bin -DNCURSES_STATIC
+
+gcc -I/mingw64/include -o FullscreenTest fullScreen.c -lwindows -L/mingw64/bin
