@@ -1,8 +1,9 @@
-// Source - https://stackoverflow.com/a/48244995
-// Posted by selbie, modified by community. See post 'Timeline' for change history
-// Retrieved 2026-02-19, License - CC BY-SA 3.0
 #include <stdio.h>
 #include <windows.h>
+#include <ncurses/curses.h>
+
+void drawWindow(int y, int x);
+
 int main()
 {
     CONSOLE_SCREEN_BUFFER_INFOEX info = {0};
@@ -17,10 +18,35 @@ int main()
     info.cbSize = sizeof(info);
     GetConsoleScreenBufferInfoEx(hConsole, &info);
 
-    width = info.srWindow.Right+1;
-    height = info.srWindow.Bottom+1;
-    printf("Size of this window is %d x %d\n", width, height);
-    getchar();
+    width = info.srWindow.Right + 1;
+    height = info.srWindow.Bottom + 1;
+
+    drawWindow(height, width);
+    // printf("Size of this window is %d x %d\n", width, height);
+    // getchar();
 
     return 0;
+}
+
+void drawWindow(int y, int x)
+{
+    initscr();
+    cbreak();
+    keypad(stdscr, TRUE);
+    mvprintw(y / 2, x / 2, "Size of this window is %d x %d", x, y);
+
+    refresh();
+    WINDOW *myWin;
+
+    myWin = newwin(y, x, 0, 0);
+
+    box(myWin, 0, 0);
+
+    wrefresh(myWin);
+
+    getch();
+
+    delwin(myWin);
+
+    endwin();
 }
