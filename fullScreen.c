@@ -12,6 +12,7 @@ int main()
 
     // maximize window
     ShowWindow(GetConsoleWindow(), SW_SHOWMAXIMIZED);
+    ShowWindow(GetConsoleWindow(), SW_SHOWMAXIMIZED);
 
     // print width/height of this window in terms of columns and rows
     hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
