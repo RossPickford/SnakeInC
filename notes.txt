@@ -1,0 +1,3 @@
+For Windows:
+- Use a .bat file to open a fullscreen powershell window, and then run the script
+- Need to check if the reason it's not working is to do with windows terminal or admin priveliges
