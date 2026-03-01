@@ -1,4 +1,4 @@
-sudo wt -F -d "C:\Users\pickford ross\"
+wt -F -d C:\ProgrammingProjects\
 
 
 
