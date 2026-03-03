@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <windows.h>
 #include <ncurses/curses.h>
-#include <pdcurses/curses.h>
+// #include <pdcurses/curses.h>
 
 void drawWindow(int y, int x);
 
@@ -12,7 +12,21 @@ int main()
     HANDLE hConsole = NULL;
 
     // maximize window
-    ShowWindow(GetConsoleWindow(), SW_MAXIMIZE);
+    // ShowWindow(GetConsoleWindow(), SW_MAXIMIZE);
+
+    STARTUPINFO si = {0};
+    PROCESS_INFORMATION pi = {0};
+
+    si.cb = sizeof(si);
+
+    if (!CreateProcess(NULL, "wt -F", NULL, NULL, FALSE, 0, NULL, NULL, &si, &pi))
+    {
+        printf("CreateProcess failed (%lu).\n", GetLastError());
+        return 1;
+    }
+
+    CloseHandle(pi.hProcess);
+    CloseHandle(pi.hThread);
 
     // print width/height of this window in terms of columns and rows
     hConsole = GetStdHandle(STD_OUTPUT_HANDLE);

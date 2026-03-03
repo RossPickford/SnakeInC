@@ -5,3 +5,5 @@ gcc -I/mingw64/include/ncurses -o nBoldChar nCursesTestingGround.c -lncurses -L/
 gcc -I/mingw64/include/ncurses -o nDrawBox nCursesTestingGround.c -lncurses -L/mingw64/bin -DNCURSES_STATIC
 
 gcc -I/mingw64/include/ncurses -o WindowTest fullScreen.c -lncurses -L/mingw64/bin -DNCURSES_STATIC
+
+gcc I/C:/msys64/ucrt64/include/sdl2 -o sdlWindowTest sdlWindowTest.c -lsdl2
