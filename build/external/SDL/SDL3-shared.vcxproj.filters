@@ -1,0 +1,1937 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="16.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="C:\ProgrammingProjects\C_Projects\SnakeInC\build\external\SDL\CMakeFiles\SDL3-shared.dir\cmake_pch.cxx">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\ProgrammingProjects\C_Projects\SnakeInC\build\external\SDL\CMakeFiles\SDL3-shared.dir\cmake_pch.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\ProgrammingProjects\C_Projects\SnakeInC\external\SDL\src\SDL.c">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\ProgrammingProjects\C_Projects\SnakeInC\external\SDL\src\SDL_assert.c">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\ProgrammingProjects\C_Projects\SnakeInC\external\SDL\src\SDL_error.c">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\ProgrammingProjects\C_Projects\SnakeInC\external\SDL\src\SDL_guid.c">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\ProgrammingProjects\C_Projects\SnakeInC\external\SDL\src\SDL_hashtable.c">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\ProgrammingProjects\C_Projects\SnakeInC\external\SDL\src\SDL_hints.c">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\ProgrammingProjects\C_Projects\SnakeInC\external\SDL\src\SDL_list.c">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\ProgrammingProjects\C_Projects\SnakeInC\external\SDL\src\SDL_log.c">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\ProgrammingProjects\C_Projects\SnakeInC\external\SDL\src\SDL_properties.c">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\ProgrammingProjects\C_Projects\SnakeInC\external\SDL\src\SDL_utils.c">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\ProgrammingProjects\C_Projects\SnakeInC\external\SDL\src\atomic\SDL_atomic.c">
+      <Filter>src\atomic</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\ProgrammingProjects\C_Projects\SnakeInC\external\SDL\src\atomic\SDL_spinlock.c">
+      <Filter>src\atomic</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\ProgrammingProjects\C_Projects\SnakeInC\external\SDL\src\audio\SDL_audio.c">
+      <Filter>src\audio</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\ProgrammingProjects\C_Projects\SnakeInC\external\SDL\src\audio\SDL_audiocvt.c">
+      <Filter>src\audio</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\ProgrammingProjects\C_Projects\SnakeInC\external\SDL\src\audio\SDL_audiodev.c">
+      <Filter>src\audio</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\ProgrammingProjects\C_Projects\SnakeInC\external\SDL\src\audio\SDL_audioqueue.c">
+      <Filter>src\audio</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\ProgrammingProjects\C_Projects\SnakeInC\external\SDL\src\audio\SDL_audioresample.c">
+      <Filter>src\audio</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\ProgrammingProjects\C_Projects\SnakeInC\external\SDL\src\audio\SDL_audiotypecvt.c">
+      <Filter>src\audio</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\ProgrammingProjects\C_Projects\SnakeInC\external\SDL\src\audio\SDL_mixer.c">
+      <Filter>src\audio</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\ProgrammingProjects\C_Projects\SnakeInC\external\SDL\src\audio\SDL_wave.c">
+      <Filter>src\audio</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\ProgrammingProjects\C_Projects\SnakeInC\external\SDL\src\camera\SDL_camera.c">
+      <Filter>src\camera</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\ProgrammingProjects\C_Projects\SnakeInC\external\SDL\src\core\SDL_core_unsupported.c">
+      <Filter>src\core</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\ProgrammingProjects\C_Projects\SnakeInC\external\SDL\src\cpuinfo\SDL_cpuinfo.c">
+      <Filter>src\cpuinfo</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\ProgrammingProjects\C_Projects\SnakeInC\external\SDL\src\dynapi\SDL_dynapi.c">
+      <Filter>src\dynapi</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\ProgrammingProjects\C_Projects\SnakeInC\external\SDL\src\events\SDL_categories.c">
+      <Filter>src\events</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\ProgrammingProjects\C_Projects\SnakeInC\external\SDL\src\events\SDL_clipboardevents.c">
+      <Filter>src\events</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\ProgrammingProjects\C_Projects\SnakeInC\external\SDL\src\events\SDL_displayevents.c">
+      <Filter>src\events</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\ProgrammingProjects\C_Projects\SnakeInC\external\SDL\src\events\SDL_dropevents.c">
+      <Filter>src\events</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\ProgrammingProjects\C_Projects\SnakeInC\external\SDL\src\events\SDL_events.c">
+      <Filter>src\events</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\ProgrammingProjects\C_Projects\SnakeInC\external\SDL\src\events\SDL_eventwatch.c">
+      <Filter>src\events</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\ProgrammingProjects\C_Projects\SnakeInC\external\SDL\src\events\SDL_keyboard.c">
+      <Filter>src\events</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\ProgrammingProjects\C_Projects\SnakeInC\external\SDL\src\events\SDL_keymap.c">
+      <Filter>src\events</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\ProgrammingProjects\C_Projects\SnakeInC\external\SDL\src\events\SDL_keysym_to_keycode.c">
+      <Filter>src\events</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\ProgrammingProjects\C_Projects\SnakeInC\external\SDL\src\events\SDL_keysym_to_scancode.c">
+      <Filter>src\events</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\ProgrammingProjects\C_Projects\SnakeInC\external\SDL\src\events\SDL_mouse.c">
+      <Filter>src\events</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\ProgrammingProjects\C_Projects\SnakeInC\external\SDL\src\events\SDL_pen.c">
+      <Filter>src\events</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\ProgrammingProjects\C_Projects\SnakeInC\external\SDL\src\events\SDL_quit.c">
+      <Filter>src\events</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\ProgrammingProjects\C_Projects\SnakeInC\external\SDL\src\events\SDL_scancode_tables.c">
+      <Filter>src\events</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\ProgrammingProjects\C_Projects\SnakeInC\external\SDL\src\events\SDL_touch.c">
+      <Filter>src\events</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\ProgrammingProjects\C_Projects\SnakeInC\external\SDL\src\events\SDL_windowevents.c">
+      <Filter>src\events</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\ProgrammingProjects\C_Projects\SnakeInC\external\SDL\src\events\imKStoUCS.c">
+      <Filter>src\events</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\ProgrammingProjects\C_Projects\SnakeInC\external\SDL\src\filesystem\SDL_filesystem.c">
+      <Filter>src\filesystem</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\ProgrammingProjects\C_Projects\SnakeInC\external\SDL\src\gpu\SDL_gpu.c">
+      <Filter>src\gpu</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\ProgrammingProjects\C_Projects\SnakeInC\external\SDL\src\gpu\xr\SDL_gpu_openxr.c">
+      <Filter>src\gpu\xr</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\ProgrammingProjects\C_Projects\SnakeInC\external\SDL\src\gpu\xr\SDL_openxrdyn.c">
+      <Filter>src\gpu\xr</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\ProgrammingProjects\C_Projects\SnakeInC\external\SDL\src\haptic\SDL_haptic.c">
+      <Filter>src\haptic</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\ProgrammingProjects\C_Projects\SnakeInC\external\SDL\src\hidapi\SDL_hidapi.c">
+      <Filter>src\hidapi</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\ProgrammingProjects\C_Projects\SnakeInC\external\SDL\src\io\SDL_asyncio.c">
+      <Filter>src\io</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\ProgrammingProjects\C_Projects\SnakeInC\external\SDL\src\io\SDL_iostream.c">
+      <Filter>src\io</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\ProgrammingProjects\C_Projects\SnakeInC\external\SDL\src\io\generic\SDL_asyncio_generic.c">
+      <Filter>src\io\generic</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\ProgrammingProjects\C_Projects\SnakeInC\external\SDL\src\joystick\SDL_gamepad.c">
+      <Filter>src\joystick</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\ProgrammingProjects\C_Projects\SnakeInC\external\SDL\src\joystick\SDL_joystick.c">
+      <Filter>src\joystick</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\ProgrammingProjects\C_Projects\SnakeInC\external\SDL\src\joystick\SDL_steam_virtual_gamepad.c">
+      <Filter>src\joystick</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\ProgrammingProjects\C_Projects\SnakeInC\external\SDL\src\joystick\controller_type.c">
+      <Filter>src\joystick</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\ProgrammingProjects\C_Projects\SnakeInC\external\SDL\src\locale\SDL_locale.c">
+      <Filter>src\locale</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\ProgrammingProjects\C_Projects\SnakeInC\external\SDL\src\main\SDL_main_callbacks.c">
+      <Filter>src\main</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\ProgrammingProjects\C_Projects\SnakeInC\external\SDL\src\main\SDL_runapp.c">
+      <Filter>src\main</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\ProgrammingProjects\C_Projects\SnakeInC\external\SDL\src\misc\SDL_libusb.c">
+      <Filter>src\misc</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\ProgrammingProjects\C_Projects\SnakeInC\external\SDL\src\misc\SDL_url.c">
+      <Filter>src\misc</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\ProgrammingProjects\C_Projects\SnakeInC\external\SDL\src\power\SDL_power.c">
+      <Filter>src\power</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\ProgrammingProjects\C_Projects\SnakeInC\external\SDL\src\render\SDL_render.c">
+      <Filter>src\render</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\ProgrammingProjects\C_Projects\SnakeInC\external\SDL\src\render\SDL_render_unsupported.c">
+      <Filter>src\render</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\ProgrammingProjects\C_Projects\SnakeInC\external\SDL\src\render\SDL_yuv_sw.c">
+      <Filter>src\render</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\ProgrammingProjects\C_Projects\SnakeInC\external\SDL\src\render\direct3d\SDL_render_d3d.c">
+      <Filter>src\render\direct3d</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\ProgrammingProjects\C_Projects\SnakeInC\external\SDL\src\render\direct3d\SDL_shaders_d3d.c">
+      <Filter>src\render\direct3d</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\ProgrammingProjects\C_Projects\SnakeInC\external\SDL\src\render\direct3d11\SDL_render_d3d11.c">
+      <Filter>src\render\direct3d11</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\ProgrammingProjects\C_Projects\SnakeInC\external\SDL\src\render\direct3d11\SDL_shaders_d3d11.c">
+      <Filter>src\render\direct3d11</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\ProgrammingProjects\C_Projects\SnakeInC\external\SDL\src\render\direct3d12\SDL_render_d3d12.c">
+      <Filter>src\render\direct3d12</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\ProgrammingProjects\C_Projects\SnakeInC\external\SDL\src\render\direct3d12\SDL_shaders_d3d12.c">
+      <Filter>src\render\direct3d12</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\ProgrammingProjects\C_Projects\SnakeInC\external\SDL\src\render\gpu\SDL_pipeline_gpu.c">
+      <Filter>src\render\gpu</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\ProgrammingProjects\C_Projects\SnakeInC\external\SDL\src\render\gpu\SDL_render_gpu.c">
+      <Filter>src\render\gpu</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\ProgrammingProjects\C_Projects\SnakeInC\external\SDL\src\render\gpu\SDL_shaders_gpu.c">
+      <Filter>src\render\gpu</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\ProgrammingProjects\C_Projects\SnakeInC\external\SDL\src\render\ngage\SDL_render_ngage.c">
+      <Filter>src\render\ngage</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\ProgrammingProjects\C_Projects\SnakeInC\external\SDL\src\render\opengl\SDL_render_gl.c">
+      <Filter>src\render\opengl</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\ProgrammingProjects\C_Projects\SnakeInC\external\SDL\src\render\opengl\SDL_shaders_gl.c">
+      <Filter>src\render\opengl</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\ProgrammingProjects\C_Projects\SnakeInC\external\SDL\src\render\opengles2\SDL_render_gles2.c">
+      <Filter>src\render\opengles2</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\ProgrammingProjects\C_Projects\SnakeInC\external\SDL\src\render\opengles2\SDL_shaders_gles2.c">
+      <Filter>src\render\opengles2</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\ProgrammingProjects\C_Projects\SnakeInC\external\SDL\src\render\ps2\SDL_render_ps2.c">
+      <Filter>src\render\ps2</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\ProgrammingProjects\C_Projects\SnakeInC\external\SDL\src\render\psp\SDL_render_psp.c">
+      <Filter>src\render\psp</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\ProgrammingProjects\C_Projects\SnakeInC\external\SDL\src\render\software\SDL_blendfillrect.c">
+      <Filter>src\render\software</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\ProgrammingProjects\C_Projects\SnakeInC\external\SDL\src\render\software\SDL_blendline.c">
+      <Filter>src\render\software</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\ProgrammingProjects\C_Projects\SnakeInC\external\SDL\src\render\software\SDL_blendpoint.c">
+      <Filter>src\render\software</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\ProgrammingProjects\C_Projects\SnakeInC\external\SDL\src\render\software\SDL_drawline.c">
+      <Filter>src\render\software</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\ProgrammingProjects\C_Projects\SnakeInC\external\SDL\src\render\software\SDL_drawpoint.c">
+      <Filter>src\render\software</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\ProgrammingProjects\C_Projects\SnakeInC\external\SDL\src\render\software\SDL_render_sw.c">
+      <Filter>src\render\software</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\ProgrammingProjects\C_Projects\SnakeInC\external\SDL\src\render\software\SDL_triangle.c">
+      <Filter>src\render\software</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\ProgrammingProjects\C_Projects\SnakeInC\external\SDL\src\render\vitagxm\SDL_render_vita_gxm.c">
+      <Filter>src\render\vitagxm</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\ProgrammingProjects\C_Projects\SnakeInC\external\SDL\src\render\vitagxm\SDL_render_vita_gxm_memory.c">
+      <Filter>src\render\vitagxm</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\ProgrammingProjects\C_Projects\SnakeInC\external\SDL\src\render\vitagxm\SDL_render_vita_gxm_tools.c">
+      <Filter>src\render\vitagxm</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\ProgrammingProjects\C_Projects\SnakeInC\external\SDL\src\render\vulkan\SDL_render_vulkan.c">
+      <Filter>src\render\vulkan</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\ProgrammingProjects\C_Projects\SnakeInC\external\SDL\src\render\vulkan\SDL_shaders_vulkan.c">
+      <Filter>src\render\vulkan</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\ProgrammingProjects\C_Projects\SnakeInC\external\SDL\src\sensor\SDL_sensor.c">
+      <Filter>src\sensor</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\ProgrammingProjects\C_Projects\SnakeInC\external\SDL\src\stdlib\SDL_crc16.c">
+      <Filter>src\stdlib</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\ProgrammingProjects\C_Projects\SnakeInC\external\SDL\src\stdlib\SDL_crc32.c">
+      <Filter>src\stdlib</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\ProgrammingProjects\C_Projects\SnakeInC\external\SDL\src\stdlib\SDL_getenv.c">
+      <Filter>src\stdlib</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\ProgrammingProjects\C_Projects\SnakeInC\external\SDL\src\stdlib\SDL_iconv.c">
+      <Filter>src\stdlib</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\ProgrammingProjects\C_Projects\SnakeInC\external\SDL\src\stdlib\SDL_malloc.c">
+      <Filter>src\stdlib</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\ProgrammingProjects\C_Projects\SnakeInC\external\SDL\src\stdlib\SDL_memcpy.c">
+      <Filter>src\stdlib</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\ProgrammingProjects\C_Projects\SnakeInC\external\SDL\src\stdlib\SDL_memmove.c">
+      <Filter>src\stdlib</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\ProgrammingProjects\C_Projects\SnakeInC\external\SDL\src\stdlib\SDL_memset.c">
+      <Filter>src\stdlib</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\ProgrammingProjects\C_Projects\SnakeInC\external\SDL\src\stdlib\SDL_mslibc.c">
+      <Filter>src\stdlib</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\ProgrammingProjects\C_Projects\SnakeInC\external\SDL\src\stdlib\SDL_murmur3.c">
+      <Filter>src\stdlib</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\ProgrammingProjects\C_Projects\SnakeInC\external\SDL\src\stdlib\SDL_qsort.c">
+      <Filter>src\stdlib</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\ProgrammingProjects\C_Projects\SnakeInC\external\SDL\src\stdlib\SDL_random.c">
+      <Filter>src\stdlib</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\ProgrammingProjects\C_Projects\SnakeInC\external\SDL\src\stdlib\SDL_stdlib.c">
+      <Filter>src\stdlib</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\ProgrammingProjects\C_Projects\SnakeInC\external\SDL\src\stdlib\SDL_string.c">
+      <Filter>src\stdlib</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\ProgrammingProjects\C_Projects\SnakeInC\external\SDL\src\stdlib\SDL_strtokr.c">
+      <Filter>src\stdlib</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\ProgrammingProjects\C_Projects\SnakeInC\external\SDL\src\storage\SDL_storage.c">
+      <Filter>src\storage</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\ProgrammingProjects\C_Projects\SnakeInC\external\SDL\src\thread\SDL_thread.c">
+      <Filter>src\thread</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\ProgrammingProjects\C_Projects\SnakeInC\external\SDL\src\time\SDL_time.c">
+      <Filter>src\time</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\ProgrammingProjects\C_Projects\SnakeInC\external\SDL\src\timer\SDL_timer.c">
+      <Filter>src\timer</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\ProgrammingProjects\C_Projects\SnakeInC\external\SDL\src\video\SDL_RLEaccel.c">
+      <Filter>src\video</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\ProgrammingProjects\C_Projects\SnakeInC\external\SDL\src\video\SDL_blit.c">
+      <Filter>src\video</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\ProgrammingProjects\C_Projects\SnakeInC\external\SDL\src\video\SDL_blit_0.c">
+      <Filter>src\video</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\ProgrammingProjects\C_Projects\SnakeInC\external\SDL\src\video\SDL_blit_1.c">
+      <Filter>src\video</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\ProgrammingProjects\C_Projects\SnakeInC\external\SDL\src\video\SDL_blit_A.c">
+      <Filter>src\video</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\ProgrammingProjects\C_Projects\SnakeInC\external\SDL\src\video\SDL_blit_N.c">
+      <Filter>src\video</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\ProgrammingProjects\C_Projects\SnakeInC\external\SDL\src\video\SDL_blit_auto.c">
+      <Filter>src\video</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\ProgrammingProjects\C_Projects\SnakeInC\external\SDL\src\video\SDL_blit_copy.c">
+      <Filter>src\video</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\ProgrammingProjects\C_Projects\SnakeInC\external\SDL\src\video\SDL_blit_slow.c">
+      <Filter>src\video</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\ProgrammingProjects\C_Projects\SnakeInC\external\SDL\src\video\SDL_bmp.c">
+      <Filter>src\video</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\ProgrammingProjects\C_Projects\SnakeInC\external\SDL\src\video\SDL_clipboard.c">
+      <Filter>src\video</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\ProgrammingProjects\C_Projects\SnakeInC\external\SDL\src\video\SDL_egl.c">
+      <Filter>src\video</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\ProgrammingProjects\C_Projects\SnakeInC\external\SDL\src\video\SDL_fillrect.c">
+      <Filter>src\video</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\ProgrammingProjects\C_Projects\SnakeInC\external\SDL\src\video\SDL_pixels.c">
+      <Filter>src\video</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\ProgrammingProjects\C_Projects\SnakeInC\external\SDL\src\video\SDL_rect.c">
+      <Filter>src\video</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\ProgrammingProjects\C_Projects\SnakeInC\external\SDL\src\video\SDL_rotate.c">
+      <Filter>src\video</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\ProgrammingProjects\C_Projects\SnakeInC\external\SDL\src\video\SDL_stb.c">
+      <Filter>src\video</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\ProgrammingProjects\C_Projects\SnakeInC\external\SDL\src\video\SDL_stretch.c">
+      <Filter>src\video</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\ProgrammingProjects\C_Projects\SnakeInC\external\SDL\src\video\SDL_surface.c">
+      <Filter>src\video</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\ProgrammingProjects\C_Projects\SnakeInC\external\SDL\src\video\SDL_video.c">
+      <Filter>src\video</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\ProgrammingProjects\C_Projects\SnakeInC\external\SDL\src\video\SDL_video_unsupported.c">
+      <Filter>src\video</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\ProgrammingProjects\C_Projects\SnakeInC\external\SDL\src\video\SDL_vulkan_utils.c">
+      <Filter>src\video</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\ProgrammingProjects\C_Projects\SnakeInC\external\SDL\src\video\SDL_yuv.c">
+      <Filter>src\video</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\ProgrammingProjects\C_Projects\SnakeInC\external\SDL\src\video\yuv2rgb\yuv_rgb_lsx.c">
+      <Filter>src\video\yuv2rgb</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\ProgrammingProjects\C_Projects\SnakeInC\external\SDL\src\video\yuv2rgb\yuv_rgb_sse.c">
+      <Filter>src\video\yuv2rgb</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\ProgrammingProjects\C_Projects\SnakeInC\external\SDL\src\video\yuv2rgb\yuv_rgb_std.c">
+      <Filter>src\video\yuv2rgb</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\ProgrammingProjects\C_Projects\SnakeInC\external\SDL\src\audio\dummy\SDL_dummyaudio.c">
+      <Filter>src\audio\dummy</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\ProgrammingProjects\C_Projects\SnakeInC\external\SDL\src\audio\disk\SDL_diskaudio.c">
+      <Filter>src\audio\disk</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\ProgrammingProjects\C_Projects\SnakeInC\external\SDL\src\camera\dummy\SDL_camera_dummy.c">
+      <Filter>src\camera\dummy</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\ProgrammingProjects\C_Projects\SnakeInC\external\SDL\src\joystick\virtual\SDL_virtualjoystick.c">
+      <Filter>src\joystick\virtual</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\ProgrammingProjects\C_Projects\SnakeInC\external\SDL\src\video\dummy\SDL_nullevents.c">
+      <Filter>src\video\dummy</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\ProgrammingProjects\C_Projects\SnakeInC\external\SDL\src\video\dummy\SDL_nullframebuffer.c">
+      <Filter>src\video\dummy</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\ProgrammingProjects\C_Projects\SnakeInC\external\SDL\src\video\dummy\SDL_nullvideo.c">
+      <Filter>src\video\dummy</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\ProgrammingProjects\C_Projects\SnakeInC\external\SDL\src\core\windows\SDL_gameinput.cpp">
+      <Filter>src\core\windows</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\ProgrammingProjects\C_Projects\SnakeInC\external\SDL\src\core\windows\SDL_hid.c">
+      <Filter>src\core\windows</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\ProgrammingProjects\C_Projects\SnakeInC\external\SDL\src\core\windows\SDL_immdevice.c">
+      <Filter>src\core\windows</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\ProgrammingProjects\C_Projects\SnakeInC\external\SDL\src\core\windows\SDL_windows.c">
+      <Filter>src\core\windows</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\ProgrammingProjects\C_Projects\SnakeInC\external\SDL\src\core\windows\SDL_xinput.c">
+      <Filter>src\core\windows</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\ProgrammingProjects\C_Projects\SnakeInC\external\SDL\src\core\windows\pch.c">
+      <Filter>src\core\windows</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\ProgrammingProjects\C_Projects\SnakeInC\external\SDL\src\core\windows\pch_cpp.cpp">
+      <Filter>src\core\windows</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\ProgrammingProjects\C_Projects\SnakeInC\external\SDL\src\main\windows\SDL_sysmain_runapp.c">
+      <Filter>src\main\windows</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\ProgrammingProjects\C_Projects\SnakeInC\external\SDL\src\io\windows\SDL_asyncio_windows_ioring.c">
+      <Filter>src\io\windows</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\ProgrammingProjects\C_Projects\SnakeInC\external\SDL\src\misc\windows\SDL_sysurl.c">
+      <Filter>src\misc\windows</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\ProgrammingProjects\C_Projects\SnakeInC\external\SDL\src\audio\directsound\SDL_directsound.c">
+      <Filter>src\audio\directsound</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\ProgrammingProjects\C_Projects\SnakeInC\external\SDL\src\audio\wasapi\SDL_wasapi.c">
+      <Filter>src\audio\wasapi</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\ProgrammingProjects\C_Projects\SnakeInC\external\SDL\src\video\windows\SDL_windowsclipboard.c">
+      <Filter>src\video\windows</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\ProgrammingProjects\C_Projects\SnakeInC\external\SDL\src\video\windows\SDL_windowsevents.c">
+      <Filter>src\video\windows</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\ProgrammingProjects\C_Projects\SnakeInC\external\SDL\src\video\windows\SDL_windowsframebuffer.c">
+      <Filter>src\video\windows</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\ProgrammingProjects\C_Projects\SnakeInC\external\SDL\src\video\windows\SDL_windowsgameinput.cpp">
+      <Filter>src\video\windows</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\ProgrammingProjects\C_Projects\SnakeInC\external\SDL\src\video\windows\SDL_windowskeyboard.c">
+      <Filter>src\video\windows</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\ProgrammingProjects\C_Projects\SnakeInC\external\SDL\src\video\windows\SDL_windowsmessagebox.c">
+      <Filter>src\video\windows</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\ProgrammingProjects\C_Projects\SnakeInC\external\SDL\src\video\windows\SDL_windowsmodes.c">
+      <Filter>src\video\windows</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\ProgrammingProjects\C_Projects\SnakeInC\external\SDL\src\video\windows\SDL_windowsmouse.c">
+      <Filter>src\video\windows</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\ProgrammingProjects\C_Projects\SnakeInC\external\SDL\src\video\windows\SDL_windowsopengl.c">
+      <Filter>src\video\windows</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\ProgrammingProjects\C_Projects\SnakeInC\external\SDL\src\video\windows\SDL_windowsopengles.c">
+      <Filter>src\video\windows</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\ProgrammingProjects\C_Projects\SnakeInC\external\SDL\src\video\windows\SDL_windowsrawinput.c">
+      <Filter>src\video\windows</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\ProgrammingProjects\C_Projects\SnakeInC\external\SDL\src\video\windows\SDL_windowsshape.c">
+      <Filter>src\video\windows</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\ProgrammingProjects\C_Projects\SnakeInC\external\SDL\src\video\windows\SDL_windowsvideo.c">
+      <Filter>src\video\windows</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\ProgrammingProjects\C_Projects\SnakeInC\external\SDL\src\video\windows\SDL_windowsvulkan.c">
+      <Filter>src\video\windows</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\ProgrammingProjects\C_Projects\SnakeInC\external\SDL\src\video\windows\SDL_windowswindow.c">
+      <Filter>src\video\windows</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\ProgrammingProjects\C_Projects\SnakeInC\external\SDL\src\thread\generic\SDL_syscond.c">
+      <Filter>src\thread\generic</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\ProgrammingProjects\C_Projects\SnakeInC\external\SDL\src\thread\generic\SDL_sysrwlock.c">
+      <Filter>src\thread\generic</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\ProgrammingProjects\C_Projects\SnakeInC\external\SDL\src\thread\windows\SDL_syscond_cv.c">
+      <Filter>src\thread\windows</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\ProgrammingProjects\C_Projects\SnakeInC\external\SDL\src\thread\windows\SDL_sysmutex.c">
+      <Filter>src\thread\windows</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\ProgrammingProjects\C_Projects\SnakeInC\external\SDL\src\thread\windows\SDL_sysrwlock_srw.c">
+      <Filter>src\thread\windows</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\ProgrammingProjects\C_Projects\SnakeInC\external\SDL\src\thread\windows\SDL_syssem.c">
+      <Filter>src\thread\windows</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\ProgrammingProjects\C_Projects\SnakeInC\external\SDL\src\thread\windows\SDL_systhread.c">
+      <Filter>src\thread\windows</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\ProgrammingProjects\C_Projects\SnakeInC\external\SDL\src\thread\windows\SDL_systls.c">
+      <Filter>src\thread\windows</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\ProgrammingProjects\C_Projects\SnakeInC\external\SDL\src\sensor\windows\SDL_windowssensor.c">
+      <Filter>src\sensor\windows</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\ProgrammingProjects\C_Projects\SnakeInC\external\SDL\src\power\windows\SDL_syspower.c">
+      <Filter>src\power\windows</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\ProgrammingProjects\C_Projects\SnakeInC\external\SDL\src\locale\windows\SDL_syslocale.c">
+      <Filter>src\locale\windows</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\ProgrammingProjects\C_Projects\SnakeInC\external\SDL\src\filesystem\windows\SDL_sysfilesystem.c">
+      <Filter>src\filesystem\windows</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\ProgrammingProjects\C_Projects\SnakeInC\external\SDL\src\filesystem\windows\SDL_sysfsops.c">
+      <Filter>src\filesystem\windows</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\ProgrammingProjects\C_Projects\SnakeInC\external\SDL\src\storage\generic\SDL_genericstorage.c">
+      <Filter>src\storage\generic</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\ProgrammingProjects\C_Projects\SnakeInC\external\SDL\src\storage\steam\SDL_steamstorage.c">
+      <Filter>src\storage\steam</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\ProgrammingProjects\C_Projects\SnakeInC\external\SDL\src\time\windows\SDL_systime.c">
+      <Filter>src\time\windows</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\ProgrammingProjects\C_Projects\SnakeInC\external\SDL\src\timer\windows\SDL_systimer.c">
+      <Filter>src\timer\windows</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\ProgrammingProjects\C_Projects\SnakeInC\external\SDL\src\loadso\windows\SDL_sysloadso.c">
+      <Filter>src\loadso\windows</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\ProgrammingProjects\C_Projects\SnakeInC\external\SDL\src\tray\windows\SDL_tray.c">
+      <Filter>src\tray\windows</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\ProgrammingProjects\C_Projects\SnakeInC\external\SDL\src\joystick\hidapi\SDL_hidapi_8bitdo.c">
+      <Filter>src\joystick\hidapi</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\ProgrammingProjects\C_Projects\SnakeInC\external\SDL\src\joystick\hidapi\SDL_hidapi_combined.c">
+      <Filter>src\joystick\hidapi</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\ProgrammingProjects\C_Projects\SnakeInC\external\SDL\src\joystick\hidapi\SDL_hidapi_flydigi.c">
+      <Filter>src\joystick\hidapi</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\ProgrammingProjects\C_Projects\SnakeInC\external\SDL\src\joystick\hidapi\SDL_hidapi_gamecube.c">
+      <Filter>src\joystick\hidapi</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\ProgrammingProjects\C_Projects\SnakeInC\external\SDL\src\joystick\hidapi\SDL_hidapi_gamesir.c">
+      <Filter>src\joystick\hidapi</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\ProgrammingProjects\C_Projects\SnakeInC\external\SDL\src\joystick\hidapi\SDL_hidapi_gip.c">
+      <Filter>src\joystick\hidapi</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\ProgrammingProjects\C_Projects\SnakeInC\external\SDL\src\joystick\hidapi\SDL_hidapi_lg4ff.c">
+      <Filter>src\joystick\hidapi</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\ProgrammingProjects\C_Projects\SnakeInC\external\SDL\src\joystick\hidapi\SDL_hidapi_luna.c">
+      <Filter>src\joystick\hidapi</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\ProgrammingProjects\C_Projects\SnakeInC\external\SDL\src\joystick\hidapi\SDL_hidapi_ps3.c">
+      <Filter>src\joystick\hidapi</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\ProgrammingProjects\C_Projects\SnakeInC\external\SDL\src\joystick\hidapi\SDL_hidapi_ps4.c">
+      <Filter>src\joystick\hidapi</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\ProgrammingProjects\C_Projects\SnakeInC\external\SDL\src\joystick\hidapi\SDL_hidapi_ps5.c">
+      <Filter>src\joystick\hidapi</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\ProgrammingProjects\C_Projects\SnakeInC\external\SDL\src\joystick\hidapi\SDL_hidapi_rumble.c">
+      <Filter>src\joystick\hidapi</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\ProgrammingProjects\C_Projects\SnakeInC\external\SDL\src\joystick\hidapi\SDL_hidapi_shield.c">
+      <Filter>src\joystick\hidapi</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\ProgrammingProjects\C_Projects\SnakeInC\external\SDL\src\joystick\hidapi\SDL_hidapi_sinput.c">
+      <Filter>src\joystick\hidapi</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\ProgrammingProjects\C_Projects\SnakeInC\external\SDL\src\joystick\hidapi\SDL_hidapi_stadia.c">
+      <Filter>src\joystick\hidapi</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\ProgrammingProjects\C_Projects\SnakeInC\external\SDL\src\joystick\hidapi\SDL_hidapi_steam.c">
+      <Filter>src\joystick\hidapi</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\ProgrammingProjects\C_Projects\SnakeInC\external\SDL\src\joystick\hidapi\SDL_hidapi_steam_hori.c">
+      <Filter>src\joystick\hidapi</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\ProgrammingProjects\C_Projects\SnakeInC\external\SDL\src\joystick\hidapi\SDL_hidapi_steam_triton.c">
+      <Filter>src\joystick\hidapi</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\ProgrammingProjects\C_Projects\SnakeInC\external\SDL\src\joystick\hidapi\SDL_hidapi_steamdeck.c">
+      <Filter>src\joystick\hidapi</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\ProgrammingProjects\C_Projects\SnakeInC\external\SDL\src\joystick\hidapi\SDL_hidapi_switch.c">
+      <Filter>src\joystick\hidapi</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\ProgrammingProjects\C_Projects\SnakeInC\external\SDL\src\joystick\hidapi\SDL_hidapi_switch2.c">
+      <Filter>src\joystick\hidapi</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\ProgrammingProjects\C_Projects\SnakeInC\external\SDL\src\joystick\hidapi\SDL_hidapi_wii.c">
+      <Filter>src\joystick\hidapi</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\ProgrammingProjects\C_Projects\SnakeInC\external\SDL\src\joystick\hidapi\SDL_hidapi_xbox360.c">
+      <Filter>src\joystick\hidapi</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\ProgrammingProjects\C_Projects\SnakeInC\external\SDL\src\joystick\hidapi\SDL_hidapi_xbox360w.c">
+      <Filter>src\joystick\hidapi</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\ProgrammingProjects\C_Projects\SnakeInC\external\SDL\src\joystick\hidapi\SDL_hidapi_xboxone.c">
+      <Filter>src\joystick\hidapi</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\ProgrammingProjects\C_Projects\SnakeInC\external\SDL\src\joystick\hidapi\SDL_hidapi_zuiki.c">
+      <Filter>src\joystick\hidapi</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\ProgrammingProjects\C_Projects\SnakeInC\external\SDL\src\joystick\hidapi\SDL_hidapijoystick.c">
+      <Filter>src\joystick\hidapi</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\ProgrammingProjects\C_Projects\SnakeInC\external\SDL\src\joystick\hidapi\SDL_report_descriptor.c">
+      <Filter>src\joystick\hidapi</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\ProgrammingProjects\C_Projects\SnakeInC\external\SDL\src\haptic\hidapi\SDL_hidapihaptic.c">
+      <Filter>src\haptic\hidapi</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\ProgrammingProjects\C_Projects\SnakeInC\external\SDL\src\haptic\hidapi\SDL_hidapihaptic_lg4ff.c">
+      <Filter>src\haptic\hidapi</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\ProgrammingProjects\C_Projects\SnakeInC\external\SDL\src\joystick\windows\SDL_dinputjoystick.c">
+      <Filter>src\joystick\windows</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\ProgrammingProjects\C_Projects\SnakeInC\external\SDL\src\joystick\windows\SDL_rawinputjoystick.c">
+      <Filter>src\joystick\windows</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\ProgrammingProjects\C_Projects\SnakeInC\external\SDL\src\joystick\windows\SDL_windows_gaming_input.c">
+      <Filter>src\joystick\windows</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\ProgrammingProjects\C_Projects\SnakeInC\external\SDL\src\joystick\windows\SDL_windowsjoystick.c">
+      <Filter>src\joystick\windows</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\ProgrammingProjects\C_Projects\SnakeInC\external\SDL\src\joystick\windows\SDL_xinputjoystick.c">
+      <Filter>src\joystick\windows</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\ProgrammingProjects\C_Projects\SnakeInC\external\SDL\src\haptic\windows\SDL_dinputhaptic.c">
+      <Filter>src\haptic\windows</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\ProgrammingProjects\C_Projects\SnakeInC\external\SDL\src\haptic\windows\SDL_windowshaptic.c">
+      <Filter>src\haptic\windows</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\ProgrammingProjects\C_Projects\SnakeInC\external\SDL\src\camera\mediafoundation\SDL_camera_mediafoundation.c">
+      <Filter>src\camera\mediafoundation</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\ProgrammingProjects\C_Projects\SnakeInC\external\SDL\src\dialog\SDL_dialog.c">
+      <Filter>src\dialog</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\ProgrammingProjects\C_Projects\SnakeInC\external\SDL\src\dialog\SDL_dialog_utils.c">
+      <Filter>src\dialog</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\ProgrammingProjects\C_Projects\SnakeInC\external\SDL\src\dialog\windows\SDL_windowsdialog.c">
+      <Filter>src\dialog\windows</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\ProgrammingProjects\C_Projects\SnakeInC\external\SDL\src\process\SDL_process.c">
+      <Filter>src\process</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\ProgrammingProjects\C_Projects\SnakeInC\external\SDL\src\process\windows\SDL_windowsprocess.c">
+      <Filter>src\process\windows</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\ProgrammingProjects\C_Projects\SnakeInC\external\SDL\src\video\offscreen\SDL_offscreenevents.c">
+      <Filter>src\video\offscreen</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\ProgrammingProjects\C_Projects\SnakeInC\external\SDL\src\video\offscreen\SDL_offscreenframebuffer.c">
+      <Filter>src\video\offscreen</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\ProgrammingProjects\C_Projects\SnakeInC\external\SDL\src\video\offscreen\SDL_offscreenopengles.c">
+      <Filter>src\video\offscreen</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\ProgrammingProjects\C_Projects\SnakeInC\external\SDL\src\video\offscreen\SDL_offscreenvideo.c">
+      <Filter>src\video\offscreen</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\ProgrammingProjects\C_Projects\SnakeInC\external\SDL\src\video\offscreen\SDL_offscreenvulkan.c">
+      <Filter>src\video\offscreen</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\ProgrammingProjects\C_Projects\SnakeInC\external\SDL\src\video\offscreen\SDL_offscreenwindow.c">
+      <Filter>src\video\offscreen</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\ProgrammingProjects\C_Projects\SnakeInC\external\SDL\src\tray\SDL_tray_utils.c">
+      <Filter>src\tray</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\ProgrammingProjects\C_Projects\SnakeInC\external\SDL\src\gpu\d3d12\SDL_gpu_d3d12.c">
+      <Filter>src\gpu\d3d12</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\ProgrammingProjects\C_Projects\SnakeInC\external\SDL\src\gpu\vulkan\SDL_gpu_vulkan.c">
+      <Filter>src\gpu\vulkan</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\ProgrammingProjects\C_Projects\SnakeInC\external\SDL\src\main\generic\SDL_sysmain_callbacks.c">
+      <Filter>src\main\generic</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="C:\ProgrammingProjects\C_Projects\SnakeInC\external\SDL\src\SDL_assert_c.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\ProgrammingProjects\C_Projects\SnakeInC\external\SDL\src\SDL_error_c.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\ProgrammingProjects\C_Projects\SnakeInC\external\SDL\src\SDL_hashtable.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\ProgrammingProjects\C_Projects\SnakeInC\external\SDL\src\SDL_hints_c.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\ProgrammingProjects\C_Projects\SnakeInC\external\SDL\src\SDL_internal.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\ProgrammingProjects\C_Projects\SnakeInC\external\SDL\src\SDL_list.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\ProgrammingProjects\C_Projects\SnakeInC\external\SDL\src\SDL_log_c.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\ProgrammingProjects\C_Projects\SnakeInC\external\SDL\src\SDL_properties_c.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\ProgrammingProjects\C_Projects\SnakeInC\external\SDL\src\SDL_utils_c.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\ProgrammingProjects\C_Projects\SnakeInC\external\SDL\src\audio\SDL_audio_c.h">
+      <Filter>src\audio</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\ProgrammingProjects\C_Projects\SnakeInC\external\SDL\src\audio\SDL_audio_channel_converters.h">
+      <Filter>src\audio</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\ProgrammingProjects\C_Projects\SnakeInC\external\SDL\src\audio\SDL_audiodev_c.h">
+      <Filter>src\audio</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\ProgrammingProjects\C_Projects\SnakeInC\external\SDL\src\audio\SDL_audioqueue.h">
+      <Filter>src\audio</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\ProgrammingProjects\C_Projects\SnakeInC\external\SDL\src\audio\SDL_audioresample.h">
+      <Filter>src\audio</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\ProgrammingProjects\C_Projects\SnakeInC\external\SDL\src\audio\SDL_sysaudio.h">
+      <Filter>src\audio</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\ProgrammingProjects\C_Projects\SnakeInC\external\SDL\src\audio\SDL_wave.h">
+      <Filter>src\audio</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\ProgrammingProjects\C_Projects\SnakeInC\external\SDL\src\camera\SDL_camera_c.h">
+      <Filter>src\camera</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\ProgrammingProjects\C_Projects\SnakeInC\external\SDL\src\camera\SDL_syscamera.h">
+      <Filter>src\camera</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\ProgrammingProjects\C_Projects\SnakeInC\external\SDL\src\core\SDL_core_unsupported.h">
+      <Filter>src\core</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\ProgrammingProjects\C_Projects\SnakeInC\external\SDL\src\cpuinfo\SDL_cpuinfo_c.h">
+      <Filter>src\cpuinfo</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\ProgrammingProjects\C_Projects\SnakeInC\external\SDL\src\dynapi\SDL_dynapi.h">
+      <Filter>src\dynapi</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\ProgrammingProjects\C_Projects\SnakeInC\external\SDL\src\dynapi\SDL_dynapi_overrides.h">
+      <Filter>src\dynapi</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\ProgrammingProjects\C_Projects\SnakeInC\external\SDL\src\dynapi\SDL_dynapi_procs.h">
+      <Filter>src\dynapi</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\ProgrammingProjects\C_Projects\SnakeInC\external\SDL\src\dynapi\SDL_dynapi_unsupported.h">
+      <Filter>src\dynapi</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\ProgrammingProjects\C_Projects\SnakeInC\external\SDL\src\events\SDL_categories_c.h">
+      <Filter>src\events</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\ProgrammingProjects\C_Projects\SnakeInC\external\SDL\src\events\SDL_clipboardevents_c.h">
+      <Filter>src\events</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\ProgrammingProjects\C_Projects\SnakeInC\external\SDL\src\events\SDL_displayevents_c.h">
+      <Filter>src\events</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\ProgrammingProjects\C_Projects\SnakeInC\external\SDL\src\events\SDL_dropevents_c.h">
+      <Filter>src\events</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\ProgrammingProjects\C_Projects\SnakeInC\external\SDL\src\events\SDL_events_c.h">
+      <Filter>src\events</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\ProgrammingProjects\C_Projects\SnakeInC\external\SDL\src\events\SDL_eventwatch_c.h">
+      <Filter>src\events</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\ProgrammingProjects\C_Projects\SnakeInC\external\SDL\src\events\SDL_keyboard_c.h">
+      <Filter>src\events</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\ProgrammingProjects\C_Projects\SnakeInC\external\SDL\src\events\SDL_keymap_c.h">
+      <Filter>src\events</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\ProgrammingProjects\C_Projects\SnakeInC\external\SDL\src\events\SDL_keysym_to_keycode_c.h">
+      <Filter>src\events</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\ProgrammingProjects\C_Projects\SnakeInC\external\SDL\src\events\SDL_keysym_to_scancode_c.h">
+      <Filter>src\events</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\ProgrammingProjects\C_Projects\SnakeInC\external\SDL\src\events\SDL_mouse_c.h">
+      <Filter>src\events</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\ProgrammingProjects\C_Projects\SnakeInC\external\SDL\src\events\SDL_pen_c.h">
+      <Filter>src\events</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\ProgrammingProjects\C_Projects\SnakeInC\external\SDL\src\events\SDL_scancode_tables_c.h">
+      <Filter>src\events</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\ProgrammingProjects\C_Projects\SnakeInC\external\SDL\src\events\SDL_touch_c.h">
+      <Filter>src\events</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\ProgrammingProjects\C_Projects\SnakeInC\external\SDL\src\events\SDL_windowevents_c.h">
+      <Filter>src\events</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\ProgrammingProjects\C_Projects\SnakeInC\external\SDL\src\events\blank_cursor.h">
+      <Filter>src\events</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\ProgrammingProjects\C_Projects\SnakeInC\external\SDL\src\events\default_cursor.h">
+      <Filter>src\events</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\ProgrammingProjects\C_Projects\SnakeInC\external\SDL\src\events\imKStoUCS.h">
+      <Filter>src\events</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\ProgrammingProjects\C_Projects\SnakeInC\external\SDL\src\events\scancodes_darwin.h">
+      <Filter>src\events</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\ProgrammingProjects\C_Projects\SnakeInC\external\SDL\src\events\scancodes_linux.h">
+      <Filter>src\events</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\ProgrammingProjects\C_Projects\SnakeInC\external\SDL\src\events\scancodes_windows.h">
+      <Filter>src\events</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\ProgrammingProjects\C_Projects\SnakeInC\external\SDL\src\events\scancodes_xfree86.h">
+      <Filter>src\events</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\ProgrammingProjects\C_Projects\SnakeInC\external\SDL\src\filesystem\SDL_filesystem_c.h">
+      <Filter>src\filesystem</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\ProgrammingProjects\C_Projects\SnakeInC\external\SDL\src\filesystem\SDL_sysfilesystem.h">
+      <Filter>src\filesystem</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\ProgrammingProjects\C_Projects\SnakeInC\external\SDL\src\gpu\SDL_sysgpu.h">
+      <Filter>src\gpu</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\ProgrammingProjects\C_Projects\SnakeInC\external\SDL\src\gpu\xr\SDL_gpu_openxr.h">
+      <Filter>src\gpu\xr</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\ProgrammingProjects\C_Projects\SnakeInC\external\SDL\src\gpu\xr\SDL_openxr_internal.h">
+      <Filter>src\gpu\xr</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\ProgrammingProjects\C_Projects\SnakeInC\external\SDL\src\gpu\xr\SDL_openxrdyn.h">
+      <Filter>src\gpu\xr</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\ProgrammingProjects\C_Projects\SnakeInC\external\SDL\src\gpu\xr\SDL_openxrsym.h">
+      <Filter>src\gpu\xr</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\ProgrammingProjects\C_Projects\SnakeInC\external\SDL\src\haptic\SDL_haptic_c.h">
+      <Filter>src\haptic</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\ProgrammingProjects\C_Projects\SnakeInC\external\SDL\src\haptic\SDL_syshaptic.h">
+      <Filter>src\haptic</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\ProgrammingProjects\C_Projects\SnakeInC\external\SDL\src\hidapi\SDL_hidapi_android.h">
+      <Filter>src\hidapi</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\ProgrammingProjects\C_Projects\SnakeInC\external\SDL\src\hidapi\SDL_hidapi_c.h">
+      <Filter>src\hidapi</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\ProgrammingProjects\C_Projects\SnakeInC\external\SDL\src\hidapi\SDL_hidapi_ios.h">
+      <Filter>src\hidapi</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\ProgrammingProjects\C_Projects\SnakeInC\external\SDL\src\hidapi\SDL_hidapi_libusb.h">
+      <Filter>src\hidapi</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\ProgrammingProjects\C_Projects\SnakeInC\external\SDL\src\hidapi\SDL_hidapi_linux.h">
+      <Filter>src\hidapi</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\ProgrammingProjects\C_Projects\SnakeInC\external\SDL\src\hidapi\SDL_hidapi_mac.h">
+      <Filter>src\hidapi</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\ProgrammingProjects\C_Projects\SnakeInC\external\SDL\src\hidapi\SDL_hidapi_netbsd.h">
+      <Filter>src\hidapi</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\ProgrammingProjects\C_Projects\SnakeInC\external\SDL\src\hidapi\SDL_hidapi_steamxbox.h">
+      <Filter>src\hidapi</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\ProgrammingProjects\C_Projects\SnakeInC\external\SDL\src\hidapi\SDL_hidapi_windows.h">
+      <Filter>src\hidapi</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\ProgrammingProjects\C_Projects\SnakeInC\external\SDL\src\io\SDL_asyncio_c.h">
+      <Filter>src\io</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\ProgrammingProjects\C_Projects\SnakeInC\external\SDL\src\io\SDL_iostream_c.h">
+      <Filter>src\io</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\ProgrammingProjects\C_Projects\SnakeInC\external\SDL\src\io\SDL_sysasyncio.h">
+      <Filter>src\io</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\ProgrammingProjects\C_Projects\SnakeInC\external\SDL\src\joystick\SDL_gamepad_c.h">
+      <Filter>src\joystick</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\ProgrammingProjects\C_Projects\SnakeInC\external\SDL\src\joystick\SDL_gamepad_db.h">
+      <Filter>src\joystick</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\ProgrammingProjects\C_Projects\SnakeInC\external\SDL\src\joystick\SDL_joystick_c.h">
+      <Filter>src\joystick</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\ProgrammingProjects\C_Projects\SnakeInC\external\SDL\src\joystick\SDL_steam_virtual_gamepad.h">
+      <Filter>src\joystick</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\ProgrammingProjects\C_Projects\SnakeInC\external\SDL\src\joystick\SDL_sysjoystick.h">
+      <Filter>src\joystick</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\ProgrammingProjects\C_Projects\SnakeInC\external\SDL\src\joystick\controller_list.h">
+      <Filter>src\joystick</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\ProgrammingProjects\C_Projects\SnakeInC\external\SDL\src\joystick\controller_type.h">
+      <Filter>src\joystick</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\ProgrammingProjects\C_Projects\SnakeInC\external\SDL\src\joystick\usb_ids.h">
+      <Filter>src\joystick</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\ProgrammingProjects\C_Projects\SnakeInC\external\SDL\src\locale\SDL_syslocale.h">
+      <Filter>src\locale</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\ProgrammingProjects\C_Projects\SnakeInC\external\SDL\src\main\SDL_main_callbacks.h">
+      <Filter>src\main</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\ProgrammingProjects\C_Projects\SnakeInC\external\SDL\src\misc\SDL_libusb.h">
+      <Filter>src\misc</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\ProgrammingProjects\C_Projects\SnakeInC\external\SDL\src\misc\SDL_sysurl.h">
+      <Filter>src\misc</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\ProgrammingProjects\C_Projects\SnakeInC\external\SDL\src\power\SDL_syspower.h">
+      <Filter>src\power</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\ProgrammingProjects\C_Projects\SnakeInC\external\SDL\src\render\SDL_d3dmath.h">
+      <Filter>src\render</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\ProgrammingProjects\C_Projects\SnakeInC\external\SDL\src\render\SDL_render_debug_font.h">
+      <Filter>src\render</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\ProgrammingProjects\C_Projects\SnakeInC\external\SDL\src\render\SDL_sysrender.h">
+      <Filter>src\render</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\ProgrammingProjects\C_Projects\SnakeInC\external\SDL\src\render\SDL_yuv_sw_c.h">
+      <Filter>src\render</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\ProgrammingProjects\C_Projects\SnakeInC\external\SDL\src\render\direct3d\D3D9_PixelShader_Palette.h">
+      <Filter>src\render\direct3d</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\ProgrammingProjects\C_Projects\SnakeInC\external\SDL\src\render\direct3d\D3D9_PixelShader_Palette_Linear.h">
+      <Filter>src\render\direct3d</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\ProgrammingProjects\C_Projects\SnakeInC\external\SDL\src\render\direct3d\D3D9_PixelShader_Palette_Nearest.h">
+      <Filter>src\render\direct3d</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\ProgrammingProjects\C_Projects\SnakeInC\external\SDL\src\render\direct3d\D3D9_PixelShader_YUV.h">
+      <Filter>src\render\direct3d</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\ProgrammingProjects\C_Projects\SnakeInC\external\SDL\src\render\direct3d\SDL_shaders_d3d.h">
+      <Filter>src\render\direct3d</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\ProgrammingProjects\C_Projects\SnakeInC\external\SDL\src\render\direct3d11\D3D11_PixelShader_Advanced.h">
+      <Filter>src\render\direct3d11</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\ProgrammingProjects\C_Projects\SnakeInC\external\SDL\src\render\direct3d11\D3D11_PixelShader_Colors.h">
+      <Filter>src\render\direct3d11</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\ProgrammingProjects\C_Projects\SnakeInC\external\SDL\src\render\direct3d11\D3D11_PixelShader_Textures.h">
+      <Filter>src\render\direct3d11</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\ProgrammingProjects\C_Projects\SnakeInC\external\SDL\src\render\direct3d11\D3D11_VertexShader.h">
+      <Filter>src\render\direct3d11</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\ProgrammingProjects\C_Projects\SnakeInC\external\SDL\src\render\direct3d11\SDL_shaders_d3d11.h">
+      <Filter>src\render\direct3d11</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\ProgrammingProjects\C_Projects\SnakeInC\external\SDL\src\render\direct3d12\D3D12_PixelShader_Advanced.h">
+      <Filter>src\render\direct3d12</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\ProgrammingProjects\C_Projects\SnakeInC\external\SDL\src\render\direct3d12\D3D12_PixelShader_Colors.h">
+      <Filter>src\render\direct3d12</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\ProgrammingProjects\C_Projects\SnakeInC\external\SDL\src\render\direct3d12\D3D12_PixelShader_Textures.h">
+      <Filter>src\render\direct3d12</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\ProgrammingProjects\C_Projects\SnakeInC\external\SDL\src\render\direct3d12\D3D12_RootSig_Advanced.h">
+      <Filter>src\render\direct3d12</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\ProgrammingProjects\C_Projects\SnakeInC\external\SDL\src\render\direct3d12\D3D12_RootSig_Color.h">
+      <Filter>src\render\direct3d12</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\ProgrammingProjects\C_Projects\SnakeInC\external\SDL\src\render\direct3d12\D3D12_RootSig_Texture.h">
+      <Filter>src\render\direct3d12</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\ProgrammingProjects\C_Projects\SnakeInC\external\SDL\src\render\direct3d12\D3D12_VertexShader_Advanced.h">
+      <Filter>src\render\direct3d12</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\ProgrammingProjects\C_Projects\SnakeInC\external\SDL\src\render\direct3d12\D3D12_VertexShader_Color.h">
+      <Filter>src\render\direct3d12</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\ProgrammingProjects\C_Projects\SnakeInC\external\SDL\src\render\direct3d12\D3D12_VertexShader_Texture.h">
+      <Filter>src\render\direct3d12</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\ProgrammingProjects\C_Projects\SnakeInC\external\SDL\src\render\direct3d12\SDL_render_d3d12_xbox.h">
+      <Filter>src\render\direct3d12</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\ProgrammingProjects\C_Projects\SnakeInC\external\SDL\src\render\direct3d12\SDL_shaders_d3d12.h">
+      <Filter>src\render\direct3d12</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\ProgrammingProjects\C_Projects\SnakeInC\external\SDL\src\render\gpu\SDL_gpu_util.h">
+      <Filter>src\render\gpu</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\ProgrammingProjects\C_Projects\SnakeInC\external\SDL\src\render\gpu\SDL_pipeline_gpu.h">
+      <Filter>src\render\gpu</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\ProgrammingProjects\C_Projects\SnakeInC\external\SDL\src\render\gpu\SDL_shaders_gpu.h">
+      <Filter>src\render\gpu</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\ProgrammingProjects\C_Projects\SnakeInC\external\SDL\src\render\metal\SDL_shaders_metal_ios.h">
+      <Filter>src\render\metal</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\ProgrammingProjects\C_Projects\SnakeInC\external\SDL\src\render\metal\SDL_shaders_metal_iphonesimulator.h">
+      <Filter>src\render\metal</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\ProgrammingProjects\C_Projects\SnakeInC\external\SDL\src\render\metal\SDL_shaders_metal_macos.h">
+      <Filter>src\render\metal</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\ProgrammingProjects\C_Projects\SnakeInC\external\SDL\src\render\metal\SDL_shaders_metal_tvos.h">
+      <Filter>src\render\metal</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\ProgrammingProjects\C_Projects\SnakeInC\external\SDL\src\render\metal\SDL_shaders_metal_tvsimulator.h">
+      <Filter>src\render\metal</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\ProgrammingProjects\C_Projects\SnakeInC\external\SDL\src\render\ngage\SDL_render_ngage_c.h">
+      <Filter>src\render\ngage</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\ProgrammingProjects\C_Projects\SnakeInC\external\SDL\src\render\opengl\SDL_glfuncs.h">
+      <Filter>src\render\opengl</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\ProgrammingProjects\C_Projects\SnakeInC\external\SDL\src\render\opengl\SDL_shaders_gl.h">
+      <Filter>src\render\opengl</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\ProgrammingProjects\C_Projects\SnakeInC\external\SDL\src\render\opengles2\SDL_gles2funcs.h">
+      <Filter>src\render\opengles2</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\ProgrammingProjects\C_Projects\SnakeInC\external\SDL\src\render\opengles2\SDL_shaders_gles2.h">
+      <Filter>src\render\opengles2</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\ProgrammingProjects\C_Projects\SnakeInC\external\SDL\src\render\psp\SDL_render_psp_c.h">
+      <Filter>src\render\psp</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\ProgrammingProjects\C_Projects\SnakeInC\external\SDL\src\render\software\SDL_blendfillrect.h">
+      <Filter>src\render\software</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\ProgrammingProjects\C_Projects\SnakeInC\external\SDL\src\render\software\SDL_blendline.h">
+      <Filter>src\render\software</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\ProgrammingProjects\C_Projects\SnakeInC\external\SDL\src\render\software\SDL_blendpoint.h">
+      <Filter>src\render\software</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\ProgrammingProjects\C_Projects\SnakeInC\external\SDL\src\render\software\SDL_draw.h">
+      <Filter>src\render\software</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\ProgrammingProjects\C_Projects\SnakeInC\external\SDL\src\render\software\SDL_drawline.h">
+      <Filter>src\render\software</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\ProgrammingProjects\C_Projects\SnakeInC\external\SDL\src\render\software\SDL_drawpoint.h">
+      <Filter>src\render\software</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\ProgrammingProjects\C_Projects\SnakeInC\external\SDL\src\render\software\SDL_render_sw_c.h">
+      <Filter>src\render\software</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\ProgrammingProjects\C_Projects\SnakeInC\external\SDL\src\render\software\SDL_triangle.h">
+      <Filter>src\render\software</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\ProgrammingProjects\C_Projects\SnakeInC\external\SDL\src\render\vitagxm\SDL_render_vita_gxm_memory.h">
+      <Filter>src\render\vitagxm</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\ProgrammingProjects\C_Projects\SnakeInC\external\SDL\src\render\vitagxm\SDL_render_vita_gxm_shaders.h">
+      <Filter>src\render\vitagxm</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\ProgrammingProjects\C_Projects\SnakeInC\external\SDL\src\render\vitagxm\SDL_render_vita_gxm_tools.h">
+      <Filter>src\render\vitagxm</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\ProgrammingProjects\C_Projects\SnakeInC\external\SDL\src\render\vitagxm\SDL_render_vita_gxm_types.h">
+      <Filter>src\render\vitagxm</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\ProgrammingProjects\C_Projects\SnakeInC\external\SDL\src\render\vulkan\SDL_shaders_vulkan.h">
+      <Filter>src\render\vulkan</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\ProgrammingProjects\C_Projects\SnakeInC\external\SDL\src\render\vulkan\VULKAN_PixelShader_Advanced.h">
+      <Filter>src\render\vulkan</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\ProgrammingProjects\C_Projects\SnakeInC\external\SDL\src\render\vulkan\VULKAN_PixelShader_Colors.h">
+      <Filter>src\render\vulkan</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\ProgrammingProjects\C_Projects\SnakeInC\external\SDL\src\render\vulkan\VULKAN_PixelShader_Textures.h">
+      <Filter>src\render\vulkan</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\ProgrammingProjects\C_Projects\SnakeInC\external\SDL\src\render\vulkan\VULKAN_VertexShader.h">
+      <Filter>src\render\vulkan</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\ProgrammingProjects\C_Projects\SnakeInC\external\SDL\src\sensor\SDL_sensor_c.h">
+      <Filter>src\sensor</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\ProgrammingProjects\C_Projects\SnakeInC\external\SDL\src\sensor\SDL_syssensor.h">
+      <Filter>src\sensor</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\ProgrammingProjects\C_Projects\SnakeInC\external\SDL\src\stdlib\SDL_casefolding.h">
+      <Filter>src\stdlib</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\ProgrammingProjects\C_Projects\SnakeInC\external\SDL\src\stdlib\SDL_getenv_c.h">
+      <Filter>src\stdlib</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\ProgrammingProjects\C_Projects\SnakeInC\external\SDL\src\stdlib\SDL_sysstdlib.h">
+      <Filter>src\stdlib</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\ProgrammingProjects\C_Projects\SnakeInC\external\SDL\src\stdlib\SDL_vacopy.h">
+      <Filter>src\stdlib</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\ProgrammingProjects\C_Projects\SnakeInC\external\SDL\src\storage\SDL_sysstorage.h">
+      <Filter>src\storage</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\ProgrammingProjects\C_Projects\SnakeInC\external\SDL\src\thread\SDL_systhread.h">
+      <Filter>src\thread</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\ProgrammingProjects\C_Projects\SnakeInC\external\SDL\src\thread\SDL_thread_c.h">
+      <Filter>src\thread</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\ProgrammingProjects\C_Projects\SnakeInC\external\SDL\src\time\SDL_time_c.h">
+      <Filter>src\time</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\ProgrammingProjects\C_Projects\SnakeInC\external\SDL\src\timer\SDL_timer_c.h">
+      <Filter>src\timer</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\ProgrammingProjects\C_Projects\SnakeInC\external\SDL\src\video\SDL_RLEaccel_c.h">
+      <Filter>src\video</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\ProgrammingProjects\C_Projects\SnakeInC\external\SDL\src\video\SDL_blit.h">
+      <Filter>src\video</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\ProgrammingProjects\C_Projects\SnakeInC\external\SDL\src\video\SDL_blit_auto.h">
+      <Filter>src\video</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\ProgrammingProjects\C_Projects\SnakeInC\external\SDL\src\video\SDL_blit_copy.h">
+      <Filter>src\video</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\ProgrammingProjects\C_Projects\SnakeInC\external\SDL\src\video\SDL_blit_slow.h">
+      <Filter>src\video</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\ProgrammingProjects\C_Projects\SnakeInC\external\SDL\src\video\SDL_clipboard_c.h">
+      <Filter>src\video</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\ProgrammingProjects\C_Projects\SnakeInC\external\SDL\src\video\SDL_egl_c.h">
+      <Filter>src\video</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\ProgrammingProjects\C_Projects\SnakeInC\external\SDL\src\video\SDL_pixels_c.h">
+      <Filter>src\video</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\ProgrammingProjects\C_Projects\SnakeInC\external\SDL\src\video\SDL_rect_c.h">
+      <Filter>src\video</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\ProgrammingProjects\C_Projects\SnakeInC\external\SDL\src\video\SDL_rect_impl.h">
+      <Filter>src\video</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\ProgrammingProjects\C_Projects\SnakeInC\external\SDL\src\video\SDL_rotate.h">
+      <Filter>src\video</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\ProgrammingProjects\C_Projects\SnakeInC\external\SDL\src\video\SDL_stb_c.h">
+      <Filter>src\video</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\ProgrammingProjects\C_Projects\SnakeInC\external\SDL\src\video\SDL_surface_c.h">
+      <Filter>src\video</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\ProgrammingProjects\C_Projects\SnakeInC\external\SDL\src\video\SDL_sysvideo.h">
+      <Filter>src\video</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\ProgrammingProjects\C_Projects\SnakeInC\external\SDL\src\video\SDL_video_c.h">
+      <Filter>src\video</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\ProgrammingProjects\C_Projects\SnakeInC\external\SDL\src\video\SDL_video_unsupported.h">
+      <Filter>src\video</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\ProgrammingProjects\C_Projects\SnakeInC\external\SDL\src\video\SDL_vulkan_internal.h">
+      <Filter>src\video</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\ProgrammingProjects\C_Projects\SnakeInC\external\SDL\src\video\SDL_yuv_c.h">
+      <Filter>src\video</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\ProgrammingProjects\C_Projects\SnakeInC\external\SDL\src\video\miniz.h">
+      <Filter>src\video</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\ProgrammingProjects\C_Projects\SnakeInC\external\SDL\src\video\stb_image.h">
+      <Filter>src\video</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\ProgrammingProjects\C_Projects\SnakeInC\external\SDL\src\video\yuv2rgb\yuv_rgb.h">
+      <Filter>src\video\yuv2rgb</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\ProgrammingProjects\C_Projects\SnakeInC\external\SDL\src\video\yuv2rgb\yuv_rgb_common.h">
+      <Filter>src\video\yuv2rgb</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\ProgrammingProjects\C_Projects\SnakeInC\external\SDL\src\video\yuv2rgb\yuv_rgb_internal.h">
+      <Filter>src\video\yuv2rgb</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\ProgrammingProjects\C_Projects\SnakeInC\external\SDL\src\video\yuv2rgb\yuv_rgb_lsx.h">
+      <Filter>src\video\yuv2rgb</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\ProgrammingProjects\C_Projects\SnakeInC\external\SDL\src\video\yuv2rgb\yuv_rgb_lsx_func.h">
+      <Filter>src\video\yuv2rgb</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\ProgrammingProjects\C_Projects\SnakeInC\external\SDL\src\video\yuv2rgb\yuv_rgb_sse.h">
+      <Filter>src\video\yuv2rgb</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\ProgrammingProjects\C_Projects\SnakeInC\external\SDL\src\video\yuv2rgb\yuv_rgb_sse_func.h">
+      <Filter>src\video\yuv2rgb</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\ProgrammingProjects\C_Projects\SnakeInC\external\SDL\src\video\yuv2rgb\yuv_rgb_std.h">
+      <Filter>src\video\yuv2rgb</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\ProgrammingProjects\C_Projects\SnakeInC\external\SDL\src\video\yuv2rgb\yuv_rgb_std_func.h">
+      <Filter>src\video\yuv2rgb</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\ProgrammingProjects\C_Projects\SnakeInC\external\SDL\src\audio\dummy\SDL_dummyaudio.h">
+      <Filter>src\audio\dummy</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\ProgrammingProjects\C_Projects\SnakeInC\external\SDL\src\audio\disk\SDL_diskaudio.h">
+      <Filter>src\audio\disk</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\ProgrammingProjects\C_Projects\SnakeInC\external\SDL\src\joystick\virtual\SDL_virtualjoystick_c.h">
+      <Filter>src\joystick\virtual</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\ProgrammingProjects\C_Projects\SnakeInC\external\SDL\src\video\dummy\SDL_nullevents_c.h">
+      <Filter>src\video\dummy</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\ProgrammingProjects\C_Projects\SnakeInC\external\SDL\src\video\dummy\SDL_nullframebuffer_c.h">
+      <Filter>src\video\dummy</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\ProgrammingProjects\C_Projects\SnakeInC\external\SDL\src\video\dummy\SDL_nullvideo.h">
+      <Filter>src\video\dummy</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\ProgrammingProjects\C_Projects\SnakeInC\external\SDL\src\core\windows\SDL_directx.h">
+      <Filter>src\core\windows</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\ProgrammingProjects\C_Projects\SnakeInC\external\SDL\src\core\windows\SDL_gameinput.h">
+      <Filter>src\core\windows</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\ProgrammingProjects\C_Projects\SnakeInC\external\SDL\src\core\windows\SDL_hid.h">
+      <Filter>src\core\windows</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\ProgrammingProjects\C_Projects\SnakeInC\external\SDL\src\core\windows\SDL_immdevice.h">
+      <Filter>src\core\windows</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\ProgrammingProjects\C_Projects\SnakeInC\external\SDL\src\core\windows\SDL_windows.h">
+      <Filter>src\core\windows</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\ProgrammingProjects\C_Projects\SnakeInC\external\SDL\src\core\windows\SDL_xinput.h">
+      <Filter>src\core\windows</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\ProgrammingProjects\C_Projects\SnakeInC\external\SDL\src\audio\directsound\SDL_directsound.h">
+      <Filter>src\audio\directsound</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\ProgrammingProjects\C_Projects\SnakeInC\external\SDL\src\audio\wasapi\SDL_wasapi.h">
+      <Filter>src\audio\wasapi</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\ProgrammingProjects\C_Projects\SnakeInC\external\SDL\src\video\windows\SDL_msctf.h">
+      <Filter>src\video\windows</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\ProgrammingProjects\C_Projects\SnakeInC\external\SDL\src\video\windows\SDL_windowsclipboard.h">
+      <Filter>src\video\windows</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\ProgrammingProjects\C_Projects\SnakeInC\external\SDL\src\video\windows\SDL_windowsevents.h">
+      <Filter>src\video\windows</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\ProgrammingProjects\C_Projects\SnakeInC\external\SDL\src\video\windows\SDL_windowsframebuffer.h">
+      <Filter>src\video\windows</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\ProgrammingProjects\C_Projects\SnakeInC\external\SDL\src\video\windows\SDL_windowsgameinput.h">
+      <Filter>src\video\windows</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\ProgrammingProjects\C_Projects\SnakeInC\external\SDL\src\video\windows\SDL_windowskeyboard.h">
+      <Filter>src\video\windows</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\ProgrammingProjects\C_Projects\SnakeInC\external\SDL\src\video\windows\SDL_windowsmessagebox.h">
+      <Filter>src\video\windows</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\ProgrammingProjects\C_Projects\SnakeInC\external\SDL\src\video\windows\SDL_windowsmodes.h">
+      <Filter>src\video\windows</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\ProgrammingProjects\C_Projects\SnakeInC\external\SDL\src\video\windows\SDL_windowsmouse.h">
+      <Filter>src\video\windows</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\ProgrammingProjects\C_Projects\SnakeInC\external\SDL\src\video\windows\SDL_windowsopengl.h">
+      <Filter>src\video\windows</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\ProgrammingProjects\C_Projects\SnakeInC\external\SDL\src\video\windows\SDL_windowsopengles.h">
+      <Filter>src\video\windows</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\ProgrammingProjects\C_Projects\SnakeInC\external\SDL\src\video\windows\SDL_windowsrawinput.h">
+      <Filter>src\video\windows</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\ProgrammingProjects\C_Projects\SnakeInC\external\SDL\src\video\windows\SDL_windowsshape.h">
+      <Filter>src\video\windows</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\ProgrammingProjects\C_Projects\SnakeInC\external\SDL\src\video\windows\SDL_windowsvideo.h">
+      <Filter>src\video\windows</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\ProgrammingProjects\C_Projects\SnakeInC\external\SDL\src\video\windows\SDL_windowsvulkan.h">
+      <Filter>src\video\windows</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\ProgrammingProjects\C_Projects\SnakeInC\external\SDL\src\video\windows\SDL_windowswindow.h">
+      <Filter>src\video\windows</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\ProgrammingProjects\C_Projects\SnakeInC\external\SDL\src\video\windows\wmmsg.h">
+      <Filter>src\video\windows</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\ProgrammingProjects\C_Projects\SnakeInC\external\SDL\src\thread\generic\SDL_syscond_c.h">
+      <Filter>src\thread\generic</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\ProgrammingProjects\C_Projects\SnakeInC\external\SDL\src\thread\generic\SDL_sysrwlock_c.h">
+      <Filter>src\thread\generic</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\ProgrammingProjects\C_Projects\SnakeInC\external\SDL\src\sensor\windows\SDL_windowssensor.h">
+      <Filter>src\sensor\windows</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\ProgrammingProjects\C_Projects\SnakeInC\external\SDL\src\storage\steam\SDL_steamstorage_proc.h">
+      <Filter>src\storage\steam</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\ProgrammingProjects\C_Projects\SnakeInC\external\SDL\src\joystick\windows\SDL_dinputjoystick_c.h">
+      <Filter>src\joystick\windows</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\ProgrammingProjects\C_Projects\SnakeInC\external\SDL\src\joystick\windows\SDL_rawinputjoystick_c.h">
+      <Filter>src\joystick\windows</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\ProgrammingProjects\C_Projects\SnakeInC\external\SDL\src\joystick\windows\SDL_windowsjoystick_c.h">
+      <Filter>src\joystick\windows</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\ProgrammingProjects\C_Projects\SnakeInC\external\SDL\src\joystick\windows\SDL_xinputjoystick_c.h">
+      <Filter>src\joystick\windows</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\ProgrammingProjects\C_Projects\SnakeInC\external\SDL\src\haptic\windows\SDL_dinputhaptic_c.h">
+      <Filter>src\haptic\windows</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\ProgrammingProjects\C_Projects\SnakeInC\external\SDL\src\haptic\windows\SDL_windowshaptic_c.h">
+      <Filter>src\haptic\windows</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\ProgrammingProjects\C_Projects\SnakeInC\external\SDL\src\video\offscreen\SDL_offscreenevents_c.h">
+      <Filter>src\video\offscreen</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\ProgrammingProjects\C_Projects\SnakeInC\external\SDL\src\video\offscreen\SDL_offscreenframebuffer_c.h">
+      <Filter>src\video\offscreen</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\ProgrammingProjects\C_Projects\SnakeInC\external\SDL\src\video\offscreen\SDL_offscreenopengles.h">
+      <Filter>src\video\offscreen</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\ProgrammingProjects\C_Projects\SnakeInC\external\SDL\src\video\offscreen\SDL_offscreenvideo.h">
+      <Filter>src\video\offscreen</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\ProgrammingProjects\C_Projects\SnakeInC\external\SDL\src\video\offscreen\SDL_offscreenvulkan.h">
+      <Filter>src\video\offscreen</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\ProgrammingProjects\C_Projects\SnakeInC\external\SDL\src\video\offscreen\SDL_offscreenwindow.h">
+      <Filter>src\video\offscreen</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\ProgrammingProjects\C_Projects\SnakeInC\external\SDL\src\gpu\d3d12\D3D12_Blit.h">
+      <Filter>src\gpu\d3d12</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\ProgrammingProjects\C_Projects\SnakeInC\external\SDL\src\gpu\vulkan\SDL_gpu_vulkan_vkfuncs.h">
+      <Filter>src\gpu\vulkan</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\ProgrammingProjects\C_Projects\SnakeInC\external\SDL\include\SDL3\SDL.h">
+      <Filter>include\SDL3</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\ProgrammingProjects\C_Projects\SnakeInC\external\SDL\include\SDL3\SDL_assert.h">
+      <Filter>include\SDL3</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\ProgrammingProjects\C_Projects\SnakeInC\external\SDL\include\SDL3\SDL_asyncio.h">
+      <Filter>include\SDL3</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\ProgrammingProjects\C_Projects\SnakeInC\external\SDL\include\SDL3\SDL_atomic.h">
+      <Filter>include\SDL3</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\ProgrammingProjects\C_Projects\SnakeInC\external\SDL\include\SDL3\SDL_audio.h">
+      <Filter>include\SDL3</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\ProgrammingProjects\C_Projects\SnakeInC\external\SDL\include\SDL3\SDL_begin_code.h">
+      <Filter>include\SDL3</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\ProgrammingProjects\C_Projects\SnakeInC\external\SDL\include\SDL3\SDL_bits.h">
+      <Filter>include\SDL3</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\ProgrammingProjects\C_Projects\SnakeInC\external\SDL\include\SDL3\SDL_blendmode.h">
+      <Filter>include\SDL3</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\ProgrammingProjects\C_Projects\SnakeInC\external\SDL\include\SDL3\SDL_camera.h">
+      <Filter>include\SDL3</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\ProgrammingProjects\C_Projects\SnakeInC\external\SDL\include\SDL3\SDL_clipboard.h">
+      <Filter>include\SDL3</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\ProgrammingProjects\C_Projects\SnakeInC\external\SDL\include\SDL3\SDL_close_code.h">
+      <Filter>include\SDL3</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\ProgrammingProjects\C_Projects\SnakeInC\external\SDL\include\SDL3\SDL_copying.h">
+      <Filter>include\SDL3</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\ProgrammingProjects\C_Projects\SnakeInC\external\SDL\include\SDL3\SDL_cpuinfo.h">
+      <Filter>include\SDL3</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\ProgrammingProjects\C_Projects\SnakeInC\external\SDL\include\SDL3\SDL_dialog.h">
+      <Filter>include\SDL3</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\ProgrammingProjects\C_Projects\SnakeInC\external\SDL\include\SDL3\SDL_dlopennote.h">
+      <Filter>include\SDL3</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\ProgrammingProjects\C_Projects\SnakeInC\external\SDL\include\SDL3\SDL_egl.h">
+      <Filter>include\SDL3</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\ProgrammingProjects\C_Projects\SnakeInC\external\SDL\include\SDL3\SDL_endian.h">
+      <Filter>include\SDL3</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\ProgrammingProjects\C_Projects\SnakeInC\external\SDL\include\SDL3\SDL_error.h">
+      <Filter>include\SDL3</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\ProgrammingProjects\C_Projects\SnakeInC\external\SDL\include\SDL3\SDL_events.h">
+      <Filter>include\SDL3</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\ProgrammingProjects\C_Projects\SnakeInC\external\SDL\include\SDL3\SDL_filesystem.h">
+      <Filter>include\SDL3</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\ProgrammingProjects\C_Projects\SnakeInC\external\SDL\include\SDL3\SDL_gamepad.h">
+      <Filter>include\SDL3</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\ProgrammingProjects\C_Projects\SnakeInC\external\SDL\include\SDL3\SDL_gpu.h">
+      <Filter>include\SDL3</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\ProgrammingProjects\C_Projects\SnakeInC\external\SDL\include\SDL3\SDL_guid.h">
+      <Filter>include\SDL3</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\ProgrammingProjects\C_Projects\SnakeInC\external\SDL\include\SDL3\SDL_haptic.h">
+      <Filter>include\SDL3</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\ProgrammingProjects\C_Projects\SnakeInC\external\SDL\include\SDL3\SDL_hidapi.h">
+      <Filter>include\SDL3</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\ProgrammingProjects\C_Projects\SnakeInC\external\SDL\include\SDL3\SDL_hints.h">
+      <Filter>include\SDL3</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\ProgrammingProjects\C_Projects\SnakeInC\external\SDL\include\SDL3\SDL_init.h">
+      <Filter>include\SDL3</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\ProgrammingProjects\C_Projects\SnakeInC\external\SDL\include\SDL3\SDL_intrin.h">
+      <Filter>include\SDL3</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\ProgrammingProjects\C_Projects\SnakeInC\external\SDL\include\SDL3\SDL_iostream.h">
+      <Filter>include\SDL3</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\ProgrammingProjects\C_Projects\SnakeInC\external\SDL\include\SDL3\SDL_joystick.h">
+      <Filter>include\SDL3</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\ProgrammingProjects\C_Projects\SnakeInC\external\SDL\include\SDL3\SDL_keyboard.h">
+      <Filter>include\SDL3</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\ProgrammingProjects\C_Projects\SnakeInC\external\SDL\include\SDL3\SDL_keycode.h">
+      <Filter>include\SDL3</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\ProgrammingProjects\C_Projects\SnakeInC\external\SDL\include\SDL3\SDL_loadso.h">
+      <Filter>include\SDL3</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\ProgrammingProjects\C_Projects\SnakeInC\external\SDL\include\SDL3\SDL_locale.h">
+      <Filter>include\SDL3</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\ProgrammingProjects\C_Projects\SnakeInC\external\SDL\include\SDL3\SDL_log.h">
+      <Filter>include\SDL3</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\ProgrammingProjects\C_Projects\SnakeInC\external\SDL\include\SDL3\SDL_main.h">
+      <Filter>include\SDL3</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\ProgrammingProjects\C_Projects\SnakeInC\external\SDL\include\SDL3\SDL_main_impl.h">
+      <Filter>include\SDL3</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\ProgrammingProjects\C_Projects\SnakeInC\external\SDL\include\SDL3\SDL_messagebox.h">
+      <Filter>include\SDL3</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\ProgrammingProjects\C_Projects\SnakeInC\external\SDL\include\SDL3\SDL_metal.h">
+      <Filter>include\SDL3</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\ProgrammingProjects\C_Projects\SnakeInC\external\SDL\include\SDL3\SDL_misc.h">
+      <Filter>include\SDL3</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\ProgrammingProjects\C_Projects\SnakeInC\external\SDL\include\SDL3\SDL_mouse.h">
+      <Filter>include\SDL3</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\ProgrammingProjects\C_Projects\SnakeInC\external\SDL\include\SDL3\SDL_mutex.h">
+      <Filter>include\SDL3</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\ProgrammingProjects\C_Projects\SnakeInC\external\SDL\include\SDL3\SDL_oldnames.h">
+      <Filter>include\SDL3</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\ProgrammingProjects\C_Projects\SnakeInC\external\SDL\include\SDL3\SDL_opengl.h">
+      <Filter>include\SDL3</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\ProgrammingProjects\C_Projects\SnakeInC\external\SDL\include\SDL3\SDL_opengl_glext.h">
+      <Filter>include\SDL3</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\ProgrammingProjects\C_Projects\SnakeInC\external\SDL\include\SDL3\SDL_opengles.h">
+      <Filter>include\SDL3</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\ProgrammingProjects\C_Projects\SnakeInC\external\SDL\include\SDL3\SDL_opengles2.h">
+      <Filter>include\SDL3</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\ProgrammingProjects\C_Projects\SnakeInC\external\SDL\include\SDL3\SDL_opengles2_gl2.h">
+      <Filter>include\SDL3</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\ProgrammingProjects\C_Projects\SnakeInC\external\SDL\include\SDL3\SDL_opengles2_gl2ext.h">
+      <Filter>include\SDL3</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\ProgrammingProjects\C_Projects\SnakeInC\external\SDL\include\SDL3\SDL_opengles2_gl2platform.h">
+      <Filter>include\SDL3</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\ProgrammingProjects\C_Projects\SnakeInC\external\SDL\include\SDL3\SDL_opengles2_khrplatform.h">
+      <Filter>include\SDL3</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\ProgrammingProjects\C_Projects\SnakeInC\external\SDL\include\SDL3\SDL_openxr.h">
+      <Filter>include\SDL3</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\ProgrammingProjects\C_Projects\SnakeInC\external\SDL\include\SDL3\SDL_pen.h">
+      <Filter>include\SDL3</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\ProgrammingProjects\C_Projects\SnakeInC\external\SDL\include\SDL3\SDL_pixels.h">
+      <Filter>include\SDL3</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\ProgrammingProjects\C_Projects\SnakeInC\external\SDL\include\SDL3\SDL_platform.h">
+      <Filter>include\SDL3</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\ProgrammingProjects\C_Projects\SnakeInC\external\SDL\include\SDL3\SDL_platform_defines.h">
+      <Filter>include\SDL3</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\ProgrammingProjects\C_Projects\SnakeInC\external\SDL\include\SDL3\SDL_power.h">
+      <Filter>include\SDL3</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\ProgrammingProjects\C_Projects\SnakeInC\external\SDL\include\SDL3\SDL_process.h">
+      <Filter>include\SDL3</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\ProgrammingProjects\C_Projects\SnakeInC\external\SDL\include\SDL3\SDL_properties.h">
+      <Filter>include\SDL3</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\ProgrammingProjects\C_Projects\SnakeInC\external\SDL\include\SDL3\SDL_rect.h">
+      <Filter>include\SDL3</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\ProgrammingProjects\C_Projects\SnakeInC\external\SDL\include\SDL3\SDL_render.h">
+      <Filter>include\SDL3</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\ProgrammingProjects\C_Projects\SnakeInC\external\SDL\include\SDL3\SDL_scancode.h">
+      <Filter>include\SDL3</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\ProgrammingProjects\C_Projects\SnakeInC\external\SDL\include\SDL3\SDL_sensor.h">
+      <Filter>include\SDL3</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\ProgrammingProjects\C_Projects\SnakeInC\external\SDL\include\SDL3\SDL_stdinc.h">
+      <Filter>include\SDL3</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\ProgrammingProjects\C_Projects\SnakeInC\external\SDL\include\SDL3\SDL_storage.h">
+      <Filter>include\SDL3</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\ProgrammingProjects\C_Projects\SnakeInC\external\SDL\include\SDL3\SDL_surface.h">
+      <Filter>include\SDL3</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\ProgrammingProjects\C_Projects\SnakeInC\external\SDL\include\SDL3\SDL_system.h">
+      <Filter>include\SDL3</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\ProgrammingProjects\C_Projects\SnakeInC\external\SDL\include\SDL3\SDL_thread.h">
+      <Filter>include\SDL3</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\ProgrammingProjects\C_Projects\SnakeInC\external\SDL\include\SDL3\SDL_time.h">
+      <Filter>include\SDL3</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\ProgrammingProjects\C_Projects\SnakeInC\external\SDL\include\SDL3\SDL_timer.h">
+      <Filter>include\SDL3</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\ProgrammingProjects\C_Projects\SnakeInC\external\SDL\include\SDL3\SDL_touch.h">
+      <Filter>include\SDL3</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\ProgrammingProjects\C_Projects\SnakeInC\external\SDL\include\SDL3\SDL_tray.h">
+      <Filter>include\SDL3</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\ProgrammingProjects\C_Projects\SnakeInC\external\SDL\include\SDL3\SDL_version.h">
+      <Filter>include\SDL3</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\ProgrammingProjects\C_Projects\SnakeInC\external\SDL\include\SDL3\SDL_video.h">
+      <Filter>include\SDL3</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\ProgrammingProjects\C_Projects\SnakeInC\external\SDL\include\SDL3\SDL_vulkan.h">
+      <Filter>include\SDL3</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\ProgrammingProjects\C_Projects\SnakeInC\build\external\SDL\include-revision\SDL3\SDL_revision.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\ProgrammingProjects\C_Projects\SnakeInC\build\external\SDL\CMakeFiles\SDL3-shared.dir\Debug\cmake_pch.h">
+      <Filter>Precompile Header File</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\ProgrammingProjects\C_Projects\SnakeInC\build\external\SDL\CMakeFiles\SDL3-shared.dir\Debug\cmake_pch.hxx">
+      <Filter>Precompile Header File</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\ProgrammingProjects\C_Projects\SnakeInC\build\external\SDL\CMakeFiles\SDL3-shared.dir\Release\cmake_pch.h">
+      <Filter>Precompile Header File</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\ProgrammingProjects\C_Projects\SnakeInC\build\external\SDL\CMakeFiles\SDL3-shared.dir\Release\cmake_pch.hxx">
+      <Filter>Precompile Header File</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\ProgrammingProjects\C_Projects\SnakeInC\build\external\SDL\CMakeFiles\SDL3-shared.dir\MinSizeRel\cmake_pch.h">
+      <Filter>Precompile Header File</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\ProgrammingProjects\C_Projects\SnakeInC\build\external\SDL\CMakeFiles\SDL3-shared.dir\MinSizeRel\cmake_pch.hxx">
+      <Filter>Precompile Header File</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\ProgrammingProjects\C_Projects\SnakeInC\build\external\SDL\CMakeFiles\SDL3-shared.dir\RelWithDebInfo\cmake_pch.h">
+      <Filter>Precompile Header File</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\ProgrammingProjects\C_Projects\SnakeInC\build\external\SDL\CMakeFiles\SDL3-shared.dir\RelWithDebInfo\cmake_pch.hxx">
+      <Filter>Precompile Header File</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <CustomBuild Include="C:\ProgrammingProjects\C_Projects\SnakeInC\external\SDL\CMakeLists.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="C:\ProgrammingProjects\C_Projects\SnakeInC\external\SDL\src\core\windows\version.rc">
+      <Filter>src\core\windows</Filter>
+    </ResourceCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{2CA05E31-AC8F-3559-A8AA-A6E09D9EB47B}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Precompile Header File">
+      <UniqueIdentifier>{4639BE34-22A0-3965-9AEB-050D7E200124}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{1FFDD863-85F9-3967-AE92-916C781E1BFF}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="include">
+      <UniqueIdentifier>{8120C7F2-4167-3492-B2E8-E4689469B5EC}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="include\SDL3">
+      <UniqueIdentifier>{84B41034-288C-330F-A1E8-6254DC5C87A3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src">
+      <UniqueIdentifier>{EC572D95-3A81-33A5-8C29-16969EA98B69}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\atomic">
+      <UniqueIdentifier>{C3D679D9-A3B9-37E3-B936-3B9F6885494E}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\audio">
+      <UniqueIdentifier>{0616A91A-5376-300E-BBAE-2E9D7C999CA2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\audio\directsound">
+      <UniqueIdentifier>{DCA70A11-1B0A-37B2-80C6-23984B0E466F}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\audio\disk">
+      <UniqueIdentifier>{236668FA-C1DB-3AD4-A9C6-335F5834DE06}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\audio\dummy">
+      <UniqueIdentifier>{FB2C3055-5D49-3E86-A5B7-0B3874FFCFBD}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\audio\wasapi">
+      <UniqueIdentifier>{5F34CC72-4836-3555-A670-7E73F94334A0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\camera">
+      <UniqueIdentifier>{653CF746-C548-37AB-A264-595C922B3792}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\camera\dummy">
+      <UniqueIdentifier>{9EC1601B-FD87-3D74-B501-FAB936DD6C72}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\camera\mediafoundation">
+      <UniqueIdentifier>{16113EB3-9CBF-3947-B443-71DA49CD8C4F}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\core">
+      <UniqueIdentifier>{2DCE7BC2-453F-34BC-8722-2B06787307C8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\core\windows">
+      <UniqueIdentifier>{876978F3-5673-3AC0-9A27-C69506CC55C0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\cpuinfo">
+      <UniqueIdentifier>{9549D3ED-615D-3661-8592-41AAE39C94EF}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\dialog">
+      <UniqueIdentifier>{C922B5CB-0052-32BE-A4AD-83F48E0A1366}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\dialog\windows">
+      <UniqueIdentifier>{BE2FB561-2DC7-3635-B918-5D20201523B3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\dynapi">
+      <UniqueIdentifier>{23A5C911-1E12-3738-8668-3144B751B81D}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\events">
+      <UniqueIdentifier>{A6266A78-B850-393A-A68B-3F3C1176CC46}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\filesystem">
+      <UniqueIdentifier>{7783ED28-42C5-37AD-9C4E-D442D18CDDD7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\filesystem\windows">
+      <UniqueIdentifier>{6AF61D2D-9A28-3F02-9FAF-9B4B887211D8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\gpu">
+      <UniqueIdentifier>{C36C9C35-D7F1-335A-A0B2-269DE7BAF7E0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\gpu\d3d12">
+      <UniqueIdentifier>{B212BA9A-129A-33E4-B576-9F3FE7C4900A}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\gpu\vulkan">
+      <UniqueIdentifier>{4F86DB76-DD07-32B8-BEC9-140EBB9EDAA4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\gpu\xr">
+      <UniqueIdentifier>{CD42B5AF-1C0F-329F-915D-58361AE2C017}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\haptic">
+      <UniqueIdentifier>{2A7DA59B-8CF4-3C6E-81D1-9A4FAB940AB0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\haptic\hidapi">
+      <UniqueIdentifier>{3D103B51-A940-3301-87DB-C94085A34586}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\haptic\windows">
+      <UniqueIdentifier>{FDD55FE2-3049-3197-827D-007601CC0432}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\hidapi">
+      <UniqueIdentifier>{28C22CCD-D764-31F3-9FC5-9276CA90D3F8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\io">
+      <UniqueIdentifier>{ED829787-C0BF-3EA0-B60C-96354335EFC5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\io\generic">
+      <UniqueIdentifier>{794C2CA2-81C2-3F8E-9879-5CCE4B2C96CF}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\io\windows">
+      <UniqueIdentifier>{7B327AC6-D046-3FF2-B243-D56CDCA8058B}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\joystick">
+      <UniqueIdentifier>{9CC35A70-7AC9-3012-BAA5-B503751731E6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\joystick\hidapi">
+      <UniqueIdentifier>{0AC16D9D-9F06-3E2D-B692-9C7824D09C0B}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\joystick\virtual">
+      <UniqueIdentifier>{D6D44571-6A95-37E5-BDD1-2E1E4D7FBCD8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\joystick\windows">
+      <UniqueIdentifier>{85BD8F50-78E7-3984-8EC5-CDFBE800AC50}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\loadso">
+      <UniqueIdentifier>{9E3E655E-A02C-30EC-993E-E8CC4508ECDB}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\loadso\windows">
+      <UniqueIdentifier>{26FEA107-A4FB-3D5A-8698-372127AC377E}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\locale">
+      <UniqueIdentifier>{9AA18764-7D61-37B9-9ABD-936CA8CF5DEB}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\locale\windows">
+      <UniqueIdentifier>{61B2D3FA-7A16-310F-9DF0-BAA263A2E6C3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\main">
+      <UniqueIdentifier>{597A9727-212C-32A5-869B-9F36431E3571}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\main\generic">
+      <UniqueIdentifier>{51CAF23A-0AAB-3F52-820D-81542CBE716F}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\main\windows">
+      <UniqueIdentifier>{D6DC5938-5AEF-3E26-9220-1BD1745B3BA7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\misc">
+      <UniqueIdentifier>{C75C4EA2-8AC3-353B-9ACA-313CE0BC3296}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\misc\windows">
+      <UniqueIdentifier>{573CD6B9-1D43-3DCC-8100-C2D017DD5946}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\power">
+      <UniqueIdentifier>{0D18DDC8-F52F-3721-8AAB-1DF51EBF252B}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\power\windows">
+      <UniqueIdentifier>{9DF4650C-F132-3694-A3A2-9C59C5BCE3EE}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\process">
+      <UniqueIdentifier>{92BF7574-7ABC-3584-B610-9261A0678250}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\process\windows">
+      <UniqueIdentifier>{1B6011CA-2405-349E-8C67-92A4B25AE351}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\render">
+      <UniqueIdentifier>{93578353-0186-3EE2-9328-AF4E514B09F0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\render\direct3d">
+      <UniqueIdentifier>{7863A6C4-CF59-3A3C-B6BE-F76CED13399B}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\render\direct3d11">
+      <UniqueIdentifier>{89D2A15D-47A5-37C9-9296-76D8A55AB230}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\render\direct3d12">
+      <UniqueIdentifier>{D6F5B5B8-6166-3E62-8E3D-DE80A2FE984F}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\render\gpu">
+      <UniqueIdentifier>{6FA4E4D8-78BC-37B0-928E-55C28F9FAB09}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\render\metal">
+      <UniqueIdentifier>{3FF0A94F-6443-36EB-B5C3-D5B8E320111C}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\render\ngage">
+      <UniqueIdentifier>{3B909E4B-9306-3C9B-A922-DD5BF0465F51}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\render\opengl">
+      <UniqueIdentifier>{A3D3D0DA-5822-3678-9684-BFD3ACBE57DC}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\render\opengles2">
+      <UniqueIdentifier>{D255F4CE-2812-3873-AAB6-A2F2F6FC9652}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\render\ps2">
+      <UniqueIdentifier>{43579815-6E25-3D69-8BBB-F762FC903FA0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\render\psp">
+      <UniqueIdentifier>{B5AE6316-A1DB-311A-9CA4-81354F668F1F}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\render\software">
+      <UniqueIdentifier>{333BC8B1-AFAF-3D5C-8B2D-780808CD661E}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\render\vitagxm">
+      <UniqueIdentifier>{A1D73ACF-E24B-3943-9AB1-6873865D331E}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\render\vulkan">
+      <UniqueIdentifier>{A28D435A-5B1B-30E0-97CB-A5A60A1C05DD}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\sensor">
+      <UniqueIdentifier>{B0B1C380-8D53-31DE-BC32-9D7092BECD1E}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\sensor\windows">
+      <UniqueIdentifier>{CE8ACA34-0EAF-3D71-8AAE-A3CCB2429812}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\stdlib">
+      <UniqueIdentifier>{84475008-D799-35C4-83F6-DF3D223A1005}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\storage">
+      <UniqueIdentifier>{584BED04-3FB4-3896-861E-9C4DA649ED4A}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\storage\generic">
+      <UniqueIdentifier>{DC7F5730-DDA6-3C9C-9C41-8A67B2AE3FEC}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\storage\steam">
+      <UniqueIdentifier>{E056D515-1369-3756-9A1A-5C2FD13127A9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\thread">
+      <UniqueIdentifier>{7B0EBC7F-DB99-344E-8E20-0788B70AC1E4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\thread\generic">
+      <UniqueIdentifier>{1B04A3B8-C4E0-351D-A33F-D5FCA005B29F}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\thread\windows">
+      <UniqueIdentifier>{8C72ACB9-6031-3DB6-AD8E-F435CC1E1E45}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\time">
+      <UniqueIdentifier>{60B2F6FD-9352-3F33-AA52-BCB6221B4D46}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\time\windows">
+      <UniqueIdentifier>{C3619E27-0A77-3AE0-BD96-9AFA8D28B06D}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\timer">
+      <UniqueIdentifier>{417CF346-1B8E-387C-BBAB-9C98F3AB3443}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\timer\windows">
+      <UniqueIdentifier>{E97A49E2-8300-30AB-B6E3-45802ABA9C9C}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\tray">
+      <UniqueIdentifier>{B6646B2D-C08B-3E2F-95B5-452BB6288695}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\tray\windows">
+      <UniqueIdentifier>{9216D39D-BA14-3213-BF10-1919ED93AC99}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\video">
+      <UniqueIdentifier>{A33F0E55-1C9D-3D8A-9B52-0E43D04377FF}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\video\dummy">
+      <UniqueIdentifier>{79C3E18E-095F-30CC-A545-803F8E456BED}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\video\offscreen">
+      <UniqueIdentifier>{FAA66332-D096-37F0-8D12-DF0D2540C2C9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\video\windows">
+      <UniqueIdentifier>{FA89D36E-11D5-3173-882E-4997233D6B2E}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\video\yuv2rgb">
+      <UniqueIdentifier>{25160516-02BC-31C5-AB69-0674BFA1D6D0}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>

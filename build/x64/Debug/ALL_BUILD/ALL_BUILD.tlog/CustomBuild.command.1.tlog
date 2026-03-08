@@ -1,0 +1,10 @@
+^C:\PROGRAMMINGPROJECTS\C_PROJECTS\SNAKEINC\CMAKELISTS.TXT
+setlocal
+"C:\Program Files\CMake\bin\cmake.exe" -SC:/ProgrammingProjects/C_Projects/SnakeInC -BC:/ProgrammingProjects/C_Projects/SnakeInC/build --check-stamp-file C:/ProgrammingProjects/C_Projects/SnakeInC/build/CMakeFiles/generate.stamp
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal & call :cmErrorLevel %errorlevel% & goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd

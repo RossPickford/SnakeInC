@@ -1,0 +1,7 @@
+C:/ProgrammingProjects/C_Projects/SnakeInC/build/CMakeFiles/hello.dir
+C:/ProgrammingProjects/C_Projects/SnakeInC/build/CMakeFiles/ALL_BUILD.dir
+C:/ProgrammingProjects/C_Projects/SnakeInC/build/CMakeFiles/ZERO_CHECK.dir
+C:/ProgrammingProjects/C_Projects/SnakeInC/build/external/SDL/CMakeFiles/SDL3-shared.dir
+C:/ProgrammingProjects/C_Projects/SnakeInC/build/external/SDL/CMakeFiles/SDL3_test.dir
+C:/ProgrammingProjects/C_Projects/SnakeInC/build/external/SDL/CMakeFiles/SDL_uclibc.dir
+C:/ProgrammingProjects/C_Projects/SnakeInC/build/external/SDL/CMakeFiles/ALL_BUILD.dir
