@@ -40,7 +40,7 @@ SDL_AppResult SDL_AppEvent(void *appstate, SDL_Event *event)
 /* This function runs once per frame, and is the heart of the program. */
 SDL_AppResult SDL_AppIterate(void *appstate)
 {
-    const char *message = "Hello pwincess we need to go home!";
+    const char *message = "Hello World!";
     int w = 0, h = 0;
     float x, y;
     const float scale = 4.0f;
@@ -65,4 +65,3 @@ SDL_AppResult SDL_AppIterate(void *appstate)
 void SDL_AppQuit(void *appstate, SDL_AppResult result)
 {
 }
-

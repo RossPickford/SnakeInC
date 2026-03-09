@@ -1,8 +1,0 @@
-{
-	"InstallScripts" : 
-	[
-		"C:/ProgrammingProjects/C_Projects/SnakeInC/build/cmake_install.cmake",
-		"C:/ProgrammingProjects/C_Projects/SnakeInC/build/external/SDL/cmake_install.cmake"
-	],
-	"Parallel" : false
-}
