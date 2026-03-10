@@ -111,47 +111,6 @@ SDL_AppResult SDL_AppIterate(void *appstate)
     SDL_SetRenderDrawColor(renderer, 0, 0, 255, SDL_ALPHA_OPAQUE);
     SDL_RenderFillRect(renderer, &rect);
 
-    /* Rectangles are comprised of set of X and Y coordinates, plus width and
-       height. (0, 0) is the top left of the window, and larger numbers go
-       down and to the right. This isn't how geometry works, but this is
-       pretty standard in 2D graphics. */
-
-    // /* Let's draw a single rectangle (square, really). */
-    // rect[0].x = rect[0].y = 100;
-    // rect[0].w = rect[0].h = 100 + (100 * scale);
-    // SDL_SetRenderDrawColor(renderer, 255, 0, 0, SDL_ALPHA_OPAQUE);  /* red, full alpha */
-    // SDL_RenderRect(renderer, &rect[0]);
-
-    // /* Now let's draw several rectangles with one function call. */
-    // for (i = 0; i < 3; i++) {
-    //     const float size = (i+1) * 50.0f;
-    //     rect[i].w = rect[i].h = size + (size * scale);
-    //     rect[i].x = (WINDOW_WIDTH - rect[i].w) / 2;  /* center it. */
-    //     rect[i].y = (WINDOW_HEIGHT - rect[i].h) / 2;  /* center it. */
-    // }
-    // SDL_SetRenderDrawColor(renderer, 0, 255, 0, SDL_ALPHA_OPAQUE);  /* green, full alpha */
-    // SDL_RenderRects(renderer, rect, 3);  /* draw three rectangles at once */
-
-    // /* those were rectangle _outlines_, really. You can also draw _filled_ rectangles! */
-    // rect[0].x = 400;
-    // rect[0].y = 50;
-    // rect[0].w = 100 + (100 * scale);
-    // rect[0].h = 50 + (50 * scale);
-    // SDL_SetRenderDrawColor(renderer, 0, 0, 255, SDL_ALPHA_OPAQUE);  /* blue, full alpha */
-    // SDL_RenderFillRect(renderer, &rect[0]);
-
-    // /* ...and also fill a bunch of rectangles at once... */
-    // for (i = 0; i < SDL_arraysize(rect); i++) {
-    //     const float w = (float) (WINDOW_WIDTH / SDL_arraysize(rect));
-    //     const float h = i * 8.0f;
-    //     rect[i].x = i * w;
-    //     rect[i].y = WINDOW_HEIGHT - h;
-    //     rect[i].w = w;
-    //     rect[i].h = h;
-    // }
-    // SDL_SetRenderDrawColor(renderer, 255, 255, 255, SDL_ALPHA_OPAQUE);  /* white, full alpha */
-    // SDL_RenderFillRects(renderer, rect, SDL_arraysize(rect));
-
     SDL_RenderPresent(renderer); /* put it all on the screen! */
 
     previousTick = now;
