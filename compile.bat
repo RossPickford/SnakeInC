@@ -1,0 +1,1 @@
+gcc rect.c -o rect.exe -I "./external/SDL/include" -L "./external/SDL/lib" -lSDL3
