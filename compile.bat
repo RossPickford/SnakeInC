@@ -1,1 +1,1 @@
-gcc rect.c -o rect.exe -I "./external/SDL/include" -L "./external/SDL/lib" -lSDL3
+gcc SnakeGame.c -o game.exe -I "./external/SDL/include" -L "./external/SDL/lib" -lSDL3
