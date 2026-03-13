@@ -2,20 +2,24 @@
 #include <SDL3/SDL.h>
 #include <SDL3/SDL_main.h>
 #include <stdlib.h>
-// #include <math.h>
+#include <math.h>
 
 static SDL_Window *window = NULL;
 static SDL_Renderer *renderer = NULL;
+
 static SDL_FRect wallBackground;
 static SDL_FRect mainBackground;
+static SDL_FRect* snake;
 
 #define WINDOW_WIDTH 640
 #define WINDOW_HEIGHT 640
 #define GRID_WIDTH 20
 
+#define GREY 30, 30, 30
+
 void setCoords(SDL_FRect *rect, Uint64 tickDelta);
 void renderWalls();
-void renderSnake();
+void drawSnake();
 void renderFood();
 void collisionCheck();
 
@@ -41,6 +45,8 @@ SDL_AppResult SDL_AppInit(void **appstate, int argc, char *argv[])
     mainBackground.h = WINDOW_HEIGHT - (2 * GRID_WIDTH);
     mainBackground.w = WINDOW_WIDTH - (2 * GRID_WIDTH);
     mainBackground.x = mainBackground.y = GRID_WIDTH;
+    
+    snake = (SDL_FRect*)malloc(sizeof(SDL_FRect) * (powf((WINDOW_HEIGHT - (GRID_WIDTH * 2) / (float) GRID_WIDTH), 2)));
 
     return SDL_APP_CONTINUE;
 }
@@ -59,6 +65,7 @@ SDL_AppResult SDL_AppIterate(void *appstate)
     SDL_RenderClear(renderer);
 
     renderWalls();
+    // drawSnake();
 
     SDL_RenderPresent(renderer);
 
@@ -69,6 +76,7 @@ SDL_AppResult SDL_AppIterate(void *appstate)
 
 void SDL_AppQuit(void *appstate, SDL_AppResult result)
 {
+    free(snake);
 }
 
 void setCoords(SDL_FRect *rect, Uint64 tickDelta)
@@ -77,9 +85,9 @@ void setCoords(SDL_FRect *rect, Uint64 tickDelta)
 
 void renderWalls()
 {
-    SDL_SetRenderDrawColor(renderer, 255, 0, 0, SDL_ALPHA_OPAQUE);
+    SDL_SetRenderDrawColor(renderer, 64, 0, 0, SDL_ALPHA_OPAQUE);
     SDL_RenderFillRect(renderer, &wallBackground);
 
-    SDL_SetRenderDrawColor(renderer, 0, 0, 255, SDL_ALPHA_OPAQUE);
+    SDL_SetRenderDrawColor(renderer, GREY, SDL_ALPHA_OPAQUE);
     SDL_RenderFillRect(renderer, &mainBackground);
 }
