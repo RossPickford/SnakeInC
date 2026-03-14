@@ -15,7 +15,14 @@ static SDL_Renderer *renderer = NULL;
 
 static SDL_FRect wallBackground;
 static SDL_FRect mainBackground;
+
+static SDL_FRect *arena;
 static SDL_FRect *snake;
+static SDL_FRect *fruit;
+
+static Uint64 arenaSize;
+static Uint64 snakeLength = 3;
+static Uint64 fruitSize = 3;
 
 static Int_Vector2 dir;
 
@@ -28,6 +35,9 @@ static Uint64 previousTick = 0, tickDelta = 0;
 #define GRID_WIDTH 20
 
 #define GREY 30, 30, 30
+
+void initBackground();
+void initSnakeAndFruit();
 
 void moveSnake(SDL_FRect *head, Uint64 length);
 void renderWalls();
@@ -58,13 +68,17 @@ SDL_AppResult SDL_AppInit(void **appstate, int argc, char *argv[])
     mainBackground.w = WINDOW_WIDTH - (2 * GRID_WIDTH);
     mainBackground.x = mainBackground.y = GRID_WIDTH;
 
-    snake = (SDL_FRect *)malloc(sizeof(SDL_FRect) * (powf((WINDOW_HEIGHT - (GRID_WIDTH * 2) / (float)GRID_WIDTH), 2)));
+    arenaSize = powf((WINDOW_HEIGHT - (GRID_WIDTH * 2) / (float)GRID_WIDTH), 2);
+    snake = (SDL_FRect *)malloc(sizeof(SDL_FRect) * arenaSize);
+
+    float coordx = (WINDOW_WIDTH / 2) - (WINDOW_WIDTH % GRID_WIDTH);
+    float coordy = (WINDOW_HEIGHT / 2) - (WINDOW_HEIGHT % GRID_WIDTH);
 
     for (int i = 0; i < 3; i++)
     {
         (snake + i)->h = (snake + i)->w = GRID_WIDTH;
-        (snake + i)->y = (mainBackground.h - GRID_WIDTH) / 2.0f;
-        (snake + i)->x = (snake + i)->y + (GRID_WIDTH * i);
+        (snake + i)->y = coordy;
+        (snake + i)->x = coordx + (GRID_WIDTH * i);
     }
 
     dir.x = -1.0f;
@@ -133,6 +147,14 @@ SDL_AppResult SDL_AppIterate(void *appstate)
 void SDL_AppQuit(void *appstate, SDL_AppResult result)
 {
     free(snake);
+}
+
+void initBackground()
+{
+}
+
+void initSnakeAndFruit()
+{
 }
 
 void moveSnake(SDL_FRect *head, Uint64 length)
