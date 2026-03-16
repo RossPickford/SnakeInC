@@ -25,16 +25,25 @@ static Uint64 snakeLength = 3;
 static Uint64 fruitSize = 3;
 
 static Int_Vector2 dir;
+static Int_Vector2 prevHeadLocation;
 
 static Uint64 previousTick = 0, tickDelta = 0;
+static Uint64 previousEventTick = 0;
 
 #define CLOCK_SPEED 250
+#define INPUT_THRESHOLD 150
 
 #define WINDOW_WIDTH 640
 #define WINDOW_HEIGHT 640
 #define GRID_WIDTH 20
 
+#define MAX_HORIZONTAL_WALL WINDOW_WIDTH - GRID_WIDTH
+#define MAX_VERTICAL_WALL WINDOW_HEIGHT - GRID_WIDTH
+
 #define GREY 30, 30, 30
+#define SNAKE_HEAD_COLOUR 15, 210, 0
+#define SNAKE_BODY_COLOUR 15, 110, 0
+#define RED 255, 0, 0
 
 void initBackground();
 void initSnakeAndFruit();
@@ -42,8 +51,12 @@ void initSnakeAndFruit();
 void moveSnake(SDL_FRect *head, Uint64 length);
 void renderWalls();
 void drawSnake();
-void renderFood();
-void collisionCheck();
+void drawFruit();
+
+int collisionCheck();
+int snakeEatFruitCheck(SDL_FRect *eatenFruit);
+int lengthenSnake(SDL_FRect *head, Uint64 *length, SDL_FRect *eatenFruit);
+Int_Vector2 getRandomCoord();
 
 SDL_AppResult SDL_AppInit(void **appstate, int argc, char *argv[])
 {
@@ -60,29 +73,18 @@ SDL_AppResult SDL_AppInit(void **appstate, int argc, char *argv[])
     }
     SDL_SetRenderLogicalPresentation(renderer, WINDOW_WIDTH, WINDOW_HEIGHT, SDL_LOGICAL_PRESENTATION_LETTERBOX);
 
-    wallBackground.h = WINDOW_HEIGHT;
-    wallBackground.w = WINDOW_WIDTH;
-    wallBackground.x = wallBackground.y = 0.0f;
+    initBackground();
 
-    mainBackground.h = WINDOW_HEIGHT - (2 * GRID_WIDTH);
-    mainBackground.w = WINDOW_WIDTH - (2 * GRID_WIDTH);
-    mainBackground.x = mainBackground.y = GRID_WIDTH;
+    arenaSize = powf(((WINDOW_HEIGHT - (GRID_WIDTH * 2)) / (float)GRID_WIDTH), 2);
+    arena = snake = (SDL_FRect *)malloc(sizeof(SDL_FRect) * arenaSize);
+    fruit = snake + snakeLength;
 
-    arenaSize = powf((WINDOW_HEIGHT - (GRID_WIDTH * 2) / (float)GRID_WIDTH), 2);
-    snake = (SDL_FRect *)malloc(sizeof(SDL_FRect) * arenaSize);
+    initSnakeAndFruit();
 
-    float coordx = (WINDOW_WIDTH / 2) - (WINDOW_WIDTH % GRID_WIDTH);
-    float coordy = (WINDOW_HEIGHT / 2) - (WINDOW_HEIGHT % GRID_WIDTH);
+    dir.x = -1;
+    dir.y = 0;
 
-    for (int i = 0; i < 3; i++)
-    {
-        (snake + i)->h = (snake + i)->w = GRID_WIDTH;
-        (snake + i)->y = coordy;
-        (snake + i)->x = coordx + (GRID_WIDTH * i);
-    }
-
-    dir.x = -1.0f;
-    dir.y = 0.0f;
+    prevHeadLocation.x = prevHeadLocation.y = 0;
 
     return SDL_APP_CONTINUE;
 }
@@ -91,6 +93,19 @@ SDL_AppResult SDL_AppEvent(void *appstate, SDL_Event *event)
 {
     if (event->type == SDL_EVENT_QUIT)
         return SDL_APP_SUCCESS;
+
+    // Uint64 eventTick = SDL_GetTicks();
+
+    // if ((eventTick - previousEventTick) < INPUT_THRESHOLD)
+    // return SDL_APP_CONTINUE;
+
+    // previousEventTick = eventTick;
+
+    if ((int)snake->x == prevHeadLocation.x && (int)snake->y == prevHeadLocation.y)
+        return SDL_APP_CONTINUE;
+
+    prevHeadLocation.x = (int)snake->x;
+    prevHeadLocation.y = (int)snake->y;
 
     if (event->type == SDL_EVENT_KEY_DOWN)
     {
@@ -127,8 +142,16 @@ SDL_AppResult SDL_AppIterate(void *appstate)
 
     if (tickDelta >= CLOCK_SPEED)
     {
-        moveSnake(snake, 3);
+        moveSnake(snake, snakeLength);
         tickDelta -= CLOCK_SPEED;
+
+        if (collisionCheck())
+            return SDL_APP_SUCCESS;
+
+        SDL_FRect *eatenFruit;
+        if (snakeEatFruitCheck(eatenFruit))
+            if (!lengthenSnake(snake, &snakeLength, eatenFruit))
+                return SDL_APP_FAILURE;
     }
 
     previousTick = currentTick;
@@ -137,6 +160,7 @@ SDL_AppResult SDL_AppIterate(void *appstate)
     SDL_RenderClear(renderer);
 
     renderWalls();
+    drawFruit();
     drawSnake();
 
     SDL_RenderPresent(renderer);
@@ -151,10 +175,60 @@ void SDL_AppQuit(void *appstate, SDL_AppResult result)
 
 void initBackground()
 {
+    wallBackground.h = WINDOW_HEIGHT;
+    wallBackground.w = WINDOW_WIDTH;
+    wallBackground.x = wallBackground.y = 0.0f;
+
+    mainBackground.h = WINDOW_HEIGHT - (2 * GRID_WIDTH);
+    mainBackground.w = WINDOW_WIDTH - (2 * GRID_WIDTH);
+    mainBackground.x = mainBackground.y = GRID_WIDTH;
 }
 
 void initSnakeAndFruit()
 {
+    float coordx = (WINDOW_WIDTH / 2) - (WINDOW_WIDTH % GRID_WIDTH);
+    float coordy = (WINDOW_HEIGHT / 2) - (WINDOW_HEIGHT % GRID_WIDTH);
+
+    for (int i = 0; i < snakeLength; i++)
+    {
+        (snake + i)->h = (snake + i)->w = GRID_WIDTH;
+        (snake + i)->y = coordy;
+        (snake + i)->x = coordx + (GRID_WIDTH * i);
+    }
+
+    for (int i = 0; i < fruitSize; i++)
+    {
+        (fruit + i)->h = (fruit + i)->w = GRID_WIDTH;
+
+        Int_Vector2 randCoord = getRandomCoord();
+        // will need a check to make sure the coordinate does not overlap with a previously generated one.
+        (fruit + i)->y = (float)randCoord.y;
+        (fruit + i)->x = (float)randCoord.x;
+    }
+}
+
+int collisionCheck()
+{
+    if (snake->x == 0 || snake->x == MAX_HORIZONTAL_WALL || snake->y == 0 || snake->y == MAX_VERTICAL_WALL)
+        return 1;
+
+    for (int i = 4; i < snakeLength; i++)
+        if ((int)snake->x == (int)(snake + i)->x && (int)snake->y == (int)(snake + i)->y)
+            return 1;
+
+    return 0;
+}
+
+int snakeEatFruitCheck(SDL_FRect *eatenFruit)
+{
+    for (int i = 0; i < fruitSize; i++)
+        if ((int)snake->x == (int)(fruit + i)->x && (int)snake->y == (int)(fruit + i)->y)
+        {
+            eatenFruit = (fruit + i);
+            return 1;
+        }
+
+    return 0;
 }
 
 void moveSnake(SDL_FRect *head, Uint64 length)
@@ -180,12 +254,57 @@ void renderWalls()
 
 void drawSnake()
 {
-    SDL_SetRenderDrawColor(renderer, 15, 210, 0, SDL_ALPHA_OPAQUE);
+    SDL_SetRenderDrawColor(renderer, SNAKE_HEAD_COLOUR, SDL_ALPHA_OPAQUE);
     SDL_RenderFillRect(renderer, snake);
-    SDL_SetRenderDrawColor(renderer, 15, 110, 0, SDL_ALPHA_OPAQUE);
+    SDL_SetRenderDrawColor(renderer, SNAKE_BODY_COLOUR, SDL_ALPHA_OPAQUE);
 
-    for (int i = 1; i < 3; i++)
-    {
+    for (int i = 1; i < snakeLength; i++)
         SDL_RenderFillRect(renderer, (snake + i));
-    }
+}
+
+void drawFruit()
+{
+    SDL_SetRenderDrawColor(renderer, RED, SDL_ALPHA_OPAQUE);
+
+    for (int i = 0; i < fruitSize; i++)
+        SDL_RenderFillRect(renderer, (fruit + i));
+}
+
+Int_Vector2 getRandomCoord()
+{
+    Int_Vector2 coord;
+    int x = SDL_rand(MAX_HORIZONTAL_WALL - GRID_WIDTH);
+    int y = SDL_rand(MAX_VERTICAL_WALL - GRID_WIDTH);
+
+    x -= x % GRID_WIDTH;
+    y -= y % GRID_WIDTH;
+
+    coord.x = x + GRID_WIDTH;
+    coord.y = y + GRID_WIDTH;
+
+    return coord;
+}
+
+int lengthenSnake(SDL_FRect *head, Uint64 *length, SDL_FRect *eatenFruit)
+{
+    if (fruitSize + ++*length >= arenaSize)
+        return 0;
+
+    if (!eatenFruit)
+        SDL_Log("pointer is null");
+
+    Int_Vector2 randCoord = getRandomCoord();
+    // will need a check to make sure the coordinate does not overlap with a previously generated one.
+    // eatenFruit->y = (float)randCoord.y;
+    // eatenFruit->x = (float)randCoord.x;
+
+    /* for (int i = fruitSize; i > 0; i--)
+    {
+        (fruit + i)->h = (fruit + i)->h = GRID_WIDTH;
+        (fruit + i)->x = (fruit + i - 1)->x;
+        (fruit + i)->y = (fruit + i - 1)->y;
+    } */
+
+    fruit++;
+    return 1;
 }
