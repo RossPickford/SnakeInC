@@ -19,6 +19,7 @@ static SDL_FRect mainBackground;
 static SDL_FRect *arena;
 static SDL_FRect *snake;
 static SDL_FRect *fruit;
+static SDL_FRect *bufferRect;
 
 static Uint64 arenaSize;
 static Uint64 snakeLength = 3;
@@ -54,7 +55,7 @@ void drawSnake();
 void drawFruit();
 
 int collisionCheck();
-int snakeEatFruitCheck(SDL_FRect *eatenFruit);
+int snakeEatFruitCheck(SDL_FRect **eatenFruit);
 int lengthenSnake(SDL_FRect *head, Uint64 *length, SDL_FRect *eatenFruit);
 Int_Vector2 getRandomCoord();
 
@@ -76,7 +77,8 @@ SDL_AppResult SDL_AppInit(void **appstate, int argc, char *argv[])
     initBackground();
 
     arenaSize = powf(((WINDOW_HEIGHT - (GRID_WIDTH * 2)) / (float)GRID_WIDTH), 2);
-    arena = snake = (SDL_FRect *)malloc(sizeof(SDL_FRect) * arenaSize);
+    arena = snake = (SDL_FRect *)malloc(sizeof(SDL_FRect) * (arenaSize + 1 /*buffer rect*/));
+    bufferRect = arena + arenaSize;
     fruit = snake + snakeLength;
 
     initSnakeAndFruit();
@@ -148,10 +150,18 @@ SDL_AppResult SDL_AppIterate(void *appstate)
         if (collisionCheck())
             return SDL_APP_SUCCESS;
 
-        SDL_FRect *eatenFruit;
+        SDL_FRect **eatenFruit = &bufferRect; 
+
         if (snakeEatFruitCheck(eatenFruit))
-            if (!lengthenSnake(snake, &snakeLength, eatenFruit))
+        {
+            if (!eatenFruit)
+            {
+                SDL_Log("pointer is null");
                 return SDL_APP_FAILURE;
+            }
+            if (!lengthenSnake(snake, &snakeLength, *eatenFruit))
+                return SDL_APP_FAILURE;
+        }
     }
 
     previousTick = currentTick;
@@ -219,12 +229,13 @@ int collisionCheck()
     return 0;
 }
 
-int snakeEatFruitCheck(SDL_FRect *eatenFruit)
+int snakeEatFruitCheck(SDL_FRect **eatenFruit)
 {
     for (int i = 0; i < fruitSize; i++)
         if ((int)snake->x == (int)(fruit + i)->x && (int)snake->y == (int)(fruit + i)->y)
         {
-            eatenFruit = (fruit + i);
+            SDL_Log("fruit eaten");
+            *eatenFruit = (fruit + i);
             return 1;
         }
 
@@ -290,20 +301,19 @@ int lengthenSnake(SDL_FRect *head, Uint64 *length, SDL_FRect *eatenFruit)
     if (fruitSize + ++*length >= arenaSize)
         return 0;
 
-    if (!eatenFruit)
-        SDL_Log("pointer is null");
+    // if (!eatenFruit)
+    // SDL_Log("pointer is null");
 
     Int_Vector2 randCoord = getRandomCoord();
     // will need a check to make sure the coordinate does not overlap with a previously generated one.
-    // eatenFruit->y = (float)randCoord.y;
-    // eatenFruit->x = (float)randCoord.x;
+    eatenFruit->y = (float)randCoord.y;
+    eatenFruit->x = (float)randCoord.x;
 
-    /* for (int i = fruitSize; i > 0; i--)
+    for (int i = fruitSize; i > 0; i--)
     {
-        (fruit + i)->h = (fruit + i)->h = GRID_WIDTH;
-        (fruit + i)->x = (fruit + i - 1)->x;
-        (fruit + i)->y = (fruit + i - 1)->y;
-    } */
+        *(fruit + i) = *(fruit + i - 1);
+        *(fruit + i) = *(fruit + i - 1);
+    }
 
     fruit++;
     return 1;
