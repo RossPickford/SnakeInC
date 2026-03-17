@@ -54,8 +54,8 @@ void renderWalls();
 void drawSnake();
 void drawFruit();
 
-int collisionCheck();
-int snakeEatFruitCheck(SDL_FRect **eatenFruit);
+int collisionCheck(SDL_FRect *head);
+int snakeEatFruitCheck(SDL_FRect head, SDL_FRect **eatenFruit);
 int lengthenSnake(SDL_FRect *head, Uint64 *length, SDL_FRect *eatenFruit);
 Int_Vector2 getRandomCoord();
 
@@ -144,24 +144,34 @@ SDL_AppResult SDL_AppIterate(void *appstate)
 
     if (tickDelta >= CLOCK_SPEED)
     {
-        moveSnake(snake, snakeLength);
         tickDelta -= CLOCK_SPEED;
 
-        if (collisionCheck())
-            return SDL_APP_SUCCESS;
+        int fruitEatenCheck = 0;
 
-        SDL_FRect **eatenFruit = &bufferRect; 
+        SDL_FRect pseudoHead = *snake;
 
-        if (snakeEatFruitCheck(eatenFruit))
+        pseudoHead.x += (GRID_WIDTH * dir.x);
+        pseudoHead.y += (GRID_WIDTH * dir.y);
+
+        SDL_FRect **eatenFruit = &bufferRect;
+        if (snakeEatFruitCheck(pseudoHead, eatenFruit))
         {
             if (!eatenFruit)
             {
                 SDL_Log("pointer is null");
                 return SDL_APP_FAILURE;
             }
+
             if (!lengthenSnake(snake, &snakeLength, *eatenFruit))
                 return SDL_APP_FAILURE;
+
+            fruitEatenCheck = 1;
         }
+
+        moveSnake(snake, snakeLength);
+
+        if (!fruitEatenCheck && collisionCheck(snake))
+            return SDL_APP_SUCCESS;
     }
 
     previousTick = currentTick;
@@ -217,9 +227,9 @@ void initSnakeAndFruit()
     }
 }
 
-int collisionCheck()
+int collisionCheck(SDL_FRect *head) // don't need to do collision check if eating fruit was succesful
 {
-    if (snake->x == 0 || snake->x == MAX_HORIZONTAL_WALL || snake->y == 0 || snake->y == MAX_VERTICAL_WALL)
+    if (head->x == 0 || head->x == MAX_HORIZONTAL_WALL || head->y == 0 || head->y == MAX_VERTICAL_WALL)
         return 1;
 
     for (int i = 4; i < snakeLength; i++)
@@ -229,10 +239,10 @@ int collisionCheck()
     return 0;
 }
 
-int snakeEatFruitCheck(SDL_FRect **eatenFruit)
+int snakeEatFruitCheck(SDL_FRect head, SDL_FRect **eatenFruit)
 {
     for (int i = 0; i < fruitSize; i++)
-        if ((int)snake->x == (int)(fruit + i)->x && (int)snake->y == (int)(fruit + i)->y)
+        if ((int)head.x == (int)(fruit + i)->x && (int)head.y == (int)(fruit + i)->y)
         {
             SDL_Log("fruit eaten");
             *eatenFruit = (fruit + i);
