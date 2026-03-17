@@ -31,7 +31,8 @@ static Int_Vector2 prevHeadLocation;
 static Uint64 previousTick = 0, tickDelta = 0;
 static Uint64 previousEventTick = 0;
 
-#define CLOCK_SPEED 250
+#define GAME_SPEED_MULTIPLIER 1
+#define TICK_RATE_MILLISECONDS 250
 #define INPUT_THRESHOLD 150
 
 #define WINDOW_WIDTH 640
@@ -142,16 +143,16 @@ SDL_AppResult SDL_AppIterate(void *appstate)
 
     tickDelta += (currentTick - previousTick);
 
-    if (tickDelta >= CLOCK_SPEED)
+    if (tickDelta >= (TICK_RATE_MILLISECONDS / GAME_SPEED_MULTIPLIER))
     {
-        tickDelta -= CLOCK_SPEED;
+        tickDelta -= (TICK_RATE_MILLISECONDS / GAME_SPEED_MULTIPLIER);
 
         int fruitEatenCheck = 0;
 
         SDL_FRect pseudoHead = *snake;
 
-        pseudoHead.x += (GRID_WIDTH * dir.x);
-        pseudoHead.y += (GRID_WIDTH * dir.y);
+        pseudoHead.x += ((GRID_WIDTH / GAME_SPEED_MULTIPLIER) * dir.x);
+        pseudoHead.y += ((GRID_WIDTH / GAME_SPEED_MULTIPLIER) * dir.y);
 
         SDL_FRect **eatenFruit = &bufferRect;
         if (snakeEatFruitCheck(pseudoHead, eatenFruit))
