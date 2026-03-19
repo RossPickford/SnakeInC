@@ -112,22 +112,23 @@ SDL_AppResult SDL_AppEvent(void *appstate, SDL_Event *event)
 
     if (event->type == SDL_EVENT_KEY_DOWN)
     {
-        if (event->key.key == SDLK_LEFT && dir.x != 1)
+        SDL_Log("key pressed %d", event->key.scancode);
+        if (event->key.scancode == SDL_SCANCODE_LEFT && dir.x != 1)
         {
             dir.x = -1;
             dir.y = 0;
         }
-        else if (event->key.key == SDLK_RIGHT && dir.x != -1)
+        else if (event->key.scancode == SDL_SCANCODE_RIGHT && dir.x != -1)
         {
             dir.x = 1;
             dir.y = 0;
         }
-        else if (event->key.key == SDLK_UP && dir.y != 1)
+        else if (event->key.scancode == SDL_SCANCODE_UP && dir.y != 1)
         {
             dir.x = 0;
             dir.y = -1;
         }
-        else if (event->key.key == SDLK_DOWN && dir.y != -1)
+        else if (event->key.scancode == SDL_SCANCODE_DOWN && dir.y != -1)
         {
             dir.x = 0;
             dir.y = 1;
