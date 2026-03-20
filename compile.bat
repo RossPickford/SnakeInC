@@ -1,1 +1,2 @@
 gcc SnakeGame.c -o game.exe -I "./external/SDL/include" -L "./external/SDL/lib" -lSDL3
+gcc hello_ttf.c -o hello_ttf.exe -I "./external/SDL/include" -I "./external/SDL_ttf/include" -L "external/SDL_ttf/lib" -L "./external/SDL/lib" -lSDL3_ttf -lSDL3

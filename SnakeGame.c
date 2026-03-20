@@ -13,6 +13,10 @@ typedef struct
 static SDL_Window *window = NULL;
 static SDL_Renderer *renderer = NULL;
 
+static char* title = "SNAKE GAME";
+static SDL_FRect startBtn;
+static char* startTxt = "START";
+
 static SDL_FRect wallBackground;
 static SDL_FRect mainBackground;
 
@@ -49,6 +53,18 @@ static Uint64 previousEventTick = 0;
 
 void initBackground();
 void initSnakeAndFruit();
+
+SDL_AppResult MainMenu_Input(void *appstate, SDL_Event *event);
+SDL_AppResult GameStart_Input(void *appstate, SDL_Event *event);
+SDL_AppResult GameLogic_Input(void *appstate, SDL_Event *event);
+SDL_AppResult GamePause_Input(void *appstate, SDL_Event *event);
+SDL_AppResult GameOver_Input(void *appstate, SDL_Event *event);
+
+SDL_AppResult MainMenu_Loop(void *appstate);
+SDL_AppResult GameStart_Loop(void *appstate);
+SDL_AppResult GameLogic_Loop(void *appstate);
+SDL_AppResult GamePause_Loop(void *appstate);
+SDL_AppResult GameOver_Loop(void *appstate);
 
 void moveSnake(SDL_FRect *head, Uint64 length);
 void renderWalls();
@@ -97,6 +113,32 @@ SDL_AppResult SDL_AppEvent(void *appstate, SDL_Event *event)
     if (event->type == SDL_EVENT_QUIT)
         return SDL_APP_SUCCESS;
 
+    return GameLogic_Input(appstate, event);
+}
+
+SDL_AppResult SDL_AppIterate(void *appstate)
+{
+    SDL_AppResult result = GameLogic_Loop(appstate);
+    SDL_RenderPresent(renderer);
+
+    return result;
+}
+
+void SDL_AppQuit(void *appstate, SDL_AppResult result)
+{
+    free(snake);
+}
+
+
+//===================================================================================
+
+
+SDL_AppResult MainMenu_Input(void *appstate, SDL_Event *event)
+{
+}
+
+SDL_AppResult GameLogic_Input(void *appstate, SDL_Event *event)
+{
     // Uint64 eventTick = SDL_GetTicks();
 
     // if ((eventTick - previousEventTick) < INPUT_THRESHOLD)
@@ -138,7 +180,12 @@ SDL_AppResult SDL_AppEvent(void *appstate, SDL_Event *event)
     return SDL_APP_CONTINUE;
 }
 
-SDL_AppResult SDL_AppIterate(void *appstate)
+SDL_AppResult MainMenu_Loop(void *appdstate)
+{
+    
+}
+
+SDL_AppResult GameLogic_Loop(void *appstate)
 {
     Uint64 currentTick = SDL_GetTicks();
 
@@ -185,14 +232,7 @@ SDL_AppResult SDL_AppIterate(void *appstate)
     drawFruit();
     drawSnake();
 
-    SDL_RenderPresent(renderer);
-
     return SDL_APP_CONTINUE;
-}
-
-void SDL_AppQuit(void *appstate, SDL_AppResult result)
-{
-    free(snake);
 }
 
 void initBackground()
