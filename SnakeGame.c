@@ -7,15 +7,19 @@ typedef struct
 #define SDL_MAIN_USE_CALLBACKS 1 /* use the callbacks instead of main() */
 #include <SDL3/SDL.h>
 #include <SDL3/SDL_main.h>
+#include <SDL3_ttf/SDL_ttf.h>
 #include <stdlib.h>
 #include <math.h>
 
 static SDL_Window *window = NULL;
 static SDL_Renderer *renderer = NULL;
 
-static char* title = "SNAKE GAME";
+static char *title = "SNAKE";
+static SDL_Texture *titleTexture = NULL;
+static TTF_Font *titleFont = NULL;
 static SDL_FRect startBtn;
-static char* startTxt = "START";
+
+static char *startTxt = "START";
 
 static SDL_FRect wallBackground;
 static SDL_FRect mainBackground;
@@ -50,6 +54,12 @@ static Uint64 previousEventTick = 0;
 #define SNAKE_HEAD_COLOUR 15, 210, 0
 #define SNAKE_BODY_COLOUR 15, 110, 0
 #define RED 255, 0, 0
+
+bool initMainMenu(SDL_AppResult *result);
+bool initGameStart(SDL_AppResult *result);
+bool initGameLoop(SDL_AppResult *result);
+bool initGamePause(SDL_AppResult *result);
+bool initGameOver(SDL_AppResult *result);
 
 void initBackground();
 void initSnakeAndFruit();
@@ -89,7 +99,19 @@ SDL_AppResult SDL_AppInit(void **appstate, int argc, char *argv[])
         SDL_Log("Couldn't create window/renderer: %s", SDL_GetError());
         return SDL_APP_FAILURE;
     }
+
+    if (!TTF_Init())
+    {
+        SDL_Log("Couldn't initialize SDL_ttf: %s\n", SDL_GetError());
+        return SDL_APP_FAILURE;
+    }
+
     SDL_SetRenderLogicalPresentation(renderer, WINDOW_WIDTH, WINDOW_HEIGHT, SDL_LOGICAL_PRESENTATION_LETTERBOX);
+
+    SDL_AppResult result = SDL_APP_CONTINUE;
+
+    if (!initMainMenu(&result))
+        return result;
 
     initBackground();
 
@@ -118,7 +140,8 @@ SDL_AppResult SDL_AppEvent(void *appstate, SDL_Event *event)
 
 SDL_AppResult SDL_AppIterate(void *appstate)
 {
-    SDL_AppResult result = GameLogic_Loop(appstate);
+    // SDL_AppResult result = GameLogic_Loop(appstate);
+    SDL_AppResult result = MainMenu_Loop(appstate);
     SDL_RenderPresent(renderer);
 
     return result;
@@ -129,9 +152,37 @@ void SDL_AppQuit(void *appstate, SDL_AppResult result)
     free(snake);
 }
 
-
 //===================================================================================
 
+bool initMainMenu(SDL_AppResult *result)
+{
+    SDL_Color color = {0, 0, 0, SDL_ALPHA_OPAQUE};
+    SDL_Surface *titleText;
+
+    titleFont = TTF_OpenFont("./fonts/Sunglass_one.otf", 150.0f);
+    if (!titleFont)
+    {
+        SDL_Log("Couldn't create window and renderer: %s\n", SDL_GetError());
+        *result = SDL_APP_FAILURE;
+        return false;
+    }
+
+    /* Create the text */
+    titleText = TTF_RenderText_Blended(titleFont, "SNAKE", 0, color);
+    if (titleText)
+    {
+        titleTexture = SDL_CreateTextureFromSurface(renderer, titleText);
+        SDL_DestroySurface(titleText);
+    }
+    if (!titleTexture)
+    {
+        SDL_Log("Couldn't initialize SDL_ttf: %s\n", SDL_GetError());
+        *result = SDL_APP_FAILURE;
+        return false;
+    }
+
+    return true;
+}
 
 SDL_AppResult MainMenu_Input(void *appstate, SDL_Event *event)
 {
@@ -182,7 +233,30 @@ SDL_AppResult GameLogic_Input(void *appstate, SDL_Event *event)
 
 SDL_AppResult MainMenu_Loop(void *appdstate)
 {
-    
+    int w = 0, h = 0;
+    SDL_FRect dst;
+    const float scale = 1.0f;
+
+    /* Center the text and scale it up */
+    // SDL_GetRenderOutputSize(renderer, &w, &h);
+    // SDL_SetRenderScale(renderer, scale, scale);
+    SDL_GetTextureSize(titleTexture, &dst.w, &dst.h);
+    dst.x = (WINDOW_WIDTH - dst.w) / 2;
+    dst.y = (WINDOW_HEIGHT - dst.h) / 10;
+
+    const double now = ((double)SDL_GetTicks()) / 1000.0; /* convert from milliseconds to seconds. */
+    /* choose the modulation values for the center texture. The sine wave trick makes it fade between colors smoothly. */
+    const float red = (float)(0.5 + 0.5 * SDL_sin(now));
+    const float green = (float)(0.5 + 0.5 * SDL_sin(now + SDL_PI_D * 2 / 3));
+    const float blue = (float)(0.5 + 0.5 * SDL_sin((now * 2) + SDL_PI_D * 4 / 3));
+
+    /* Draw the text */
+    SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
+    SDL_RenderClear(renderer);
+    SDL_SetTextureColorModFloat(titleTexture, red, green, blue);
+    SDL_RenderTexture(renderer, titleTexture, NULL, &dst);
+
+    return SDL_APP_CONTINUE;
 }
 
 SDL_AppResult GameLogic_Loop(void *appstate)
