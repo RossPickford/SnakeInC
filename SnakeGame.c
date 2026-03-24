@@ -17,9 +17,11 @@ static SDL_Renderer *renderer = NULL;
 static char *title = "SNAKE";
 static SDL_Texture *titleTexture = NULL;
 static TTF_Font *titleFont = NULL;
-static SDL_FRect startBtn;
 
 static char *startTxt = "START";
+static SDL_Texture *startTexture = NULL;
+static TTF_Font *startFont = NULL;
+static SDL_FRect startBtn;
 
 static SDL_FRect wallBackground;
 static SDL_FRect mainBackground;
@@ -156,11 +158,14 @@ void SDL_AppQuit(void *appstate, SDL_AppResult result)
 
 bool initMainMenu(SDL_AppResult *result)
 {
-    SDL_Color color = {0, 0, 0, SDL_ALPHA_OPAQUE};
+    SDL_Color colour_black = {0, 0, 0, SDL_ALPHA_OPAQUE};
+    SDL_Color colour_white = {255, 255, 255, SDL_ALPHA_OPAQUE};
     SDL_Surface *titleText;
+    SDL_Surface *startText;
 
     titleFont = TTF_OpenFont("./fonts/Sunglass_one.otf", 150.0f);
-    if (!titleFont)
+    startFont = TTF_OpenFont("./fonts/PublicPixel.ttf", 20.0f);
+    if (!titleFont || !startFont)
     {
         SDL_Log("Couldn't create window and renderer: %s\n", SDL_GetError());
         *result = SDL_APP_FAILURE;
@@ -168,13 +173,16 @@ bool initMainMenu(SDL_AppResult *result)
     }
 
     /* Create the text */
-    titleText = TTF_RenderText_Blended(titleFont, "SNAKE", 0, color);
-    if (titleText)
+    titleText = TTF_RenderText_Blended(titleFont, title, 0, colour_black);
+    startText = TTF_RenderText_Blended(startFont, startTxt, 0, colour_white);
+    if (titleText && startText)
     {
         titleTexture = SDL_CreateTextureFromSurface(renderer, titleText);
+        startTexture = SDL_CreateTextureFromSurface(renderer, startText);
         SDL_DestroySurface(titleText);
+        SDL_DestroySurface(startText);
     }
-    if (!titleTexture)
+    else
     {
         SDL_Log("Couldn't initialize SDL_ttf: %s\n", SDL_GetError());
         *result = SDL_APP_FAILURE;
@@ -233,15 +241,20 @@ SDL_AppResult GameLogic_Input(void *appstate, SDL_Event *event)
 
 SDL_AppResult MainMenu_Loop(void *appdstate)
 {
-    SDL_FRect dst;
+    SDL_FRect titleRect;
     const float scale = 1.0f;
 
     /* Center the text and scale it up */
     // SDL_GetRenderOutputSize(renderer, &w, &h);
     // SDL_SetRenderScale(renderer, scale, scale);
-    SDL_GetTextureSize(titleTexture, &dst.w, &dst.h);
-    dst.x = (WINDOW_WIDTH - dst.w) / 2;
-    dst.y = (WINDOW_HEIGHT - dst.h) / 10;
+    SDL_GetTextureSize(titleTexture, &titleRect.w, &titleRect.h);
+    titleRect.x = (WINDOW_WIDTH - titleRect.w) / 2;
+    titleRect.y = (WINDOW_HEIGHT - titleRect.h) / 10;
+
+    SDL_GetTextureSize(startTexture, &startBtn.w, &startBtn.h);
+    startBtn.x = (WINDOW_WIDTH - startBtn.w) / 2;
+    startBtn.y = (WINDOW_HEIGHT - startBtn.h) / 1.5f;
+
 
     const double now = ((double)SDL_GetTicks()) / 1000.0; /* convert from milliseconds to seconds. */
     /* choose the modulation values for the center texture. The sine wave trick makes it fade between colors smoothly. */
@@ -249,11 +262,13 @@ SDL_AppResult MainMenu_Loop(void *appdstate)
     const float green = (float)(0.5 + 0.5 * SDL_sin(now + SDL_PI_D * 2 / 3));
     const float blue = (float)(0.5 + 0.5 * SDL_sin((now * 2) + SDL_PI_D * 4 / 3));
 
-    /* Draw the text */
+    /* Draw the title */
     SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
     SDL_RenderClear(renderer);
     SDL_SetTextureColorModFloat(titleTexture, red, green, blue);
-    SDL_RenderTexture(renderer, titleTexture, NULL, &dst);
+    SDL_RenderTexture(renderer, titleTexture, NULL, &titleRect);
+    
+    SDL_RenderTexture(renderer, startTexture, NULL, &startBtn);
 
     return SDL_APP_CONTINUE;
 }
