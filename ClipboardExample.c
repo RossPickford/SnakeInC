@@ -209,6 +209,7 @@ SDL_AppResult SDL_AppIterate(void *appstate)
     float mx, my;
     SDL_GetMouseState(&mx, &my);
     SDL_FPoint p = {mx, my};
+    
     if (copy_pressed)
     {
         SDL_SetRenderDrawColor(renderer, 0, 255, 0, 255);

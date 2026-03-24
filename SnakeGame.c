@@ -44,7 +44,7 @@ static Uint64 previousEventTick = 0;
 #define INPUT_THRESHOLD 150
 
 #define WINDOW_WIDTH 640
-#define WINDOW_HEIGHT 640
+#define WINDOW_HEIGHT 480
 #define GRID_WIDTH 20
 
 #define MAX_HORIZONTAL_WALL WINDOW_WIDTH - GRID_WIDTH
@@ -233,7 +233,6 @@ SDL_AppResult GameLogic_Input(void *appstate, SDL_Event *event)
 
 SDL_AppResult MainMenu_Loop(void *appdstate)
 {
-    int w = 0, h = 0;
     SDL_FRect dst;
     const float scale = 1.0f;
 

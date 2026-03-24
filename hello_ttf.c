@@ -43,7 +43,7 @@ SDL_AppResult SDL_AppInit(void **appstate, int argc, char *argv[])
 
     /* Open the font */
     // font = TTF_OpenFontIO(SDL_IOFromConstMem(tiny_ttf, tiny_ttf_len), true, 60.0f);
-    font = TTF_OpenFont("./fonts/Sunglass_one.otf", 200.0f);
+    font = TTF_OpenFont("./fonts/Sunglass_one.otf", 20.0f);
     if (!font)
     {
         SDL_Log("Couldn't open font: %s\n", SDL_GetError());
@@ -82,14 +82,14 @@ SDL_AppResult SDL_AppIterate(void *appstate)
 {
     int w = 0, h = 0;
     SDL_FRect dst;
-    const float scale = 1.0f;
+    const float scale = 4.0f;
 
     /* Center the text and scale it up */
     SDL_GetRenderOutputSize(renderer, &w, &h);
-    // SDL_SetRenderScale(renderer, scale, scale);
+    SDL_SetRenderScale(renderer, scale, scale);
     SDL_GetTextureSize(texture, &dst.w, &dst.h);
-    dst.x = ((w / scale) - dst.w) / 2;
-    dst.y = ((h / scale) - dst.h) / 10;
+    dst.x = ((w / scale) - dst.w);
+    dst.y = ((h / scale) - dst.h);
 
     const double now = ((double)SDL_GetTicks()) / 1000.0; /* convert from milliseconds to seconds. */
     /* choose the modulation values for the center texture. The sine wave trick makes it fade between colors smoothly. */
