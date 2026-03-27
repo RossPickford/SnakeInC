@@ -1,9 +1,3 @@
-typedef struct
-{
-    int x;
-    int y;
-} Int_Vector2;
-
 #define SDL_MAIN_USE_CALLBACKS 1 /* use the callbacks instead of main() */
 #include <SDL3/SDL.h>
 #include <SDL3/SDL_main.h>
@@ -11,17 +5,46 @@ typedef struct
 #include <stdlib.h>
 #include <math.h>
 
+typedef struct
+{
+    int x;
+    int y;
+} Int_Vector2;
+
+typedef struct
+{
+    char *text;
+    SDL_Texture *texture;
+    TTF_Font *font;
+} DisplayText;
+
+typedef enum
+{
+    MAIN_MENU,
+    GAME_START,
+    GAME_LOOP,
+    GAME_PAUSE,
+    GAME_OVER,
+} E_State;
+
+static E_State currentState = MAIN_MENU;
+
 static SDL_Window *window = NULL;
 static SDL_Renderer *renderer = NULL;
 
-static char *title = "SNAKE";
-static SDL_Texture *titleTexture = NULL;
 static TTF_Font *titleFont = NULL;
-
-static char *startTxt = "START";
-static SDL_Texture *startTexture = NULL;
 static TTF_Font *startFont = NULL;
+
+static DisplayText *textBuffer = NULL;
+static int textBufferSize = 0;
+
+static DisplayText MM_titleDisplay;
+static char *MM_title = "SNAKE";
+
+static DisplayText MM_startDisplay;
+static char *MM_startTxt = "START";
 static SDL_FRect startBtn;
+static bool startPressed = false;
 
 static SDL_FRect wallBackground;
 static SDL_FRect mainBackground;
@@ -40,6 +63,8 @@ static Int_Vector2 prevHeadLocation;
 
 static Uint64 previousTick = 0, tickDelta = 0;
 static Uint64 previousEventTick = 0;
+
+#define TEXT_BUFFER_MAX_LENGTH 5
 
 #define GAME_SPEED_MULTIPLIER 1
 #define TICK_RATE_MILLISECONDS 250
@@ -87,6 +112,7 @@ int collisionCheck(SDL_FRect *head);
 int snakeEatFruitCheck(SDL_FRect head, SDL_FRect **eatenFruit);
 int lengthenSnake(SDL_FRect *head, Uint64 *length, SDL_FRect *eatenFruit);
 Int_Vector2 getRandomCoord();
+bool changeTextColour(DisplayText *displayText, SDL_Color colour);
 
 SDL_AppResult SDL_AppInit(void **appstate, int argc, char *argv[])
 {
@@ -96,7 +122,7 @@ SDL_AppResult SDL_AppInit(void **appstate, int argc, char *argv[])
         return SDL_APP_FAILURE;
     }
 
-    if (!SDL_CreateWindowAndRenderer("Snake Game in C", WINDOW_WIDTH, WINDOW_HEIGHT, SDL_WINDOW_RESIZABLE, &window, &renderer))
+    if (!SDL_CreateWindowAndRenderer("Snake Game in C", WINDOW_WIDTH, WINDOW_HEIGHT, SDL_WINDOW_FULLSCREEN, &window, &renderer))
     {
         SDL_Log("Couldn't create window/renderer: %s", SDL_GetError());
         return SDL_APP_FAILURE;
@@ -129,6 +155,8 @@ SDL_AppResult SDL_AppInit(void **appstate, int argc, char *argv[])
 
     prevHeadLocation.x = prevHeadLocation.y = 0;
 
+    textBuffer = (DisplayText *)malloc(sizeof(DisplayText) * TEXT_BUFFER_MAX_LENGTH);
+
     return SDL_APP_CONTINUE;
 }
 
@@ -137,13 +165,37 @@ SDL_AppResult SDL_AppEvent(void *appstate, SDL_Event *event)
     if (event->type == SDL_EVENT_QUIT)
         return SDL_APP_SUCCESS;
 
-    return GameLogic_Input(appstate, event);
+    switch (currentState)
+    {
+    case MAIN_MENU:
+        return MainMenu_Input(appstate, event);
+    case GAME_LOOP:
+        return GameLogic_Input(appstate, event);
+    }
 }
 
 SDL_AppResult SDL_AppIterate(void *appstate)
 {
-    // SDL_AppResult result = GameLogic_Loop(appstate);
-    SDL_AppResult result = MainMenu_Loop(appstate);
+    SDL_AppResult result;
+
+    switch (currentState)
+    {
+    case MAIN_MENU:
+        result = MainMenu_Loop(appstate);
+        break;
+    case GAME_LOOP:
+        result = GameLogic_Loop(appstate);
+        break;
+    }
+
+    if(textBufferSize > 0)
+    {
+        while(--textBufferSize > 0)
+        {
+            
+        }
+    }
+
     SDL_RenderPresent(renderer);
 
     return result;
@@ -151,7 +203,7 @@ SDL_AppResult SDL_AppIterate(void *appstate)
 
 void SDL_AppQuit(void *appstate, SDL_AppResult result)
 {
-    free(snake);
+    free(arena);
 }
 
 //===================================================================================
@@ -172,13 +224,20 @@ bool initMainMenu(SDL_AppResult *result)
         return false;
     }
 
+    MM_titleDisplay.text = MM_title;
+    MM_titleDisplay.font = titleFont;
+
+    MM_startDisplay.text = MM_startTxt;
+    MM_startDisplay.font = startFont;
+
     /* Create the text */
-    titleText = TTF_RenderText_Blended(titleFont, title, 0, colour_black);
-    startText = TTF_RenderText_Blended(startFont, startTxt, 0, colour_white);
+    titleText = TTF_RenderText_Blended(titleFont, MM_title, 0, colour_black);
+    startText = TTF_RenderText_Blended(startFont, MM_startTxt, 0, colour_white);
     if (titleText && startText)
     {
-        titleTexture = SDL_CreateTextureFromSurface(renderer, titleText);
-        startTexture = SDL_CreateTextureFromSurface(renderer, startText);
+        MM_titleDisplay.texture = SDL_CreateTextureFromSurface(renderer, titleText);
+        MM_startDisplay.texture = SDL_CreateTextureFromSurface(renderer, startText);
+
         SDL_DestroySurface(titleText);
         SDL_DestroySurface(startText);
     }
@@ -194,6 +253,37 @@ bool initMainMenu(SDL_AppResult *result)
 
 SDL_AppResult MainMenu_Input(void *appstate, SDL_Event *event)
 {
+    SDL_ConvertEventToRenderCoordinates(renderer, event);
+
+    if (event->type == SDL_EVENT_MOUSE_BUTTON_DOWN)
+    {
+        if (event->button.button == SDL_BUTTON_LEFT)
+        {
+            const SDL_FPoint p = {event->button.x, event->button.y};
+            if (startPressed = SDL_PointInRectFloat(&p, &startBtn))
+            {
+                /*send text to textbuffer*/
+                SDL_Color colour_red = {255, 0, 0, SDL_ALPHA_OPAQUE};
+                changeTextColour(&MM_startDisplay, colour_red);
+                // *(textBuffer + textBufferSize++) = MM_startDisplay; 
+            }
+        }
+    }
+    else if (event->type == SDL_EVENT_MOUSE_BUTTON_UP)
+    {
+        if (event->button.button == SDL_BUTTON_LEFT)
+        {
+            const SDL_FPoint p = {event->button.x, event->button.y};
+            if (startPressed && SDL_PointInRectFloat(&p, &startBtn))
+            {
+                currentState = GAME_LOOP;
+            }
+
+            startPressed = false;
+        }
+    }
+
+    return SDL_APP_CONTINUE;
 }
 
 SDL_AppResult GameLogic_Input(void *appstate, SDL_Event *event)
@@ -247,14 +337,14 @@ SDL_AppResult MainMenu_Loop(void *appdstate)
     /* Center the text and scale it up */
     // SDL_GetRenderOutputSize(renderer, &w, &h);
     // SDL_SetRenderScale(renderer, scale, scale);
-    SDL_GetTextureSize(titleTexture, &titleRect.w, &titleRect.h);
+    // SDL_GetTextureSize(titleTexture, &titleRect.w, &titleRect.h);
+    SDL_GetTextureSize(MM_titleDisplay.texture, &titleRect.w, &titleRect.h);
     titleRect.x = (WINDOW_WIDTH - titleRect.w) / 2;
     titleRect.y = (WINDOW_HEIGHT - titleRect.h) / 10;
 
-    SDL_GetTextureSize(startTexture, &startBtn.w, &startBtn.h);
+    SDL_GetTextureSize(MM_startDisplay.texture, &startBtn.w, &startBtn.h);
     startBtn.x = (WINDOW_WIDTH - startBtn.w) / 2;
     startBtn.y = (WINDOW_HEIGHT - startBtn.h) / 1.5f;
-
 
     const double now = ((double)SDL_GetTicks()) / 1000.0; /* convert from milliseconds to seconds. */
     /* choose the modulation values for the center texture. The sine wave trick makes it fade between colors smoothly. */
@@ -265,10 +355,23 @@ SDL_AppResult MainMenu_Loop(void *appdstate)
     /* Draw the title */
     SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
     SDL_RenderClear(renderer);
-    SDL_SetTextureColorModFloat(titleTexture, red, green, blue);
-    SDL_RenderTexture(renderer, titleTexture, NULL, &titleRect);
-    
-    SDL_RenderTexture(renderer, startTexture, NULL, &startBtn);
+    SDL_SetTextureColorModFloat(MM_titleDisplay.texture, red, green, blue);
+    SDL_RenderTexture(renderer, MM_titleDisplay.texture, NULL, &titleRect);
+
+    float mx, my;
+    SDL_GetMouseState(&mx, &my);
+    SDL_FPoint p = {mx, my};
+
+    if (SDL_PointInRectFloat(&p, &startBtn))
+    {
+        SDL_Color colour_darkRed = {150, 0, 0, SDL_ALPHA_OPAQUE};
+        changeTextColour(&MM_startDisplay, colour_darkRed);
+        
+    }
+    else
+        SDL_SetTextureColorModFloat(startTexture, 0.0f, 0.0f, 0.0f);
+
+    SDL_RenderTexture(renderer, MM_startDisplay.texture, NULL, &startBtn);
 
     return SDL_APP_CONTINUE;
 }
@@ -281,7 +384,7 @@ SDL_AppResult GameLogic_Loop(void *appstate)
 
     if (tickDelta >= (TICK_RATE_MILLISECONDS / GAME_SPEED_MULTIPLIER))
     {
-        tickDelta -= (TICK_RATE_MILLISECONDS / GAME_SPEED_MULTIPLIER);
+        tickDelta %= (TICK_RATE_MILLISECONDS / GAME_SPEED_MULTIPLIER);
 
         int fruitEatenCheck = 0;
 
@@ -457,4 +560,19 @@ int lengthenSnake(SDL_FRect *head, Uint64 *length, SDL_FRect *eatenFruit)
 
     fruit++;
     return 1;
+}
+
+ bool changeTextColour(DisplayText *displayText, SDL_Color colour)
+{
+    SDL_Surface *textSurface = TTF_RenderText_Blended(displayText->font, displayText->text, 0, colour);
+    if (!textSurface)
+    {
+        SDL_Log("Couldn't initialize SDL_ttf: %s\n", SDL_GetError());
+        return false;
+    }
+
+    displayText->texture = SDL_CreateTextureFromSurface(renderer, textSurface);
+    SDL_DestroySurface(textSurface);
+
+    return false;
 }
