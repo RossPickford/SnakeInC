@@ -12,3 +12,7 @@ Working on Currently:
     swaps between the pseudo one and NULL.
 
     The struct will have the string it will display, the texture it will display on, a pointer to the font,  
+
+    The struct should hold key data regarding font, such as size, colour, etc.
+
+    Potentially should create a button struct. It should include two bool variables named "pressed" and "hovering"

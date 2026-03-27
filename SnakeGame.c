@@ -16,7 +16,17 @@ typedef struct
     char *text;
     SDL_Texture *texture;
     TTF_Font *font;
-} DisplayText;
+    float fontSize;
+    SDL_Color colour;
+} TextData;
+
+typedef struct
+{
+    TextData textData;
+    SDL_FRect rect;
+    bool pressed;
+    bool hovering;
+} ButtonData;
 
 typedef enum
 {
@@ -35,16 +45,14 @@ static SDL_Renderer *renderer = NULL;
 static TTF_Font *titleFont = NULL;
 static TTF_Font *startFont = NULL;
 
-static DisplayText *textBuffer = NULL;
+static TextData *textBuffer = NULL;
 static int textBufferSize = 0;
 
-static DisplayText MM_titleDisplay;
+static TextData MM_titleData = {NULL, NULL, NULL, 0, {0, 0, 0, 0}};
 static char *MM_title = "SNAKE";
 
-static DisplayText MM_startDisplay;
+static ButtonData MM_startBtnData = {{NULL, NULL, NULL, 0, {0, 0, 0, 0}}, {0, 0, 0, 0}, false, false};
 static char *MM_startTxt = "START";
-static SDL_FRect startBtn;
-static bool startPressed = false;
 
 static SDL_FRect wallBackground;
 static SDL_FRect mainBackground;
@@ -112,7 +120,7 @@ int collisionCheck(SDL_FRect *head);
 int snakeEatFruitCheck(SDL_FRect head, SDL_FRect **eatenFruit);
 int lengthenSnake(SDL_FRect *head, Uint64 *length, SDL_FRect *eatenFruit);
 Int_Vector2 getRandomCoord();
-bool changeTextColour(DisplayText *displayText, SDL_Color colour);
+bool InitText(TextData *textData);
 
 SDL_AppResult SDL_AppInit(void **appstate, int argc, char *argv[])
 {
@@ -155,7 +163,7 @@ SDL_AppResult SDL_AppInit(void **appstate, int argc, char *argv[])
 
     prevHeadLocation.x = prevHeadLocation.y = 0;
 
-    textBuffer = (DisplayText *)malloc(sizeof(DisplayText) * TEXT_BUFFER_MAX_LENGTH);
+    textBuffer = (TextData *)malloc(sizeof(TextData) * TEXT_BUFFER_MAX_LENGTH);
 
     return SDL_APP_CONTINUE;
 }
@@ -164,6 +172,12 @@ SDL_AppResult SDL_AppEvent(void *appstate, SDL_Event *event)
 {
     if (event->type == SDL_EVENT_QUIT)
         return SDL_APP_SUCCESS;
+
+    if (event->type == SDL_EVENT_KEY_DOWN)
+    {
+        if (event->key.scancode == SDL_SCANCODE_ESCAPE)
+            return SDL_APP_SUCCESS;
+    }
 
     switch (currentState)
     {
@@ -188,11 +202,10 @@ SDL_AppResult SDL_AppIterate(void *appstate)
         break;
     }
 
-    if(textBufferSize > 0)
+    if (textBufferSize > 0)
     {
-        while(--textBufferSize > 0)
+        while (--textBufferSize > 0)
         {
-            
         }
     }
 
@@ -206,7 +219,7 @@ void SDL_AppQuit(void *appstate, SDL_AppResult result)
     free(arena);
 }
 
-//===================================================================================
+//=================================================================================== MAIN MENU
 
 bool initMainMenu(SDL_AppResult *result)
 {
@@ -224,26 +237,19 @@ bool initMainMenu(SDL_AppResult *result)
         return false;
     }
 
-    MM_titleDisplay.text = MM_title;
-    MM_titleDisplay.font = titleFont;
+    MM_titleData.text = MM_title;
+    MM_titleData.font = titleFont;
+    MM_titleData.fontSize = 150.0f;
+    MM_titleData.colour = colour_black;
 
-    MM_startDisplay.text = MM_startTxt;
-    MM_startDisplay.font = startFont;
+    MM_startBtnData.textData.text = MM_startTxt;
+    MM_startBtnData.textData.font = startFont;
+    MM_startBtnData.textData.fontSize = 20.0f;
+    MM_startBtnData.textData.colour = colour_white;
 
     /* Create the text */
-    titleText = TTF_RenderText_Blended(titleFont, MM_title, 0, colour_black);
-    startText = TTF_RenderText_Blended(startFont, MM_startTxt, 0, colour_white);
-    if (titleText && startText)
+    if (!InitText(&MM_titleData) || !InitText(&MM_startBtnData.textData))
     {
-        MM_titleDisplay.texture = SDL_CreateTextureFromSurface(renderer, titleText);
-        MM_startDisplay.texture = SDL_CreateTextureFromSurface(renderer, startText);
-
-        SDL_DestroySurface(titleText);
-        SDL_DestroySurface(startText);
-    }
-    else
-    {
-        SDL_Log("Couldn't initialize SDL_ttf: %s\n", SDL_GetError());
         *result = SDL_APP_FAILURE;
         return false;
     }
@@ -260,12 +266,13 @@ SDL_AppResult MainMenu_Input(void *appstate, SDL_Event *event)
         if (event->button.button == SDL_BUTTON_LEFT)
         {
             const SDL_FPoint p = {event->button.x, event->button.y};
-            if (startPressed = SDL_PointInRectFloat(&p, &startBtn))
+            if (MM_startBtnData.pressed = SDL_PointInRectFloat(&p, &MM_startBtnData.rect))
             {
                 /*send text to textbuffer*/
                 SDL_Color colour_red = {255, 0, 0, SDL_ALPHA_OPAQUE};
-                changeTextColour(&MM_startDisplay, colour_red);
-                // *(textBuffer + textBufferSize++) = MM_startDisplay; 
+                MM_startBtnData.textData.colour = colour_red;
+                InitText(&MM_startBtnData.textData);
+                // *(textBuffer + textBufferSize++) = MM_startBtnData;
             }
         }
     }
@@ -274,17 +281,75 @@ SDL_AppResult MainMenu_Input(void *appstate, SDL_Event *event)
         if (event->button.button == SDL_BUTTON_LEFT)
         {
             const SDL_FPoint p = {event->button.x, event->button.y};
-            if (startPressed && SDL_PointInRectFloat(&p, &startBtn))
+            if (MM_startBtnData.pressed && SDL_PointInRectFloat(&p, &MM_startBtnData.rect))
             {
                 currentState = GAME_LOOP;
             }
 
-            startPressed = false;
+            MM_startBtnData.pressed = false;
         }
     }
 
     return SDL_APP_CONTINUE;
 }
+
+SDL_AppResult MainMenu_Loop(void *appdstate)
+{
+    SDL_FRect titleRect;
+    const float scale = 1.0f;
+
+    /* Center the text and scale it up */
+    // SDL_GetRenderOutputSize(renderer, &w, &h);
+    // SDL_SetRenderScale(renderer, scale, scale);
+    // SDL_GetTextureSize(titleTexture, &titleRect.w, &titleRect.h);
+    SDL_GetTextureSize(MM_titleData.texture, &titleRect.w, &titleRect.h);
+    titleRect.x = (WINDOW_WIDTH - titleRect.w) / 2;
+    titleRect.y = (WINDOW_HEIGHT - titleRect.h) / 10;
+
+    SDL_GetTextureSize(MM_startBtnData.textData.texture, &MM_startBtnData.rect.w, &MM_startBtnData.rect.h);
+    MM_startBtnData.rect.x = (WINDOW_WIDTH - MM_startBtnData.rect.w) / 2;
+    MM_startBtnData.rect.y = (WINDOW_HEIGHT - MM_startBtnData.rect.h) / 1.5f;
+
+    const double now = ((double)SDL_GetTicks()) / 1000.0; /* convert from milliseconds to seconds. */
+    /* choose the modulation values for the center texture. The sine wave trick makes it fade between colors smoothly. */
+    const float red = (float)(0.5 + 0.5 * SDL_sin(now));
+    const float green = (float)(0.5 + 0.5 * SDL_sin(now + SDL_PI_D * 2 / 3));
+    const float blue = (float)(0.5 + 0.5 * SDL_sin((now * 2) + SDL_PI_D * 4 / 3));
+
+    /* Draw the title */
+    SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
+    SDL_RenderClear(renderer);
+    SDL_SetTextureColorModFloat(MM_titleData.texture, red, green, blue);
+    SDL_RenderTexture(renderer, MM_titleData.texture, NULL, &titleRect);
+
+    float mx, my;
+    SDL_GetMouseState(&mx, &my);
+    SDL_FPoint p = {mx, my};
+
+    SDL_Color Cgreen = {0, 255, 0, SDL_ALPHA_OPAQUE};
+    SDL_Color white = {0, 0, 0, SDL_ALPHA_OPAQUE};
+
+    if (SDL_PointInRectFloat(&p, &titleRect))
+        SDL_Log("ok");
+
+    if (!MM_startBtnData.hovering & (MM_startBtnData.hovering = SDL_PointInRectFloat(&p, &MM_startBtnData.rect)))
+    {
+        SDL_Log("Mouse in rect");
+        MM_startBtnData.textData.colour = Cgreen;
+        InitText(&MM_startBtnData.textData);
+    }
+    else if (MM_startBtnData.hovering & !(MM_startBtnData.hovering = SDL_PointInRectFloat(&p, &MM_startBtnData.rect)))
+    {
+        MM_startBtnData.textData.colour = white;
+        InitText(&MM_startBtnData.textData);
+    }
+
+    SDL_RenderTexture(renderer, MM_startBtnData.textData.texture, NULL, &MM_startBtnData.rect);
+
+    return SDL_APP_CONTINUE;
+}
+
+//================================================================================ GAME LOOP
 
 SDL_AppResult GameLogic_Input(void *appstate, SDL_Event *event)
 {
@@ -325,53 +390,6 @@ SDL_AppResult GameLogic_Input(void *appstate, SDL_Event *event)
             dir.y = 1;
         }
     }
-
-    return SDL_APP_CONTINUE;
-}
-
-SDL_AppResult MainMenu_Loop(void *appdstate)
-{
-    SDL_FRect titleRect;
-    const float scale = 1.0f;
-
-    /* Center the text and scale it up */
-    // SDL_GetRenderOutputSize(renderer, &w, &h);
-    // SDL_SetRenderScale(renderer, scale, scale);
-    // SDL_GetTextureSize(titleTexture, &titleRect.w, &titleRect.h);
-    SDL_GetTextureSize(MM_titleDisplay.texture, &titleRect.w, &titleRect.h);
-    titleRect.x = (WINDOW_WIDTH - titleRect.w) / 2;
-    titleRect.y = (WINDOW_HEIGHT - titleRect.h) / 10;
-
-    SDL_GetTextureSize(MM_startDisplay.texture, &startBtn.w, &startBtn.h);
-    startBtn.x = (WINDOW_WIDTH - startBtn.w) / 2;
-    startBtn.y = (WINDOW_HEIGHT - startBtn.h) / 1.5f;
-
-    const double now = ((double)SDL_GetTicks()) / 1000.0; /* convert from milliseconds to seconds. */
-    /* choose the modulation values for the center texture. The sine wave trick makes it fade between colors smoothly. */
-    const float red = (float)(0.5 + 0.5 * SDL_sin(now));
-    const float green = (float)(0.5 + 0.5 * SDL_sin(now + SDL_PI_D * 2 / 3));
-    const float blue = (float)(0.5 + 0.5 * SDL_sin((now * 2) + SDL_PI_D * 4 / 3));
-
-    /* Draw the title */
-    SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
-    SDL_RenderClear(renderer);
-    SDL_SetTextureColorModFloat(MM_titleDisplay.texture, red, green, blue);
-    SDL_RenderTexture(renderer, MM_titleDisplay.texture, NULL, &titleRect);
-
-    float mx, my;
-    SDL_GetMouseState(&mx, &my);
-    SDL_FPoint p = {mx, my};
-
-    if (SDL_PointInRectFloat(&p, &startBtn))
-    {
-        SDL_Color colour_darkRed = {150, 0, 0, SDL_ALPHA_OPAQUE};
-        changeTextColour(&MM_startDisplay, colour_darkRed);
-        
-    }
-    else
-        SDL_SetTextureColorModFloat(startTexture, 0.0f, 0.0f, 0.0f);
-
-    SDL_RenderTexture(renderer, MM_startDisplay.texture, NULL, &startBtn);
 
     return SDL_APP_CONTINUE;
 }
@@ -562,17 +580,22 @@ int lengthenSnake(SDL_FRect *head, Uint64 *length, SDL_FRect *eatenFruit)
     return 1;
 }
 
- bool changeTextColour(DisplayText *displayText, SDL_Color colour)
+bool InitText(TextData *textData)
 {
-    SDL_Surface *textSurface = TTF_RenderText_Blended(displayText->font, displayText->text, 0, colour);
+    // SDL_Surface *textSurface = TTF_RenderText_Blended(displayText->font, displayText->text, 0, colour);
+    TTF_SetFontSize(textData->font, textData->fontSize);
+    SDL_Surface *textSurface = TTF_RenderText_Solid(textData->font, textData->text, 0, textData->colour);
     if (!textSurface)
     {
         SDL_Log("Couldn't initialize SDL_ttf: %s\n", SDL_GetError());
         return false;
     }
 
-    displayText->texture = SDL_CreateTextureFromSurface(renderer, textSurface);
+    if (textData->texture != NULL)
+        SDL_DestroyTexture(textData->texture);
+
+    textData->texture = SDL_CreateTextureFromSurface(renderer, textSurface);
     SDL_DestroySurface(textSurface);
 
-    return false;
+    return true;
 }
