@@ -329,7 +329,7 @@ SDL_AppResult MainMenu_Loop(void *appdstate)
     SDL_Color Cgreen = {0, 255, 0, SDL_ALPHA_OPAQUE};
     SDL_Color white = {0, 0, 0, SDL_ALPHA_OPAQUE};
 
-    if (SDL_PointInRectFloat(&p, &titleRect))
+    if (SDL_PointInRectFloat(&p, &titleRect)) //not sure why this is not working
         SDL_Log("ok");
 
     if (!MM_startBtnData.hovering & (MM_startBtnData.hovering = SDL_PointInRectFloat(&p, &MM_startBtnData.rect)))
