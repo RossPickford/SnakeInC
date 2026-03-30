@@ -39,6 +39,8 @@ typedef enum
 
 static E_State currentState = MAIN_MENU;
 
+static SDL_FPoint mousePos;
+
 static SDL_Window *window = NULL;
 static SDL_Renderer *renderer = NULL;
 
@@ -261,18 +263,19 @@ SDL_AppResult MainMenu_Input(void *appstate, SDL_Event *event)
 {
     SDL_ConvertEventToRenderCoordinates(renderer, event);
 
+    mousePos.x = event->button.x;
+    mousePos.y = event->button.y;
+
     if (event->type == SDL_EVENT_MOUSE_BUTTON_DOWN)
     {
         if (event->button.button == SDL_BUTTON_LEFT)
         {
             const SDL_FPoint p = {event->button.x, event->button.y};
-            if (MM_startBtnData.pressed = SDL_PointInRectFloat(&p, &MM_startBtnData.rect))
+            if (MM_startBtnData.pressed = SDL_PointInRectFloat(&mousePos, &MM_startBtnData.rect))
             {
-                /*send text to textbuffer*/
                 SDL_Color colour_red = {255, 0, 0, SDL_ALPHA_OPAQUE};
                 MM_startBtnData.textData.colour = colour_red;
                 InitText(&MM_startBtnData.textData);
-                // *(textBuffer + textBufferSize++) = MM_startBtnData;
             }
         }
     }
@@ -281,7 +284,7 @@ SDL_AppResult MainMenu_Input(void *appstate, SDL_Event *event)
         if (event->button.button == SDL_BUTTON_LEFT)
         {
             const SDL_FPoint p = {event->button.x, event->button.y};
-            if (MM_startBtnData.pressed && SDL_PointInRectFloat(&p, &MM_startBtnData.rect))
+            if (MM_startBtnData.pressed && SDL_PointInRectFloat(&mousePos, &MM_startBtnData.rect))
             {
                 currentState = GAME_LOOP;
             }
@@ -310,6 +313,26 @@ SDL_AppResult MainMenu_Loop(void *appdstate)
     MM_startBtnData.rect.x = (WINDOW_WIDTH - MM_startBtnData.rect.w) / 2;
     MM_startBtnData.rect.y = (WINDOW_HEIGHT - MM_startBtnData.rect.h) / 1.5f;
 
+    SDL_Color Cgreen = {0, 255, 0, SDL_ALPHA_OPAQUE};
+    SDL_Color white = {255, 255, 255, SDL_ALPHA_OPAQUE};
+
+    
+    if (!MM_startBtnData.hovering && SDL_PointInRectFloat(&mousePos, &MM_startBtnData.rect))
+    {
+        SDL_Log("Mouse in rect");
+        SDL_Log("%d", MM_startBtnData.hovering);
+        MM_startBtnData.textData.colour = Cgreen;
+        InitText(&MM_startBtnData.textData);
+        MM_startBtnData.hovering = true;
+    }
+    else if (MM_startBtnData.hovering && !SDL_PointInRectFloat(&mousePos, &MM_startBtnData.rect))
+    {
+        SDL_Log("mouse not in rect");
+        MM_startBtnData.textData.colour = white;
+        InitText(&MM_startBtnData.textData);
+        MM_startBtnData.hovering = false;
+    }
+
     const double now = ((double)SDL_GetTicks()) / 1000.0; /* convert from milliseconds to seconds. */
     /* choose the modulation values for the center texture. The sine wave trick makes it fade between colors smoothly. */
     const float red = (float)(0.5 + 0.5 * SDL_sin(now));
@@ -321,28 +344,6 @@ SDL_AppResult MainMenu_Loop(void *appdstate)
     SDL_RenderClear(renderer);
     SDL_SetTextureColorModFloat(MM_titleData.texture, red, green, blue);
     SDL_RenderTexture(renderer, MM_titleData.texture, NULL, &titleRect);
-
-    float mx, my;
-    SDL_GetMouseState(&mx, &my);
-    SDL_FPoint p = {mx, my};
-
-    SDL_Color Cgreen = {0, 255, 0, SDL_ALPHA_OPAQUE};
-    SDL_Color white = {0, 0, 0, SDL_ALPHA_OPAQUE};
-
-    if (SDL_PointInRectFloat(&p, &titleRect)) //not sure why this is not working
-        SDL_Log("ok");
-
-    if (!MM_startBtnData.hovering & (MM_startBtnData.hovering = SDL_PointInRectFloat(&p, &MM_startBtnData.rect)))
-    {
-        SDL_Log("Mouse in rect");
-        MM_startBtnData.textData.colour = Cgreen;
-        InitText(&MM_startBtnData.textData);
-    }
-    else if (MM_startBtnData.hovering & !(MM_startBtnData.hovering = SDL_PointInRectFloat(&p, &MM_startBtnData.rect)))
-    {
-        MM_startBtnData.textData.colour = white;
-        InitText(&MM_startBtnData.textData);
-    }
 
     SDL_RenderTexture(renderer, MM_startBtnData.textData.texture, NULL, &MM_startBtnData.rect);
 
