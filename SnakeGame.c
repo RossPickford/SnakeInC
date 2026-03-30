@@ -58,9 +58,11 @@ static char *MM_startTxt = "START";
 static TextData MM_difficultyData = {NULL, NULL, NULL, 0, {0, 0, 0, 0}};
 static ButtonData MM_difficultyBtnData = {{NULL, NULL, NULL, 0, {0, 0, 0, 0}}, {0, 0, 0, 0}, false, false};
 static char *MM_difficultyTxt = "DIFFICULTY ";
-static char *MM_difficultyEasyTxt = "EASY";
+static char *MM_difficultyEasyTxt = "EASY  ";
 static char *MM_difficultyMediumTxt = "MEDIUM";
-static char *MM_difficultyHardTxt = "HARD";
+static char *MM_difficultyHardTxt = "HARD  ";
+static char *nextDifficulty;
+static bool changeDifficulty = false;
 
 static SDL_FRect wallBackground;
 static SDL_FRect mainBackground;
@@ -77,12 +79,17 @@ static Uint64 fruitSize = 3;
 static Int_Vector2 dir;
 static Int_Vector2 prevHeadLocation;
 
+static Uint64 tickRateMilliseconds = 0;
 static Uint64 previousTick = 0, tickDelta = 0;
 static Uint64 previousEventTick = 0;
 
 #define GAME_SPEED_MULTIPLIER 1
 #define TICK_RATE_MILLISECONDS 250
 #define INPUT_THRESHOLD 150
+
+#define EASY 250
+#define MEDIUM 175
+#define HARD 100
 
 #define WINDOW_WIDTH 640
 #define WINDOW_HEIGHT 480
@@ -127,7 +134,8 @@ int snakeEatFruitCheck(SDL_FRect head, SDL_FRect **eatenFruit);
 int lengthenSnake(SDL_FRect *head, Uint64 *length, SDL_FRect *eatenFruit);
 Int_Vector2 getRandomCoord();
 bool InitText(TextData *textData);
-bool buttonMouseHover(ButtonData *btnData);
+void buttonMouseHover(ButtonData *btnData);
+bool moveDifficultText(TextData *txtData, TextData *temp, float speed, float timeDelta, char *nextText);
 
 SDL_AppResult SDL_AppInit(void **appstate, int argc, char *argv[])
 {
@@ -266,6 +274,8 @@ bool initMainMenu(SDL_AppResult *result)
         return false;
     }
 
+    tickRateMilliseconds = EASY;
+
     /* Set Title position */
     SDL_GetTextureSize(MM_titleData.texture, &MM_titleData.rect.w, &MM_titleData.rect.h);
     MM_titleData.rect.x = (WINDOW_WIDTH - MM_titleData.rect.w) / 2;
@@ -329,11 +339,22 @@ SDL_AppResult MainMenu_Input(void *appstate, SDL_Event *event)
             {
                 MM_difficultyBtnData.textData.colour = MM_difficultyBtnData.displayColour;
 
-                MM_difficultyData.text = MM_difficultyData.text == MM_difficultyEasyTxt ? MM_difficultyMediumTxt : MM_difficultyData.text == MM_difficultyMediumTxt ? MM_difficultyHardTxt
-                                                                                                                                                                    : MM_difficultyEasyTxt;
+                if (!changeDifficulty)
+                {
 
-                InitText(&MM_difficultyBtnData.textData);
-                InitText(&MM_difficultyData);
+                    nextDifficulty = MM_difficultyData.text == MM_difficultyEasyTxt ? MM_difficultyMediumTxt : MM_difficultyData.text == MM_difficultyMediumTxt ? MM_difficultyHardTxt
+                                                                                                                                                                : MM_difficultyEasyTxt;
+                    /* Set the difficulty speed */
+                    if (nextDifficulty == MM_difficultyEasyTxt)
+                        tickRateMilliseconds = EASY;
+                    if (nextDifficulty == MM_difficultyMediumTxt)
+                        tickRateMilliseconds = MEDIUM;
+                    if (nextDifficulty == MM_difficultyHardTxt)
+                        tickRateMilliseconds = HARD;
+
+                    InitText(&MM_difficultyBtnData.textData);
+                    changeDifficulty = true;
+                }
             }
 
             MM_startBtnData.pressed = false;
@@ -345,7 +366,11 @@ SDL_AppResult MainMenu_Input(void *appstate, SDL_Event *event)
 
 SDL_AppResult MainMenu_Loop(void *appdstate)
 {
-    const double now = ((double)SDL_GetTicks()) / 1000.0; /* convert from milliseconds to seconds. */
+    const Uint64 currentTick = (Uint64)SDL_GetTicks();
+    tickDelta = currentTick - previousTick;
+    previousTick = currentTick;
+
+    double DtickDelta = tickDelta / 1000.0; // convert to seconds
 
     SDL_Rect diffViewport;
 
@@ -356,6 +381,7 @@ SDL_AppResult MainMenu_Loop(void *appdstate)
     buttonMouseHover(&MM_startBtnData);
     buttonMouseHover(&MM_difficultyBtnData);
 
+    const double now = currentTick / 1000.0; /* convert from milliseconds to seconds. */
     /* choose the modulation values for the center texture. The sine wave trick makes it fade between colors smoothly. */
     const float red = (float)(0.5 + 0.5 * SDL_sin(now));
     const float green = (float)(0.5 + 0.5 * SDL_sin(now + SDL_PI_D * 2 / 3));
@@ -378,7 +404,14 @@ SDL_AppResult MainMenu_Loop(void *appdstate)
     SDL_RenderTexture(renderer, MM_startBtnData.textData.texture, NULL, &MM_startBtnData.textData.rect);
     SDL_RenderTexture(renderer, MM_difficultyBtnData.textData.texture, NULL, &MM_difficultyBtnData.textData.rect);
 
+    /* Draw difficulty buttons */
     SDL_SetRenderViewport(renderer, &diffViewport);
+    if (changeDifficulty)
+    {
+        TextData temp;
+        changeDifficulty = moveDifficultText(&MM_difficultyData, &temp, 350, DtickDelta, nextDifficulty);
+        SDL_RenderTexture(renderer, temp.texture, NULL, &temp.rect);
+    }
     SDL_RenderTexture(renderer, MM_difficultyData.texture, NULL, &MM_difficultyData.rect);
 
     SDL_SetRenderViewport(renderer, NULL);
@@ -390,13 +423,6 @@ SDL_AppResult MainMenu_Loop(void *appdstate)
 
 SDL_AppResult GameLogic_Input(void *appstate, SDL_Event *event)
 {
-    // Uint64 eventTick = SDL_GetTicks();
-
-    // if ((eventTick - previousEventTick) < INPUT_THRESHOLD)
-    // return SDL_APP_CONTINUE;
-
-    // previousEventTick = eventTick;
-
     if ((int)snake->x == prevHeadLocation.x && (int)snake->y == prevHeadLocation.y)
         return SDL_APP_CONTINUE;
 
@@ -437,9 +463,9 @@ SDL_AppResult GameLogic_Loop(void *appstate)
 
     tickDelta += (currentTick - previousTick);
 
-    if (tickDelta >= (TICK_RATE_MILLISECONDS / GAME_SPEED_MULTIPLIER))
+    if (tickDelta >= tickRateMilliseconds)
     {
-        tickDelta %= (TICK_RATE_MILLISECONDS / GAME_SPEED_MULTIPLIER);
+        tickDelta %= tickRateMilliseconds;
 
         int fruitEatenCheck = 0;
 
@@ -637,7 +663,7 @@ bool InitText(TextData *textData)
     return true;
 }
 
-bool buttonMouseHover(ButtonData *btnData)
+void buttonMouseHover(ButtonData *btnData)
 {
     if (!btnData->hovering && SDL_PointInRectFloat(&mousePos, &btnData->textData.rect))
     {
@@ -651,4 +677,35 @@ bool buttonMouseHover(ButtonData *btnData)
         InitText(&btnData->textData);
         btnData->hovering = false;
     }
+}
+
+/* intended to be used "recursively" until the x coord reaches the negative texure width */
+bool moveDifficultText(TextData *txtData, TextData *temp, float speed, float timeDelta, char *nextText)
+{
+    txtData->rect.x -= speed * timeDelta;
+
+    if (temp != NULL)
+    {
+        temp->text = nextText;
+        temp->font = txtData->font;
+        temp->fontSize = txtData->fontSize;
+        temp->colour = txtData->colour;
+        InitText(temp);
+
+        SDL_GetTextureSize(temp->texture, &temp->rect.w, &temp->rect.h);
+        temp->rect.x = txtData->rect.x + txtData->rect.w;
+        temp->rect.y = 0.0f;
+    }
+    // InitText(txtData);
+
+    if (txtData->rect.x < -txtData->texture->w)
+    {
+        txtData->rect.x = 0.0f;
+        txtData->text = nextText;
+
+        InitText(txtData);
+        return false;
+    }
+
+    return true;
 }
