@@ -18,12 +18,14 @@ typedef struct
     TTF_Font *font;
     float fontSize;
     SDL_Color colour;
+    SDL_FRect rect;
 } TextData;
 
 typedef struct
 {
     TextData textData;
-    SDL_FRect rect;
+    SDL_Color displayColour;
+    SDL_Color highlightColour;
     bool pressed;
     bool hovering;
 } ButtonData;
@@ -47,14 +49,18 @@ static SDL_Renderer *renderer = NULL;
 static TTF_Font *titleFont = NULL;
 static TTF_Font *startFont = NULL;
 
-static TextData *textBuffer = NULL;
-static int textBufferSize = 0;
-
 static TextData MM_titleData = {NULL, NULL, NULL, 0, {0, 0, 0, 0}};
 static char *MM_title = "SNAKE";
 
 static ButtonData MM_startBtnData = {{NULL, NULL, NULL, 0, {0, 0, 0, 0}}, {0, 0, 0, 0}, false, false};
 static char *MM_startTxt = "START";
+
+static TextData MM_difficultyData = {NULL, NULL, NULL, 0, {0, 0, 0, 0}};
+static ButtonData MM_difficultyBtnData = {{NULL, NULL, NULL, 0, {0, 0, 0, 0}}, {0, 0, 0, 0}, false, false};
+static char *MM_difficultyTxt = "DIFFICULTY ";
+static char *MM_difficultyEasyTxt = "EASY";
+static char *MM_difficultyMediumTxt = "MEDIUM";
+static char *MM_difficultyHardTxt = "HARD";
 
 static SDL_FRect wallBackground;
 static SDL_FRect mainBackground;
@@ -73,8 +79,6 @@ static Int_Vector2 prevHeadLocation;
 
 static Uint64 previousTick = 0, tickDelta = 0;
 static Uint64 previousEventTick = 0;
-
-#define TEXT_BUFFER_MAX_LENGTH 5
 
 #define GAME_SPEED_MULTIPLIER 1
 #define TICK_RATE_MILLISECONDS 250
@@ -123,6 +127,7 @@ int snakeEatFruitCheck(SDL_FRect head, SDL_FRect **eatenFruit);
 int lengthenSnake(SDL_FRect *head, Uint64 *length, SDL_FRect *eatenFruit);
 Int_Vector2 getRandomCoord();
 bool InitText(TextData *textData);
+bool buttonMouseHover(ButtonData *btnData);
 
 SDL_AppResult SDL_AppInit(void **appstate, int argc, char *argv[])
 {
@@ -165,8 +170,6 @@ SDL_AppResult SDL_AppInit(void **appstate, int argc, char *argv[])
 
     prevHeadLocation.x = prevHeadLocation.y = 0;
 
-    textBuffer = (TextData *)malloc(sizeof(TextData) * TEXT_BUFFER_MAX_LENGTH);
-
     return SDL_APP_CONTINUE;
 }
 
@@ -204,13 +207,6 @@ SDL_AppResult SDL_AppIterate(void *appstate)
         break;
     }
 
-    if (textBufferSize > 0)
-    {
-        while (--textBufferSize > 0)
-        {
-        }
-    }
-
     SDL_RenderPresent(renderer);
 
     return result;
@@ -227,6 +223,8 @@ bool initMainMenu(SDL_AppResult *result)
 {
     SDL_Color colour_black = {0, 0, 0, SDL_ALPHA_OPAQUE};
     SDL_Color colour_white = {255, 255, 255, SDL_ALPHA_OPAQUE};
+    SDL_Color colour_green = {0, 255, 0, SDL_ALPHA_OPAQUE};
+    SDL_Color colour_blue = {0, 0, 255, SDL_ALPHA_OPAQUE};
     SDL_Surface *titleText;
     SDL_Surface *startText;
 
@@ -247,14 +245,45 @@ bool initMainMenu(SDL_AppResult *result)
     MM_startBtnData.textData.text = MM_startTxt;
     MM_startBtnData.textData.font = startFont;
     MM_startBtnData.textData.fontSize = 20.0f;
-    MM_startBtnData.textData.colour = colour_white;
+    MM_startBtnData.displayColour = MM_startBtnData.textData.colour = colour_white;
+    MM_startBtnData.highlightColour = colour_green;
+
+    MM_difficultyBtnData.textData.text = MM_difficultyTxt;
+    MM_difficultyBtnData.textData.font = startFont;
+    MM_difficultyBtnData.textData.fontSize = 20.0f;
+    MM_difficultyBtnData.displayColour = MM_difficultyBtnData.textData.colour = colour_white;
+    MM_difficultyBtnData.highlightColour = colour_green;
+
+    MM_difficultyData.text = MM_difficultyEasyTxt;
+    MM_difficultyData.font = startFont;
+    MM_difficultyData.fontSize = 20.0f;
+    MM_difficultyData.colour = colour_blue;
 
     /* Create the text */
-    if (!InitText(&MM_titleData) || !InitText(&MM_startBtnData.textData))
+    if (!InitText(&MM_titleData) || !InitText(&MM_startBtnData.textData) || !InitText(&MM_difficultyData) || !InitText(&MM_difficultyBtnData.textData))
     {
         *result = SDL_APP_FAILURE;
         return false;
     }
+
+    /* Set Title position */
+    SDL_GetTextureSize(MM_titleData.texture, &MM_titleData.rect.w, &MM_titleData.rect.h);
+    MM_titleData.rect.x = (WINDOW_WIDTH - MM_titleData.rect.w) / 2;
+    MM_titleData.rect.y = (WINDOW_HEIGHT - MM_titleData.rect.h) / 10;
+
+    /* Set Start button position */
+    SDL_GetTextureSize(MM_startBtnData.textData.texture, &MM_startBtnData.textData.rect.w, &MM_startBtnData.textData.rect.h);
+    MM_startBtnData.textData.rect.x = (WINDOW_WIDTH - MM_startBtnData.textData.rect.w) / 2;
+    MM_startBtnData.textData.rect.y = (WINDOW_HEIGHT - MM_startBtnData.textData.rect.h) / 2;
+
+    /* Set Difficulty text and button position */
+    SDL_GetTextureSize(MM_difficultyBtnData.textData.texture, &MM_difficultyBtnData.textData.rect.w, &MM_difficultyBtnData.textData.rect.h);
+    SDL_GetTextureSize(MM_difficultyData.texture, &MM_difficultyData.rect.w, &MM_difficultyData.rect.h);
+
+    MM_difficultyBtnData.textData.rect.x = (WINDOW_WIDTH - (MM_difficultyBtnData.textData.rect.w + MM_difficultyData.rect.w)) / 2;
+    MM_difficultyBtnData.textData.rect.y = MM_startBtnData.textData.rect.y + (MM_startBtnData.textData.rect.h * 1.5f);
+    MM_difficultyData.rect.x = 0.0f; // Coords are at 0,0 as this will be displayed through a viewport.
+    MM_difficultyData.rect.y = 0.0f;
 
     return true;
 }
@@ -270,12 +299,18 @@ SDL_AppResult MainMenu_Input(void *appstate, SDL_Event *event)
     {
         if (event->button.button == SDL_BUTTON_LEFT)
         {
-            const SDL_FPoint p = {event->button.x, event->button.y};
-            if (MM_startBtnData.pressed = SDL_PointInRectFloat(&mousePos, &MM_startBtnData.rect))
+            if (MM_startBtnData.pressed = SDL_PointInRectFloat(&mousePos, &MM_startBtnData.textData.rect))
             {
                 SDL_Color colour_red = {255, 0, 0, SDL_ALPHA_OPAQUE};
                 MM_startBtnData.textData.colour = colour_red;
                 InitText(&MM_startBtnData.textData);
+            }
+
+            if (MM_difficultyBtnData.pressed = SDL_PointInRectFloat(&mousePos, &MM_difficultyBtnData.textData.rect))
+            {
+                SDL_Color colour_red = {255, 0, 0, SDL_ALPHA_OPAQUE};
+                MM_difficultyBtnData.textData.colour = colour_red;
+                InitText(&MM_difficultyBtnData.textData);
             }
         }
     }
@@ -283,10 +318,22 @@ SDL_AppResult MainMenu_Input(void *appstate, SDL_Event *event)
     {
         if (event->button.button == SDL_BUTTON_LEFT)
         {
-            const SDL_FPoint p = {event->button.x, event->button.y};
-            if (MM_startBtnData.pressed && SDL_PointInRectFloat(&mousePos, &MM_startBtnData.rect))
+            if (MM_startBtnData.pressed && SDL_PointInRectFloat(&mousePos, &MM_startBtnData.textData.rect))
             {
+                MM_startBtnData.textData.colour = MM_startBtnData.displayColour;
+                InitText(&MM_startBtnData.textData);
                 currentState = GAME_LOOP;
+            }
+
+            if (MM_difficultyBtnData.pressed && SDL_PointInRectFloat(&mousePos, &MM_difficultyBtnData.textData.rect))
+            {
+                MM_difficultyBtnData.textData.colour = MM_difficultyBtnData.displayColour;
+
+                MM_difficultyData.text = MM_difficultyData.text == MM_difficultyEasyTxt ? MM_difficultyMediumTxt : MM_difficultyData.text == MM_difficultyMediumTxt ? MM_difficultyHardTxt
+                                                                                                                                                                    : MM_difficultyEasyTxt;
+
+                InitText(&MM_difficultyBtnData.textData);
+                InitText(&MM_difficultyData);
             }
 
             MM_startBtnData.pressed = false;
@@ -298,54 +345,43 @@ SDL_AppResult MainMenu_Input(void *appstate, SDL_Event *event)
 
 SDL_AppResult MainMenu_Loop(void *appdstate)
 {
-    SDL_FRect titleRect;
-    const float scale = 1.0f;
+    const double now = ((double)SDL_GetTicks()) / 1000.0; /* convert from milliseconds to seconds. */
 
-    /* Center the text and scale it up */
-    // SDL_GetRenderOutputSize(renderer, &w, &h);
-    // SDL_SetRenderScale(renderer, scale, scale);
-    // SDL_GetTextureSize(titleTexture, &titleRect.w, &titleRect.h);
-    SDL_GetTextureSize(MM_titleData.texture, &titleRect.w, &titleRect.h);
-    titleRect.x = (WINDOW_WIDTH - titleRect.w) / 2;
-    titleRect.y = (WINDOW_HEIGHT - titleRect.h) / 10;
-
-    SDL_GetTextureSize(MM_startBtnData.textData.texture, &MM_startBtnData.rect.w, &MM_startBtnData.rect.h);
-    MM_startBtnData.rect.x = (WINDOW_WIDTH - MM_startBtnData.rect.w) / 2;
-    MM_startBtnData.rect.y = (WINDOW_HEIGHT - MM_startBtnData.rect.h) / 1.5f;
+    SDL_Rect diffViewport;
 
     SDL_Color Cgreen = {0, 255, 0, SDL_ALPHA_OPAQUE};
     SDL_Color white = {255, 255, 255, SDL_ALPHA_OPAQUE};
 
-    
-    if (!MM_startBtnData.hovering && SDL_PointInRectFloat(&mousePos, &MM_startBtnData.rect))
-    {
-        SDL_Log("Mouse in rect");
-        SDL_Log("%d", MM_startBtnData.hovering);
-        MM_startBtnData.textData.colour = Cgreen;
-        InitText(&MM_startBtnData.textData);
-        MM_startBtnData.hovering = true;
-    }
-    else if (MM_startBtnData.hovering && !SDL_PointInRectFloat(&mousePos, &MM_startBtnData.rect))
-    {
-        SDL_Log("mouse not in rect");
-        MM_startBtnData.textData.colour = white;
-        InitText(&MM_startBtnData.textData);
-        MM_startBtnData.hovering = false;
-    }
+    /* check if the mouse is hovering over a button*/
+    buttonMouseHover(&MM_startBtnData);
+    buttonMouseHover(&MM_difficultyBtnData);
 
-    const double now = ((double)SDL_GetTicks()) / 1000.0; /* convert from milliseconds to seconds. */
     /* choose the modulation values for the center texture. The sine wave trick makes it fade between colors smoothly. */
     const float red = (float)(0.5 + 0.5 * SDL_sin(now));
     const float green = (float)(0.5 + 0.5 * SDL_sin(now + SDL_PI_D * 2 / 3));
     const float blue = (float)(0.5 + 0.5 * SDL_sin((now * 2) + SDL_PI_D * 4 / 3));
 
+    /*set the viewport size*/
+    diffViewport.x = MM_difficultyBtnData.textData.rect.x + MM_difficultyBtnData.textData.rect.w;
+    diffViewport.y = MM_difficultyBtnData.textData.rect.y;
+    diffViewport.w = MM_difficultyData.rect.w;
+    diffViewport.h = MM_difficultyData.rect.h;
+
+    SDL_SetRenderViewport(renderer, NULL);
+
     /* Draw the title */
     SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
     SDL_RenderClear(renderer);
     SDL_SetTextureColorModFloat(MM_titleData.texture, red, green, blue);
-    SDL_RenderTexture(renderer, MM_titleData.texture, NULL, &titleRect);
+    SDL_RenderTexture(renderer, MM_titleData.texture, NULL, &MM_titleData.rect);
 
-    SDL_RenderTexture(renderer, MM_startBtnData.textData.texture, NULL, &MM_startBtnData.rect);
+    SDL_RenderTexture(renderer, MM_startBtnData.textData.texture, NULL, &MM_startBtnData.textData.rect);
+    SDL_RenderTexture(renderer, MM_difficultyBtnData.textData.texture, NULL, &MM_difficultyBtnData.textData.rect);
+
+    SDL_SetRenderViewport(renderer, &diffViewport);
+    SDL_RenderTexture(renderer, MM_difficultyData.texture, NULL, &MM_difficultyData.rect);
+
+    SDL_SetRenderViewport(renderer, NULL);
 
     return SDL_APP_CONTINUE;
 }
@@ -599,4 +635,20 @@ bool InitText(TextData *textData)
     SDL_DestroySurface(textSurface);
 
     return true;
+}
+
+bool buttonMouseHover(ButtonData *btnData)
+{
+    if (!btnData->hovering && SDL_PointInRectFloat(&mousePos, &btnData->textData.rect))
+    {
+        btnData->textData.colour = btnData->highlightColour;
+        InitText(&btnData->textData);
+        btnData->hovering = true;
+    }
+    else if (btnData->hovering && !SDL_PointInRectFloat(&mousePos, &btnData->textData.rect))
+    {
+        btnData->textData.colour = btnData->displayColour;
+        InitText(&btnData->textData);
+        btnData->hovering = false;
+    }
 }
