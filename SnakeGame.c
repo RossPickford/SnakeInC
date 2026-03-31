@@ -5,6 +5,24 @@
 #include <stdlib.h>
 #include <math.h>
 
+typedef enum
+{
+    MAIN_MENU,
+    GAME_START,
+    GAME_LOOP,
+    GAME_PAUSE,
+    GAME_OVER,
+} E_GameState;
+
+typedef enum
+{
+    PRESSED,
+    RELEASED,
+    HOVERING,
+    NORMAL,
+    NONE,
+} E_ButtonState;
+
 typedef struct
 {
     int x;
@@ -26,20 +44,14 @@ typedef struct
     TextData textData;
     SDL_Color displayColour;
     SDL_Color highlightColour;
+    SDL_Color selectColour;
+    E_ButtonState currentState;
+    E_ButtonState previousState;
     bool pressed;
     bool hovering;
 } ButtonData;
 
-typedef enum
-{
-    MAIN_MENU,
-    GAME_START,
-    GAME_LOOP,
-    GAME_PAUSE,
-    GAME_OVER,
-} E_State;
-
-static E_State currentState = MAIN_MENU;
+static E_GameState currentGameState = MAIN_MENU;
 
 static SDL_FPoint mousePos;
 
@@ -49,20 +61,20 @@ static SDL_Renderer *renderer = NULL;
 static TTF_Font *titleFont = NULL;
 static TTF_Font *startFont = NULL;
 
-static TextData MM_titleData = {NULL, NULL, NULL, 0, {0, 0, 0, 0}};
+static TextData MM_titleData;
 static char *MM_title = "SNAKE";
 
-static ButtonData MM_startBtnData = {{NULL, NULL, NULL, 0, {0, 0, 0, 0}}, {0, 0, 0, 0}, false, false};
+static ButtonData MM_startBtnData;
 static char *MM_startTxt = "START";
 
-static TextData MM_difficultyData = {NULL, NULL, NULL, 0, {0, 0, 0, 0}};
-static ButtonData MM_difficultyBtnData = {{NULL, NULL, NULL, 0, {0, 0, 0, 0}}, {0, 0, 0, 0}, false, false};
+static TextData MM_difficultyData;
+static ButtonData MM_difficultyBtnData;
 static char *MM_difficultyTxt = "DIFFICULTY ";
 static char *MM_difficultyEasyTxt = "EASY  ";
 static char *MM_difficultyMediumTxt = "MEDIUM";
 static char *MM_difficultyHardTxt = "HARD  ";
 static char *nextDifficulty;
-static bool changeDifficulty = false;
+static bool changingDifficulty = false;
 
 static SDL_FRect wallBackground;
 static SDL_FRect mainBackground;
@@ -137,6 +149,10 @@ bool InitText(TextData *textData);
 void buttonMouseHover(ButtonData *btnData);
 bool moveDifficultText(TextData *txtData, TextData *temp, float speed, float timeDelta, char *nextText);
 
+SDL_Color getButtonTextColour(ButtonData *btnData);
+bool ChangeButtonState(ButtonData *btnData, E_ButtonState btnState);
+bool CheckButtonState(ButtonData *btnData, SDL_Event *event);
+
 SDL_AppResult SDL_AppInit(void **appstate, int argc, char *argv[])
 {
     if (!SDL_Init(SDL_INIT_VIDEO))
@@ -192,7 +208,7 @@ SDL_AppResult SDL_AppEvent(void *appstate, SDL_Event *event)
             return SDL_APP_SUCCESS;
     }
 
-    switch (currentState)
+    switch (currentGameState)
     {
     case MAIN_MENU:
         return MainMenu_Input(appstate, event);
@@ -205,7 +221,7 @@ SDL_AppResult SDL_AppIterate(void *appstate)
 {
     SDL_AppResult result;
 
-    switch (currentState)
+    switch (currentGameState)
     {
     case MAIN_MENU:
         result = MainMenu_Loop(appstate);
@@ -231,6 +247,7 @@ bool initMainMenu(SDL_AppResult *result)
 {
     SDL_Color colour_black = {0, 0, 0, SDL_ALPHA_OPAQUE};
     SDL_Color colour_white = {255, 255, 255, SDL_ALPHA_OPAQUE};
+    SDL_Color colour_red = {255, 0, 0, SDL_ALPHA_OPAQUE};
     SDL_Color colour_green = {0, 255, 0, SDL_ALPHA_OPAQUE};
     SDL_Color colour_blue = {0, 0, 255, SDL_ALPHA_OPAQUE};
     SDL_Surface *titleText;
@@ -253,14 +270,18 @@ bool initMainMenu(SDL_AppResult *result)
     MM_startBtnData.textData.text = MM_startTxt;
     MM_startBtnData.textData.font = startFont;
     MM_startBtnData.textData.fontSize = 20.0f;
+    MM_startBtnData.currentState = NORMAL;
     MM_startBtnData.displayColour = MM_startBtnData.textData.colour = colour_white;
     MM_startBtnData.highlightColour = colour_green;
+    MM_startBtnData.selectColour = colour_red;
 
     MM_difficultyBtnData.textData.text = MM_difficultyTxt;
     MM_difficultyBtnData.textData.font = startFont;
     MM_difficultyBtnData.textData.fontSize = 20.0f;
+    MM_difficultyBtnData.currentState = NORMAL;
     MM_difficultyBtnData.displayColour = MM_difficultyBtnData.textData.colour = colour_white;
     MM_difficultyBtnData.highlightColour = colour_green;
+    MM_difficultyBtnData.selectColour = colour_red;
 
     MM_difficultyData.text = MM_difficultyEasyTxt;
     MM_difficultyData.font = startFont;
@@ -305,7 +326,28 @@ SDL_AppResult MainMenu_Input(void *appstate, SDL_Event *event)
     mousePos.x = event->button.x;
     mousePos.y = event->button.y;
 
-    if (event->type == SDL_EVENT_MOUSE_BUTTON_DOWN)
+    if (CheckButtonState(&MM_startBtnData, event) && MM_startBtnData.currentState == RELEASED)
+        currentGameState = GAME_LOOP;
+
+    if (CheckButtonState(&MM_difficultyBtnData, event) && MM_difficultyBtnData.currentState == RELEASED)
+    {
+        if (!changingDifficulty)
+        {
+            nextDifficulty = MM_difficultyData.text == MM_difficultyEasyTxt ? MM_difficultyMediumTxt : MM_difficultyData.text == MM_difficultyMediumTxt ? MM_difficultyHardTxt
+                                                                                                                                                        : MM_difficultyEasyTxt;
+            // Set the difficulty speed
+            if (nextDifficulty == MM_difficultyEasyTxt)
+                tickRateMilliseconds = EASY;
+            if (nextDifficulty == MM_difficultyMediumTxt)
+                tickRateMilliseconds = MEDIUM;
+            if (nextDifficulty == MM_difficultyHardTxt)
+                tickRateMilliseconds = HARD;
+
+            changingDifficulty = true;
+        }
+    }
+
+    /* if (event->type == SDL_EVENT_MOUSE_BUTTON_DOWN)
     {
         if (event->button.button == SDL_BUTTON_LEFT)
         {
@@ -332,19 +374,19 @@ SDL_AppResult MainMenu_Input(void *appstate, SDL_Event *event)
             {
                 MM_startBtnData.textData.colour = MM_startBtnData.displayColour;
                 InitText(&MM_startBtnData.textData);
-                currentState = GAME_LOOP;
+                currentGameState = GAME_LOOP;
             }
 
             if (MM_difficultyBtnData.pressed && SDL_PointInRectFloat(&mousePos, &MM_difficultyBtnData.textData.rect))
             {
                 MM_difficultyBtnData.textData.colour = MM_difficultyBtnData.displayColour;
 
-                if (!changeDifficulty)
+                if (!changingDifficulty)
                 {
 
                     nextDifficulty = MM_difficultyData.text == MM_difficultyEasyTxt ? MM_difficultyMediumTxt : MM_difficultyData.text == MM_difficultyMediumTxt ? MM_difficultyHardTxt
                                                                                                                                                                 : MM_difficultyEasyTxt;
-                    /* Set the difficulty speed */
+                    // Set the difficulty speed
                     if (nextDifficulty == MM_difficultyEasyTxt)
                         tickRateMilliseconds = EASY;
                     if (nextDifficulty == MM_difficultyMediumTxt)
@@ -353,13 +395,13 @@ SDL_AppResult MainMenu_Input(void *appstate, SDL_Event *event)
                         tickRateMilliseconds = HARD;
 
                     InitText(&MM_difficultyBtnData.textData);
-                    changeDifficulty = true;
+                    changingDifficulty = true;
                 }
             }
 
             MM_startBtnData.pressed = false;
         }
-    }
+    } */
 
     return SDL_APP_CONTINUE;
 }
@@ -378,8 +420,11 @@ SDL_AppResult MainMenu_Loop(void *appdstate)
     SDL_Color white = {255, 255, 255, SDL_ALPHA_OPAQUE};
 
     /* check if the mouse is hovering over a button*/
-    buttonMouseHover(&MM_startBtnData);
-    buttonMouseHover(&MM_difficultyBtnData);
+    // buttonMouseHover(&MM_startBtnData);
+    // buttonMouseHover(&MM_difficultyBtnData); // it does not stay green after clicking
+
+    if (MM_startBtnData.currentState != MM_startBtnData.previousState)
+        InitText(&MM_startBtnData.textData);
 
     const double now = currentTick / 1000.0; /* convert from milliseconds to seconds. */
     /* choose the modulation values for the center texture. The sine wave trick makes it fade between colors smoothly. */
@@ -406,10 +451,10 @@ SDL_AppResult MainMenu_Loop(void *appdstate)
 
     /* Draw difficulty buttons */
     SDL_SetRenderViewport(renderer, &diffViewport);
-    if (changeDifficulty)
+    if (changingDifficulty)
     {
         TextData temp;
-        changeDifficulty = moveDifficultText(&MM_difficultyData, &temp, 350, DtickDelta, nextDifficulty);
+        changingDifficulty = moveDifficultText(&MM_difficultyData, &temp, 350, DtickDelta, nextDifficulty);
         SDL_RenderTexture(renderer, temp.texture, NULL, &temp.rect);
     }
     SDL_RenderTexture(renderer, MM_difficultyData.texture, NULL, &MM_difficultyData.rect);
@@ -645,9 +690,12 @@ int lengthenSnake(SDL_FRect *head, Uint64 *length, SDL_FRect *eatenFruit)
 
 bool InitText(TextData *textData)
 {
-    // SDL_Surface *textSurface = TTF_RenderText_Blended(displayText->font, displayText->text, 0, colour);
     TTF_SetFontSize(textData->font, textData->fontSize);
     SDL_Surface *textSurface = TTF_RenderText_Solid(textData->font, textData->text, 0, textData->colour);
+
+    if (textData->texture != NULL)
+        SDL_DestroyTexture(textData->texture);
+
     if (!textSurface)
     {
         SDL_Log("Couldn't initialize SDL_ttf: %s\n", SDL_GetError());
@@ -677,6 +725,12 @@ void buttonMouseHover(ButtonData *btnData)
         InitText(&btnData->textData);
         btnData->hovering = false;
     }
+
+    /* point in rect is being checked regardless, hover bool may not even be necessary
+
+    if (state != previousState) InitText;
+
+    */
 }
 
 /* intended to be used "recursively" until the x coord reaches the negative texure width */
@@ -708,4 +762,56 @@ bool moveDifficultText(TextData *txtData, TextData *temp, float speed, float tim
     }
 
     return true;
+}
+
+bool CheckButtonState(ButtonData *btnData, SDL_Event *event)
+{
+    if (event->button.button != SDL_BUTTON_LEFT)
+        return false;
+
+    E_ButtonState btnState = NONE;
+    if (SDL_PointInRectFloat(&mousePos, &btnData->textData.rect))
+    {
+        if (event->type == SDL_EVENT_MOUSE_BUTTON_DOWN)
+            btnState = PRESSED;
+        else if (event->type == SDL_EVENT_MOUSE_BUTTON_UP)
+            btnState = RELEASED;
+        else
+            btnState = HOVERING;
+    }
+    else if (event->type == SDL_EVENT_MOUSE_BUTTON_DOWN)
+        btnState = NORMAL;
+
+    if (btnState != NONE && ChangeButtonState(btnData, NORMAL))
+    {
+        btnData->textData.colour = getButtonTextColour(btnData);
+        return true;
+    }
+
+    return false;
+}
+
+bool ChangeButtonState(ButtonData *btnData, E_ButtonState btnState)
+{
+    if (btnState == btnData->currentState)
+        return false;
+
+    btnData->previousState = btnData->currentState;
+    btnData->currentState = btnState;
+
+    return true;
+}
+
+SDL_Color getButtonTextColour(ButtonData *btnData)
+{
+    switch (btnData->currentState)
+    {
+    case PRESSED:
+        return btnData->selectColour;
+    case HOVERING:
+        return btnData->highlightColour;
+    case NORMAL:
+    case RELEASED:
+        return btnData->displayColour;
+    }
 }

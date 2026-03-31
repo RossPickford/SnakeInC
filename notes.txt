@@ -1,18 +1,3 @@
 Working on Currently:
 
-- Getting the text to change colour when hovering and when clicked on - in the main menu. Issue is with TTF, and the text having to be
-    re-mapped to a surface and then texture, which seems wildly inefficient to do every clock cycle.
-
---> IDEA: create a text buffer (could even be a single pointer). The memory allocated to it will be based on the struct known as text data or button data,
-    something along those lines. The struct will contain a TTF text variable and a SDL surface variable. During the iterate function, it will check the buffer
-    for any text structs being pointed to. If it is pointing to NULL, then it can move on, if it is pointing to a struct - then it can perform a function which
-    will do what it must to the text.
-    |
-    The pointer can't change from NULL to the allocated memory... - unless I use another pointer to store the location of the text buffer, and then actual pointer
-    swaps between the pseudo one and NULL.
-
-    The struct will have the string it will display, the texture it will display on, a pointer to the font,  
-
-    The struct should hold key data regarding font, such as size, colour, etc.
-
-    Potentially should create a button struct. It should include two bool variables named "pressed" and "hovering"
+- Have the text remain as highlighted colour after clicking
