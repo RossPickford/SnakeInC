@@ -90,6 +90,9 @@ static ButtonData MM_volumeBtnData;
 static SliderData MM_volumeSliderData;
 static char *MM_volumeText = "VOLUME     ";
 
+static ButtonData MM_quitBtnData;
+static char *MM_quitTxt = "QUIT";
+
 static SDL_FRect wallBackground;
 static SDL_FRect mainBackground;
 
@@ -319,8 +322,17 @@ bool initMainMenu(SDL_AppResult *result)
     MM_volumeBtnData.highlightColour = colour_yellow;
     MM_volumeBtnData.selectColour = colour_red;
 
+    MM_quitBtnData.textData.text = MM_quitTxt;
+    MM_quitBtnData.textData.font = mainFont;
+    MM_quitBtnData.textData.fontSize = 20.0f;
+    MM_quitBtnData.currentState = NORMAL;
+    MM_quitBtnData.previousState = NONE;
+    MM_quitBtnData.textData.colour = MM_quitBtnData.displayColour = colour_white;
+    MM_quitBtnData.highlightColour = colour_green;
+    MM_quitBtnData.selectColour = colour_red;
+
     /* Create the text */
-    if (!InitText(&MM_titleData) || !InitText(&MM_startBtnData.textData) || !InitText(&MM_difficultyData) || !InitText(&MM_difficultyBtnData.textData) || !InitText(&MM_volumeData))
+    if (!InitText(&MM_titleData) || !InitText(&MM_startBtnData.textData) || !InitText(&MM_difficultyData) || !InitText(&MM_difficultyBtnData.textData) || !InitText(&MM_volumeData) || !InitText(&MM_quitBtnData.textData))
     {
         *result = SDL_APP_FAILURE;
         return false;
@@ -357,6 +369,10 @@ bool initMainMenu(SDL_AppResult *result)
     MM_volumeBtnData.textData.rect.y = MM_volumeSliderData.y = MM_volumeData.rect.y;
     MM_volumeSliderData.position = MM_volumeSliderData.x + (MM_volumeSliderData.width / 2.0f);
 
+    SDL_GetTextureSize(MM_quitBtnData.textData.texture, &MM_quitBtnData.textData.rect.w, &MM_quitBtnData.textData.rect.h);
+    MM_quitBtnData.textData.rect.x = (WINDOW_WIDTH - MM_quitBtnData.textData.rect.w) / 2;
+    MM_quitBtnData.textData.rect.y = MM_volumeData.rect.y + (MM_volumeData.rect.h * 3.0f);
+
     return true;
 }
 
@@ -392,6 +408,9 @@ SDL_AppResult MainMenu_Input(void *appstate, SDL_Event *event)
     if (MM_volumeBtnData.currentState == PRESSED)
         changeVolume(&MM_volumeSliderData, mousePos.x);
 
+    if (CheckButtonState(&MM_quitBtnData, event) && MM_quitBtnData.currentState == RELEASED)
+        return SDL_APP_SUCCESS;
+
     return SDL_APP_CONTINUE;
 }
 
@@ -417,6 +436,9 @@ SDL_AppResult MainMenu_Loop(void *appdstate)
 
     if (MM_volumeBtnData.currentState == RELEASED)
         CheckButtonState(&MM_volumeBtnData, NULL);
+
+    if (MM_quitBtnData.currentState != MM_quitBtnData.previousState)
+        InitText(&MM_quitBtnData.textData);
 
     const double now = currentTick / 1000.0; /* convert from milliseconds to seconds. */
     /* choose the modulation values for the center texture. The sine wave trick makes it fade between colors smoothly. */
@@ -454,6 +476,8 @@ SDL_AppResult MainMenu_Loop(void *appdstate)
 
     SDL_RenderTexture(renderer, MM_volumeData.texture, NULL, &MM_volumeData.rect);
     drawVolumeBar(&MM_volumeBtnData, &MM_volumeSliderData);
+
+    SDL_RenderTexture(renderer, MM_quitBtnData.textData.texture, NULL, &MM_quitBtnData.textData.rect);
 
     return SDL_APP_CONTINUE;
 }
