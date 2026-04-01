@@ -48,7 +48,6 @@ typedef struct
     E_ButtonState currentState;
     E_ButtonState previousState;
     bool pressed;
-    bool hovering;
 } ButtonData;
 
 static E_GameState currentGameState = MAIN_MENU;
@@ -713,7 +712,7 @@ bool InitText(TextData *textData)
 
 void buttonMouseHover(ButtonData *btnData)
 {
-    if (!btnData->hovering && SDL_PointInRectFloat(&mousePos, &btnData->textData.rect))
+    /* if (!btnData->hovering && SDL_PointInRectFloat(&mousePos, &btnData->textData.rect))
     {
         btnData->textData.colour = btnData->highlightColour;
         InitText(&btnData->textData);
@@ -724,7 +723,7 @@ void buttonMouseHover(ButtonData *btnData)
         btnData->textData.colour = btnData->displayColour;
         InitText(&btnData->textData);
         btnData->hovering = false;
-    }
+    } */
 
     /* point in rect is being checked regardless, hover bool may not even be necessary
 
@@ -766,23 +765,23 @@ bool moveDifficultText(TextData *txtData, TextData *temp, float speed, float tim
 
 bool CheckButtonState(ButtonData *btnData, SDL_Event *event)
 {
-    if (event->button.button != SDL_BUTTON_LEFT)
-        return false;
+    // if (event->button.button != SDL_BUTTON_LEFT)
+    // return false;
 
     E_ButtonState btnState = NONE;
     if (SDL_PointInRectFloat(&mousePos, &btnData->textData.rect))
     {
-        if (event->type == SDL_EVENT_MOUSE_BUTTON_DOWN)
+        if (event->button.button != SDL_BUTTON_LEFT)
+            btnState = HOVERING;
+        else if (event->type == SDL_EVENT_MOUSE_BUTTON_DOWN)
             btnState = PRESSED;
         else if (event->type == SDL_EVENT_MOUSE_BUTTON_UP)
             btnState = RELEASED;
-        else
-            btnState = HOVERING;
     }
-    else if (event->type == SDL_EVENT_MOUSE_BUTTON_DOWN)
+    else if (btnData->currentState != PRESSED || event->type == SDL_EVENT_MOUSE_BUTTON_UP)
         btnState = NORMAL;
 
-    if (btnState != NONE && ChangeButtonState(btnData, NORMAL))
+    if (btnState != NONE && ChangeButtonState(btnData, btnState))
     {
         btnData->textData.colour = getButtonTextColour(btnData);
         return true;
