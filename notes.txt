@@ -1,3 +1,9 @@
 Working on Currently:
 
-- Create a Volume setting on the main menu
+- Game Start Menu:
+    IDEAS:
+    - Have the snake be moving in the background, except it teleports to the opposite wall on collision
+    - Have the keys that are shown shrink and come back to normal size when pressed.
+    - Make the snake respond to movement.
+
+

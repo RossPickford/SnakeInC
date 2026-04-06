@@ -93,6 +93,13 @@ static char *MM_volumeText = "VOLUME     ";
 static ButtonData MM_quitBtnData;
 static char *MM_quitTxt = "QUIT";
 
+static SDL_Texture *GS_tex_keyLeft = NULL;
+static SDL_Texture *GS_tex_keyRight = NULL;
+static SDL_Texture *GS_tex_keyUp = NULL;
+static SDL_Texture *GS_tex_keyDown = NULL;
+
+static SDL_FRect GS_rect_keyLeft, GS_rect_keyRight, GS_rect_keyUp, GS_rect_keyDown;
+
 static SDL_FRect wallBackground;
 static SDL_FRect mainBackground;
 
@@ -200,6 +207,11 @@ SDL_AppResult SDL_AppInit(void **appstate, int argc, char *argv[])
     if (!initMainMenu(&result))
         return result;
 
+    if (!initGameStart(&result))
+        return result;
+        
+    
+
     initBackground();
 
     arenaSize = powf(((WINDOW_HEIGHT - (GRID_WIDTH * 2)) / (float)GRID_WIDTH), 2);
@@ -232,6 +244,8 @@ SDL_AppResult SDL_AppEvent(void *appstate, SDL_Event *event)
     {
     case MAIN_MENU:
         return MainMenu_Input(appstate, event);
+    case GAME_START:
+        return GameStart_Input(appstate, event);
     case GAME_LOOP:
         return GameLogic_Input(appstate, event);
     }
@@ -245,6 +259,9 @@ SDL_AppResult SDL_AppIterate(void *appstate)
     {
     case MAIN_MENU:
         result = MainMenu_Loop(appstate);
+        break;
+    case GAME_START:
+        result = GameStart_Loop(appstate);
         break;
     case GAME_LOOP:
         result = GameLogic_Loop(appstate);
@@ -384,7 +401,7 @@ SDL_AppResult MainMenu_Input(void *appstate, SDL_Event *event)
     mousePos.y = event->button.y;
 
     if (CheckButtonState(&MM_startBtnData, event) && MM_startBtnData.currentState == RELEASED)
-        currentGameState = GAME_LOOP;
+        currentGameState = GAME_START;
 
     if (CheckButtonState(&MM_difficultyBtnData, event) && MM_difficultyBtnData.currentState == RELEASED)
     {
@@ -478,6 +495,110 @@ SDL_AppResult MainMenu_Loop(void *appdstate)
     drawVolumeBar(&MM_volumeBtnData, &MM_volumeSliderData);
 
     SDL_RenderTexture(renderer, MM_quitBtnData.textData.texture, NULL, &MM_quitBtnData.textData.rect);
+
+    return SDL_APP_CONTINUE;
+}
+
+//================================================================================ GAME START
+
+bool initGameStart(SDL_AppResult *result)
+{
+    char *path_keyLeft = NULL;
+    char *path_keyRight = NULL;
+    char *path_keyUp = NULL;
+    char *path_keyDown = NULL;
+
+    SDL_Surface *surf_keyLeft;
+    SDL_Surface *surf_keyRight;
+    SDL_Surface *surf_keyUp;
+    SDL_Surface *surf_keyDown;
+
+    SDL_asprintf(&path_keyLeft, "%simages/KeyCapLeft.png", SDL_GetBasePath());
+    SDL_asprintf(&path_keyRight, "%simages/KeyCapRight.png", SDL_GetBasePath());
+    SDL_asprintf(&path_keyUp, "%simages/KeyCapUp.png", SDL_GetBasePath());
+    SDL_asprintf(&path_keyDown, "%simages/KeyCapDown.png", SDL_GetBasePath());
+
+    surf_keyLeft = SDL_LoadPNG(path_keyLeft);
+    surf_keyRight = SDL_LoadPNG(path_keyRight);
+    surf_keyUp = SDL_LoadPNG(path_keyUp);
+    surf_keyDown = SDL_LoadPNG(path_keyDown);
+
+    if (!surf_keyLeft || !surf_keyRight || !surf_keyUp || !surf_keyDown)
+    {
+        SDL_Log("Couldn't load bitmap: %s", SDL_GetError());
+        *result = SDL_APP_FAILURE;
+        return false;
+    }
+
+    SDL_free(path_keyLeft);
+    SDL_free(path_keyRight);
+    SDL_free(path_keyUp);
+    SDL_free(path_keyDown);
+
+    GS_tex_keyLeft = SDL_CreateTextureFromSurface(renderer, surf_keyLeft);
+    GS_tex_keyRight = SDL_CreateTextureFromSurface(renderer, surf_keyRight);
+    GS_tex_keyUp = SDL_CreateTextureFromSurface(renderer, surf_keyUp);
+    GS_tex_keyDown = SDL_CreateTextureFromSurface(renderer, surf_keyDown);
+
+    if (!GS_tex_keyLeft || !GS_tex_keyRight || !GS_tex_keyUp || !GS_tex_keyDown)
+    {
+        SDL_Log("Failed to load texture: %s", SDL_GetError());
+        return false;
+    }
+
+    SDL_DestroySurface(surf_keyLeft);
+    SDL_DestroySurface(surf_keyRight);
+    SDL_DestroySurface(surf_keyUp);
+    SDL_DestroySurface(surf_keyDown);
+
+    return true;
+}
+
+SDL_AppResult GameStart_Input(void *appstate, SDL_Event *event)
+{
+}
+
+SDL_AppResult GameStart_Loop(void *appstate)
+{
+    SDL_SetRenderDrawColor(renderer, 0, 0, 0, SDL_ALPHA_OPAQUE);
+    SDL_RenderClear(renderer);
+    
+    renderWalls();
+    drawSnake();
+
+    SDL_SetRenderDrawColor(renderer, 0, 0, 0, 170);
+    SDL_SetRenderDrawBlendMode(renderer, SDL_BLENDMODE_BLEND);
+
+    SDL_FRect overlay = {0, 0, WINDOW_WIDTH, WINDOW_HEIGHT};
+    SDL_RenderFillRect(renderer, &overlay);
+
+    SDL_SetRenderDrawBlendMode(renderer, SDL_BLENDMODE_NONE);
+    
+    if (!SDL_GetTextureSize(GS_tex_keyLeft, &GS_rect_keyLeft.w, &GS_rect_keyLeft.h) ||
+        !SDL_GetTextureSize(GS_tex_keyRight, &GS_rect_keyRight.w, &GS_rect_keyRight.h) ||
+        !SDL_GetTextureSize(GS_tex_keyUp, &GS_rect_keyUp.w, &GS_rect_keyUp.h) ||
+        !SDL_GetTextureSize(GS_tex_keyDown, &GS_rect_keyDown.w, &GS_rect_keyDown.h))
+    {
+        SDL_Log("Failed to get texure size: %s", SDL_GetError());
+        return SDL_APP_FAILURE;
+    }
+
+    GS_rect_keyUp.x = (WINDOW_WIDTH - GS_rect_keyUp.w) / 2.0f;
+    GS_rect_keyUp.y = (WINDOW_WIDTH - GS_rect_keyUp.h) / 2.0f;
+
+    GS_rect_keyDown.x = GS_rect_keyUp.x;
+    GS_rect_keyDown.y = GS_rect_keyUp.y + GS_rect_keyUp.h;
+
+    GS_rect_keyLeft.x = GS_rect_keyDown.x - GS_rect_keyLeft.w;
+    GS_rect_keyLeft.y = GS_rect_keyDown.y;
+
+    GS_rect_keyRight.x = GS_rect_keyDown.x + GS_rect_keyRight.w;
+    GS_rect_keyRight.y = GS_rect_keyDown.y;
+
+    SDL_RenderTexture(renderer, GS_tex_keyLeft, NULL, &GS_rect_keyLeft);
+    SDL_RenderTexture(renderer, GS_tex_keyRight, NULL, &GS_rect_keyRight);
+    SDL_RenderTexture(renderer, GS_tex_keyUp, NULL, &GS_rect_keyUp);
+    SDL_RenderTexture(renderer, GS_tex_keyDown, NULL, &GS_rect_keyDown);
 
     return SDL_APP_CONTINUE;
 }
