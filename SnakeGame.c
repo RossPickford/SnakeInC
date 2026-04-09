@@ -98,6 +98,15 @@ static SDL_Texture *GS_tex_keyRight = NULL;
 static SDL_Texture *GS_tex_keyUp = NULL;
 static SDL_Texture *GS_tex_keyDown = NULL;
 
+static TextData GS_controlData;
+static char *GS_ControlTxt = "CONTROL THE SNAKE";
+
+static TextData GS_pauseKeyData;
+static char *GS_pauseKeyTxt = "PRESS P TO PAUSE";
+
+static TextData GS_pressPlayData;
+static char *GS_pressPlayTxt = "PRESS SPACE TO START";
+
 static SDL_FRect GS_rect_keyLeft, GS_rect_keyRight, GS_rect_keyUp, GS_rect_keyDown;
 
 static SDL_FRect wallBackground;
@@ -209,8 +218,6 @@ SDL_AppResult SDL_AppInit(void **appstate, int argc, char *argv[])
 
     if (!initGameStart(&result))
         return result;
-        
-    
 
     initBackground();
 
@@ -523,6 +530,31 @@ bool initGameStart(SDL_AppResult *result)
     surf_keyUp = SDL_LoadPNG(path_keyUp);
     surf_keyDown = SDL_LoadPNG(path_keyDown);
 
+    SDL_Color colour_white = {255, 255, 255, SDL_ALPHA_OPAQUE};
+    SDL_Color colour_red = {255, 0, 0, SDL_ALPHA_OPAQUE};
+
+    GS_controlData.text = GS_ControlTxt;
+    GS_controlData.fontSize = 20.0f;
+    GS_controlData.font = mainFont;
+    GS_controlData.colour = colour_white;
+
+    GS_pauseKeyData.text = GS_pauseKeyTxt;
+    GS_pauseKeyData.fontSize = 20.0f;
+    GS_pauseKeyData.font = mainFont;
+    GS_pauseKeyData.colour = colour_white;
+
+    GS_pressPlayData.text = GS_pressPlayTxt;
+    GS_pressPlayData.fontSize = 20.0f;
+    GS_pressPlayData.font = mainFont;
+    GS_pressPlayData.colour = colour_white;
+
+    if (!InitText(&GS_controlData) || !InitText(&GS_pauseKeyData) || !InitText(&GS_pressPlayData))
+    {
+        SDL_Log("Failed to initialise text: %s", SDL_GetError());
+        *result = SDL_APP_FAILURE;
+        return false;
+    }
+
     if (!surf_keyLeft || !surf_keyRight || !surf_keyUp || !surf_keyDown)
     {
         SDL_Log("Couldn't load bitmap: %s", SDL_GetError());
@@ -543,6 +575,7 @@ bool initGameStart(SDL_AppResult *result)
     if (!GS_tex_keyLeft || !GS_tex_keyRight || !GS_tex_keyUp || !GS_tex_keyDown)
     {
         SDL_Log("Failed to load texture: %s", SDL_GetError());
+        *result = SDL_APP_FAILURE;
         return false;
     }
 
@@ -551,40 +584,21 @@ bool initGameStart(SDL_AppResult *result)
     SDL_DestroySurface(surf_keyUp);
     SDL_DestroySurface(surf_keyDown);
 
-    return true;
-}
-
-SDL_AppResult GameStart_Input(void *appstate, SDL_Event *event)
-{
-}
-
-SDL_AppResult GameStart_Loop(void *appstate)
-{
-    SDL_SetRenderDrawColor(renderer, 0, 0, 0, SDL_ALPHA_OPAQUE);
-    SDL_RenderClear(renderer);
-    
-    renderWalls();
-    drawSnake();
-
-    SDL_SetRenderDrawColor(renderer, 0, 0, 0, 170);
-    SDL_SetRenderDrawBlendMode(renderer, SDL_BLENDMODE_BLEND);
-
-    SDL_FRect overlay = {0, 0, WINDOW_WIDTH, WINDOW_HEIGHT};
-    SDL_RenderFillRect(renderer, &overlay);
-
-    SDL_SetRenderDrawBlendMode(renderer, SDL_BLENDMODE_NONE);
-    
     if (!SDL_GetTextureSize(GS_tex_keyLeft, &GS_rect_keyLeft.w, &GS_rect_keyLeft.h) ||
         !SDL_GetTextureSize(GS_tex_keyRight, &GS_rect_keyRight.w, &GS_rect_keyRight.h) ||
         !SDL_GetTextureSize(GS_tex_keyUp, &GS_rect_keyUp.w, &GS_rect_keyUp.h) ||
-        !SDL_GetTextureSize(GS_tex_keyDown, &GS_rect_keyDown.w, &GS_rect_keyDown.h))
+        !SDL_GetTextureSize(GS_tex_keyDown, &GS_rect_keyDown.w, &GS_rect_keyDown.h) ||
+        !SDL_GetTextureSize(GS_controlData.texture, &GS_controlData.rect.w, &GS_controlData.rect.h) ||
+        !SDL_GetTextureSize(GS_pauseKeyData.texture, &GS_pauseKeyData.rect.w, &GS_pauseKeyData.rect.h) ||
+        !SDL_GetTextureSize(GS_pressPlayData.texture, &GS_pressPlayData.rect.w, &GS_pressPlayData.rect.h))
     {
         SDL_Log("Failed to get texure size: %s", SDL_GetError());
-        return SDL_APP_FAILURE;
+        *result = SDL_APP_FAILURE;
+        return false;
     }
 
-    GS_rect_keyUp.x = (WINDOW_WIDTH - GS_rect_keyUp.w) / 2.0f;
-    GS_rect_keyUp.y = (WINDOW_WIDTH - GS_rect_keyUp.h) / 2.0f;
+    GS_rect_keyUp.x = (WINDOW_WIDTH - (GS_rect_keyLeft.w + GS_rect_keyDown.w + GS_rect_keyRight.w + GS_controlData.rect.w)) / 2.0f;
+    GS_rect_keyUp.y = (WINDOW_WIDTH - (GS_rect_keyUp.h + GS_rect_keyDown.h + GS_pauseKeyData.rect.h + GS_pressPlayData.rect.h)) / 5.0f;
 
     GS_rect_keyDown.x = GS_rect_keyUp.x;
     GS_rect_keyDown.y = GS_rect_keyUp.y + GS_rect_keyUp.h;
@@ -595,10 +609,73 @@ SDL_AppResult GameStart_Loop(void *appstate)
     GS_rect_keyRight.x = GS_rect_keyDown.x + GS_rect_keyRight.w;
     GS_rect_keyRight.y = GS_rect_keyDown.y;
 
+    GS_controlData.rect.x = GS_rect_keyRight.x + GS_rect_keyRight.w;
+    GS_controlData.rect.y = (GS_rect_keyUp.y + GS_rect_keyDown.y) / 2.0f;
+
+    GS_pauseKeyData.rect.x = (WINDOW_WIDTH - GS_pauseKeyData.rect.w) / 2.0f;
+    GS_pauseKeyData.rect.y = GS_rect_keyDown.y + (GS_rect_keyDown.h * 5.0f);
+
+    GS_pressPlayData.rect.x = (WINDOW_WIDTH - GS_pressPlayData.rect.w) / 2.0f;
+    GS_pressPlayData.rect.y = GS_pauseKeyData.rect.y + (GS_pauseKeyData.rect.h * 5.0f);
+
+    return true;
+}
+
+SDL_AppResult GameStart_Input(void *appstate, SDL_Event *event)
+{
+    if (event->type == SDL_EVENT_KEY_DOWN && event->key.scancode == SDL_SCANCODE_SPACE)
+    {
+        currentGameState = GAME_LOOP;
+        return SDL_APP_CONTINUE;
+    }
+
+    return GameLogic_Input(appstate, event);
+}
+
+SDL_AppResult GameStart_Loop(void *appstate)
+{
+    Uint64 currentTick = SDL_GetTicks();
+
+    tickDelta += (currentTick - previousTick);
+
+    if (tickDelta >= tickRateMilliseconds)
+    {
+        tickDelta %= tickRateMilliseconds;
+        moveSnake(snake, snakeLength);
+    }
+    previousTick = currentTick;
+
+    SDL_SetRenderDrawColor(renderer, 0, 0, 0, SDL_ALPHA_OPAQUE);
+    SDL_RenderClear(renderer);
+
+    renderWalls();
+    drawSnake();
+
+    SDL_SetRenderDrawColor(renderer, 0, 0, 0, 170);
+    SDL_SetRenderDrawBlendMode(renderer, SDL_BLENDMODE_BLEND);
+
+    SDL_FRect overlay = {0, 0, WINDOW_WIDTH, WINDOW_HEIGHT};
+    SDL_RenderFillRect(renderer, &overlay);
+
+    SDL_SetRenderDrawBlendMode(renderer, SDL_BLENDMODE_NONE);
+
+    if (!SDL_GetTextureSize(GS_tex_keyLeft, &GS_rect_keyLeft.w, &GS_rect_keyLeft.h) ||
+        !SDL_GetTextureSize(GS_tex_keyRight, &GS_rect_keyRight.w, &GS_rect_keyRight.h) ||
+        !SDL_GetTextureSize(GS_tex_keyUp, &GS_rect_keyUp.w, &GS_rect_keyUp.h) ||
+        !SDL_GetTextureSize(GS_tex_keyDown, &GS_rect_keyDown.w, &GS_rect_keyDown.h))
+    {
+        SDL_Log("Failed to get texure size: %s", SDL_GetError());
+        return SDL_APP_FAILURE;
+    }
+
     SDL_RenderTexture(renderer, GS_tex_keyLeft, NULL, &GS_rect_keyLeft);
     SDL_RenderTexture(renderer, GS_tex_keyRight, NULL, &GS_rect_keyRight);
     SDL_RenderTexture(renderer, GS_tex_keyUp, NULL, &GS_rect_keyUp);
     SDL_RenderTexture(renderer, GS_tex_keyDown, NULL, &GS_rect_keyDown);
+
+    SDL_RenderTexture(renderer, GS_controlData.texture, NULL, &GS_controlData.rect);
+    SDL_RenderTexture(renderer, GS_pauseKeyData.texture, NULL, &GS_pauseKeyData.rect);
+    SDL_RenderTexture(renderer, GS_pressPlayData.texture, NULL, &GS_pressPlayData.rect);
 
     return SDL_APP_CONTINUE;
 }
