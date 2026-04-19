@@ -109,17 +109,27 @@ bool CheckButtonState(ButtonData *btnData, SDL_Event *event, SDL_FPoint *mousePo
     return false;
 }
 
-void InitTextData(TextData *txtData, char *txt, SDL_Texture *texture, TTF_Font *font, float fontSize, SDL_Color colour, SDL_FRect rect)
+/**
+ * Assigns data to the parameters of the Text Data Struct
+ *
+ * This DOES NOT assign the pointer texture - call UpdateText() after calling this function to create
+ * and assign a texture and it's corresponding pointer to the text data struct.
+ */
+void AssignTextData(TextData *txtData, char *txt, TTF_Font *font, float fontSize, SDL_Color colour /*, SDL_FRect rect*/)
 {
     txtData->text = txt;
-    txtData->texture = texture;
     txtData->font = font;
     txtData->fontSize = fontSize;
     txtData->colour = colour;
-    txtData->rect = rect;
+    // txtData->rect = rect;
 }
 
-void InitButtonData(ButtonData *btn, SDL_Color display, SDL_Color highlight, SDL_Color select, E_ButtonState curState, E_ButtonState prevState)
+/**
+ * Assigns state data to the button data.
+ *
+ * This does not need to be called before calling AssignTextData(), however it would be advised for clarity
+ */
+void AssignButtonData(ButtonData *btn, SDL_Color display, SDL_Color highlight, SDL_Color select, E_ButtonState curState, E_ButtonState prevState)
 {
     btn->displayColour = display;
     btn->highlightColour = highlight;
@@ -127,22 +137,3 @@ void InitButtonData(ButtonData *btn, SDL_Color display, SDL_Color highlight, SDL
     btn->currentState = curState;
     btn->previousState = prevState;
 }
-
-/*
-    char *text;
-    SDL_Texture *texture;
-    TTF_Font *font;
-    float fontSize;
-    SDL_Color colour;
-    SDL_FRect rect;
-} TextData;
-
-typedef struct
-{
-    TextData textData;
-    SDL_Color displayColour;
-    SDL_Color highlightColour;
-    SDL_Color selectColour;
-    E_ButtonState currentState;
-    E_ButtonState previousState;
-} ButtonData;*/
