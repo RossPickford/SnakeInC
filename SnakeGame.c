@@ -187,7 +187,7 @@ Int_Vector2 getRandomCoord();
 
 bool InitText(TextData *textData);
 bool moveDifficultText(TextData *txtData, TextData *temp, float speed, float timeDelta, char *nextText);
-SDL_Color getButtonTextColour(ButtonData *btnData);
+SDL_Color GetButtonTextColour(ButtonData *btnData);
 bool ChangeButtonState(ButtonData *btnData, E_ButtonState btnState);
 bool CheckButtonState(ButtonData *btnData, SDL_Event *event);
 
@@ -1010,7 +1010,7 @@ bool CheckButtonState(ButtonData *btnData, SDL_Event *event)
 
     if (btnState != NONE && ChangeButtonState(btnData, btnState))
     {
-        btnData->textData.colour = getButtonTextColour(btnData);
+        btnData->textData.colour = GetButtonTextColour(btnData);
 
         return true;
     }
@@ -1029,7 +1029,7 @@ bool ChangeButtonState(ButtonData *btnData, E_ButtonState state)
     return true;
 }
 
-SDL_Color getButtonTextColour(ButtonData *btnData)
+SDL_Color GetButtonTextColour(ButtonData *btnData)
 {
     switch (btnData->currentState)
     {

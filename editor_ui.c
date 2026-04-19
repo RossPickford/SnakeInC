@@ -1,13 +1,30 @@
-#include <SDL3/SDL.h>
 #include <SDL3/SDL_main.h>
-#include <SDL3_ttf/SDL_ttf.h>
+#include "editorUI.h"
 
 SDL_Window *window = NULL;
 SDL_Renderer *renderer = NULL;
 
 TTF_Font *font = NULL;
+
+SDL_Color black = {0, 0, 0, 255};
+SDL_Color white = {255, 255, 255, 255};
+SDL_Color red = {255, 0, 0, 255};
+SDL_Color green = {0, 255, 0, 255};
+SDL_Color blue = {0, 0, 255, 255};
+
+ButtonData createLayoutBtn;
 char *createLayoutTxt = "Create Layout";
+
+ButtonData loadLayoutBtn;
 char *loadLayoutTxt = "Load Layout...";
+
+void InitAllText()
+{
+    InitButtonData(&createLayoutBtn, white, green, blue, NORMAL, NONE);
+    InitButtonData(&loadLayoutBtn, white, green, blue, NORMAL, NONE);
+
+    // InitTextData(&createLayoutBtn.textData, createLayoutTxt, )
+}
 
 int main(int argc, char *argv[])
 {
