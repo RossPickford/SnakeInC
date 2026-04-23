@@ -7,3 +7,12 @@ Working on Currently:
     - Make the snake respond to movement.
 
 
+
+UI Editor:
+
+- create a layout - made the input textbox. TO DO:
+    - create a window that opens in the centre to insert the name of the layout file, and then a button to chose the file to save it in.
+    - Add backspace capability
+    - create an enum that allows you to select key input type (e.g. spaces allowed or not)
+
+
