@@ -178,7 +178,7 @@ bool SetTextPosition(TextData *txtData, float x, float y)
     return true;
 }
 
-bool InitInputTextBox(InputTextBoxData *txtBx, int maxInputLength, TTF_Font *font, float fontSize, SDL_Color *colour)
+bool InitInputTextBox(SDL_Renderer *renderer, InputTextBoxData *txtBx, int maxInputLength, TTF_Font *font, float fontSize, SDL_Color *colour)
 {
     txtBx->maxInputLength = maxInputLength;
     txtBx->font = font;
@@ -187,17 +187,17 @@ bool InitInputTextBox(InputTextBoxData *txtBx, int maxInputLength, TTF_Font *fon
     txtBx->input = (char *)SDL_malloc(sizeof(char) * maxInputLength);
     *txtBx->input = '\0';
     txtBx->currentPos = 0;
+
+    SDL_Surface *surf = TTF_RenderText_Solid(font, txtBx->input, maxInputLength, *colour);
+    SDL_Texture *tex = SDL_CreateTextureFromSurface(renderer, surf);
+    SDL_DestroySurface(surf);
+
+    SDL_GetTextureSize(tex, &txtBx->cursor.w, &txtBx->cursor.h);
+    SDL_DestroyTexture(tex);
 }
 
 bool RenderInputTextBox(InputTextBoxData *txtBx, SDL_Renderer *renderer)
 {
-    SDL_Surface *surf = TTF_RenderText_Solid(txtBx->font, txtBx->input, sizeof(char) * txtBx->maxInputLength, *(txtBx->colour));
-    SDL_Texture *texture = SDL_CreateTextureFromSurface(renderer, surf);
-    SDL_DestroySurface(surf);
-
-    SDL_GetTextureSize(texture, &txtBx->textBox.w, &txtBx->textBox.h);
-    SDL_DestroyTexture(texture);
-
     SDL_SetRenderDrawColor(renderer, txtBx->colour->r, txtBx->colour->g, txtBx->colour->b, txtBx->colour->a);
     SDL_RenderRect(renderer, &txtBx->textBox);
 
@@ -220,8 +220,8 @@ bool RenderInputTextBox(InputTextBoxData *txtBx, SDL_Renderer *renderer)
     SDL_RenderTexture(renderer, displayTexture, NULL, &rect);
     SDL_DestroyTexture(displayTexture);
 
-    surf = TTF_RenderText_Solid(txtBx->font, " ", 1, *txtBx->colour);
-    texture = SDL_CreateTextureFromSurface(renderer, surf);
+    SDL_Surface *surf = TTF_RenderText_Solid(txtBx->font, " ", 1, *txtBx->colour);
+    SDL_Texture *texture = SDL_CreateTextureFromSurface(renderer, surf);
     SDL_DestroySurface(surf);
 
     SDL_GetTextureSize(texture, &txtBx->cursor.w, &txtBx->cursor.h);
@@ -236,6 +236,16 @@ bool RenderInputTextBox(InputTextBoxData *txtBx, SDL_Renderer *renderer)
     SDL_SetRenderViewport(renderer, NULL);
 
     return true;
+}
+
+void SizeTextBoxToMaxCharInput(InputTextBoxData *txtBx, SDL_Renderer *renderer)
+{
+    SDL_Surface *surf = TTF_RenderText_Solid(txtBx->font, txtBx->input, txtBx->maxInputLength, *txtBx->colour);
+    SDL_Texture *text = SDL_CreateTextureFromSurface(renderer, surf);
+    SDL_DestroySurface(surf);
+
+    SDL_GetTextureSize(text, &txtBx->textBox.w, &txtBx->textBox.h);
+    SDL_DestroyTexture(text);
 }
 
 bool InsertCharacter(InputTextBoxData *txtBx, const char *input)

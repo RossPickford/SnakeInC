@@ -57,7 +57,9 @@ bool InitAllText()
     AssignTextData(&createLayoutBtn.textData, createLayoutTxt, font, 20.0f, createLayoutBtn.displayColour);
     AssignTextData(&loadLayoutBtn.textData, loadLayoutTxt, font, 20.0f, loadLayoutBtn.displayColour);
 
-    InitInputTextBox(&createLayoutInput, MAX_CHAR_INPUT, font, 20.0f, &white);
+    InitInputTextBox(renderer, &createLayoutInput, MAX_CHAR_INPUT, font, 20.0f, &white);
+    SizeTextBoxToMaxCharInput(&createLayoutInput, renderer);
+
     createLayoutInput.textBox.x = WINDOW_WIDTH / 3.0f;
     createLayoutInput.textBox.y = WINDOW_HEIGHT / 3.0f;
 
@@ -125,6 +127,8 @@ static void SDLCALL callback(void *userdata, const char *const *filelist, int fi
     }
 }
 
+bool showWindow = false;
+
 bool AppEvent()
 {
     SDL_Event event;
@@ -140,8 +144,8 @@ bool AppEvent()
         mousePos.x = event.button.x;
         mousePos.y = event.button.y;
 
-        if (CheckButtonState(&createLayoutBtn, &event, &mousePos))
-            ;
+        if (CheckButtonState(&createLayoutBtn, &event, &mousePos) && createLayoutBtn.currentState == RELEASED)
+            showWindow = true;
         if (CheckButtonState(&loadLayoutBtn, &event, &mousePos) && loadLayoutBtn.currentState == RELEASED)
         {
             SDL_Log("clicked on");
@@ -166,8 +170,6 @@ bool AppIterate()
     SDL_SetRenderDrawColor(renderer, 0, 0, 0, SDL_ALPHA_OPAQUE);
     SDL_RenderFillRect(renderer, &rect);
 
-    RenderInputTextBox(&createLayoutInput, renderer);
-
     if (createLayoutBtn.currentState != createLayoutBtn.previousState)
         UpdateText(&createLayoutBtn.textData, renderer);
 
@@ -176,6 +178,24 @@ bool AppIterate()
 
     SDL_RenderTexture(renderer, createLayoutBtn.textData.texture, NULL, &createLayoutBtn.textData.rect);
     SDL_RenderTexture(renderer, loadLayoutBtn.textData.texture, NULL, &loadLayoutBtn.textData.rect);
+
+    if (showWindow)
+    {
+        SDL_FRect windowRect;
+
+        windowRect.w = WINDOW_WIDTH / 3.0f;
+        windowRect.h = WINDOW_HEIGHT / 3.0f;
+
+        windowRect.x = (WINDOW_WIDTH - windowRect.w) / 2.0f;
+        windowRect.y = (WINDOW_HEIGHT - windowRect.h) / 2.0f;
+
+        SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255);
+        SDL_RenderRect(renderer, &windowRect);
+
+        createLayoutInput.textBox.x = windowRect.x + ((windowRect.w - createLayoutInput.textBox.w) / 2.0f);
+        createLayoutInput.textBox.y = windowRect.y + (windowRect.h / 10.0f);
+        RenderInputTextBox(&createLayoutInput, renderer);
+    }
 
     SDL_RenderPresent(renderer);
 
