@@ -74,7 +74,7 @@ bool AppInit()
     if (!initSystems())
         return APP_END;
 
-    if (!SDL_CreateWindowAndRenderer("UI Editor", WINDOW_WIDTH, WINDOW_HEIGHT, SDL_WINDOW_FULLSCREEN, &window, &renderer))
+    if (!SDL_CreateWindowAndRenderer("UI Editor", WINDOW_WIDTH, WINDOW_HEIGHT, SDL_WINDOW_MOUSE_CAPTURE, &window, &renderer))
     {
         SDL_Log("Failed to create window and renderer: %s", SDL_GetError());
         return APP_END;
@@ -170,6 +170,7 @@ bool AppIterate()
     SDL_SetRenderDrawColor(renderer, 0, 0, 0, SDL_ALPHA_OPAQUE);
     SDL_RenderFillRect(renderer, &rect);
 
+    // SDL_Log("%d", createLayoutBtn.currentState);
     if (createLayoutBtn.currentState != createLayoutBtn.previousState)
         UpdateText(&createLayoutBtn.textData, renderer);
 

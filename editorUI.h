@@ -121,10 +121,16 @@ SDL_Color GetButtonTextColour(ButtonData *btnData)
 bool CheckButtonState(ButtonData *btnData, SDL_Event *event, SDL_FPoint *mousePos)
 {
     E_ButtonState btnState = NONE;
+    SDL_Log("%d : %d", mousePos->x, mousePos->y);
     if (SDL_PointInRectFloat(mousePos, &btnData->textData.rect))
     {
+        if (event == NULL)
+            SDL_Log("Event is Null");
         if (event == NULL || event->button.button != SDL_BUTTON_LEFT)
+        {
             btnState = HOVERING;
+            SDL_Log("set to hovering");   
+        }
         else if (event->type == SDL_EVENT_MOUSE_BUTTON_DOWN)
             btnState = PRESSED;
         else if (event->type == SDL_EVENT_MOUSE_BUTTON_UP && btnData->currentState == PRESSED)
