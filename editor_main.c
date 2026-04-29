@@ -1,11 +1,12 @@
-#include <SDL3/SDL_main.h>
-#include "editorUI.h"
+#include "ui_editor.h"
 
 #define APP_CONTINUE true
 #define APP_END false
 
 #define WINDOW_WIDTH 1920
 #define WINDOW_HEIGHT 1080
+
+#define MAX_CHAR_INPUT 20
 
 SDL_DialogFileCallback fileCallback;
 
@@ -93,8 +94,7 @@ bool AppInit()
 static const SDL_DialogFileFilter filters[] = {
     {"PNG images", "png"},
     {"JPEG images", "jpg;jpeg"},
-    {"All images", "png;jpg;jpeg"},
-    {"All files", "*"}};
+    {"All images", "png;jpg;jpeg"}};
 
 static void SDLCALL callback(void *userdata, const char *const *filelist, int filter)
 {
@@ -156,7 +156,7 @@ bool AppEvent()
         if (CheckButtonState(&loadLayoutBtn, &event, mousePosPtr) && loadLayoutBtn.currentState == RELEASED)
         {
             SDL_Log("clicked on");
-            SDL_ShowOpenFileDialog(callback, NULL, window, NULL, 0, NULL, false);
+            SDL_ShowOpenFileDialog(callback, NULL, window, filters, 0, NULL, false);
         }
     }
 

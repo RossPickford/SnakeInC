@@ -16,5 +16,17 @@ UI Editor:
     - create an enum that allows you to select key input type (e.g. spaces allowed or not)
 
 
-Mouse: Try make a cursor in relative mode
 
+WIDGETS:
+
+- button
+- Image
+- Input Text box
+- Slider
+- Drop Down Menu
+
+BUTTON:
+- Normal Image
+- Hover Image
+- Selected Image
+- rect ()
