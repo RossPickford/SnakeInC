@@ -29,4 +29,10 @@ BUTTON:
 - Normal Image
 - Hover Image
 - Selected Image
-- rect ()
+- Teture Pointer
+- Rect
+- Current State
+- Previous State
+
+IMAGE:
+- 
