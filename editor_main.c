@@ -33,6 +33,30 @@ SDL_FPoint *mousePosPtr = NULL;
 float *mousePos_x = NULL;
 float *mousePos_y = NULL;
 
+InputTypeIdentifier *eventQueue = NULL;
+
+bool queryAction(InputTypeIdentifier *id)
+{
+    switch (id->action)
+    {
+    case SHOW_CHILDREN:
+        if(id->children == NULL)
+            break;
+        showChildren(id->children);
+    }
+}
+
+void processInputEvents(InputTypeIdentifier *id)
+{
+    switch (id->type)
+    {
+    case BUTTON:
+        if (CheckButtonState((ButtonData *)id->data, NULL, NULL))
+            if (queryAction(id->action))
+                break;
+    }
+}
+
 bool initSystems()
 {
     if (!SDL_Init(SDL_INIT_VIDEO))

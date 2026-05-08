@@ -6,12 +6,32 @@
 
 typedef enum
 {
+    BUTTON,
+
+} Input_Type;
+
+typedef enum
+{
+    SHOW_CHILDREN,
+
+} Input_Action;
+
+typedef enum
+{
     PRESSED,
     RELEASED,
     HOVERING,
     NORMAL,
     NONE,
 } E_ButtonState;
+
+typedef struct
+{
+    Input_Type type;
+    Input_Action action;
+    void *data;
+    InputTypeIdentifier *children;
+} InputTypeIdentifier;
 
 typedef struct
 {
@@ -44,4 +64,3 @@ typedef struct
     SDL_FRect cursor;
     SDL_Color *colour;
 } InputTextBoxData;
-

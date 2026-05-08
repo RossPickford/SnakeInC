@@ -30,3 +30,7 @@ BUTTON:
 - Hover Image
 - Selected Image
 - rect ()
+
+
+
+- Create a header and a source file for each layout. It will define each widget, and initialse them as well. 
