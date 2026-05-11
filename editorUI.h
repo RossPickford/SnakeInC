@@ -20,17 +20,17 @@ typedef struct
     float fontSize;
     SDL_Color colour;
     SDL_FRect rect;
-} TextData;
+} TextDisplay;
 
 typedef struct
 {
-    TextData textData;
+    TextDisplay textData;
     SDL_Color displayColour;
     SDL_Color highlightColour;
     SDL_Color selectColour;
     E_ButtonState currentState;
     E_ButtonState previousState;
-} ButtonData;
+} TextButton;
 
 typedef struct
 {
@@ -42,9 +42,9 @@ typedef struct
     SDL_FRect textBox;
     SDL_FRect cursor;
     SDL_Color *colour;
-} InputTextBoxData;
+} InputTextBox;
 
-bool UpdateText(TextData *textData, SDL_Renderer *renderer)
+bool UpdateText(TextDisplay *textData, SDL_Renderer *renderer)
 {
     if (textData->text == NULL || textData->font == NULL)
     {
@@ -84,7 +84,7 @@ bool UpdateText(TextData *textData, SDL_Renderer *renderer)
     return true;
 }
 
-bool ChangeButtonState(ButtonData *btnData, E_ButtonState state)
+bool ChangeButtonState(TextButton *btnData, E_ButtonState state)
 {
     if (state == btnData->currentState)
         return false;
@@ -95,7 +95,7 @@ bool ChangeButtonState(ButtonData *btnData, E_ButtonState state)
     return true;
 }
 
-SDL_Color GetButtonTextColour(ButtonData *btnData)
+SDL_Color GetButtonTextColour(TextButton *btnData)
 {
     switch (btnData->currentState)
     {
@@ -116,7 +116,7 @@ SDL_Color GetButtonTextColour(ButtonData *btnData)
  *
  * Use this in an if statement to add in logic changes if the change of state was true
  */
-bool CheckButtonState(ButtonData *btnData, SDL_Event *event, SDL_FPoint *mousePosPtr)
+bool CheckButtonState(TextButton *btnData, SDL_Event *event, SDL_FPoint *mousePosPtr)
 {
     E_ButtonState btnState = NONE;
     // SDL_Log("%d : %d", mousePos->x, mousePos->y);
@@ -148,7 +148,7 @@ bool CheckButtonState(ButtonData *btnData, SDL_Event *event, SDL_FPoint *mousePo
  * This DOES NOT assign the pointer texture - call UpdateText() after calling this function to create
  * and assign a texture and it's corresponding pointer to the text data struct.
  */
-void AssignTextData(TextData *txtData, char *txt, TTF_Font *font, float fontSize, SDL_Color colour)
+void AssignTextData(TextDisplay *txtData, char *txt, TTF_Font *font, float fontSize, SDL_Color colour)
 {
     txtData->text = txt;
     txtData->font = font;
@@ -161,7 +161,7 @@ void AssignTextData(TextData *txtData, char *txt, TTF_Font *font, float fontSize
  *
  * This does not need to be called before calling AssignTextData(), however it would be advised for clarity
  */
-void AssignButtonData(ButtonData *btn, SDL_Color display, SDL_Color highlight, SDL_Color select, E_ButtonState curState, E_ButtonState prevState)
+void AssignButtonData(TextButton *btn, SDL_Color display, SDL_Color highlight, SDL_Color select, E_ButtonState curState, E_ButtonState prevState)
 {
     btn->displayColour = display;
     btn->highlightColour = highlight;
@@ -170,7 +170,7 @@ void AssignButtonData(ButtonData *btn, SDL_Color display, SDL_Color highlight, S
     btn->previousState = prevState;
 }
 
-bool SetTextPosition(TextData *txtData, float x, float y)
+bool SetTextPosition(TextDisplay *txtData, float x, float y)
 {
     txtData->rect.x = x;
     txtData->rect.y = y;
@@ -178,7 +178,7 @@ bool SetTextPosition(TextData *txtData, float x, float y)
     return true;
 }
 
-bool InitInputTextBox(SDL_Renderer *renderer, InputTextBoxData *txtBx, int maxInputLength, TTF_Font *font, float fontSize, SDL_Color *colour)
+bool InitInputTextBox(SDL_Renderer *renderer, InputTextBox *txtBx, int maxInputLength, TTF_Font *font, float fontSize, SDL_Color *colour)
 {
     txtBx->maxInputLength = maxInputLength;
     txtBx->font = font;
@@ -196,7 +196,7 @@ bool InitInputTextBox(SDL_Renderer *renderer, InputTextBoxData *txtBx, int maxIn
     SDL_DestroyTexture(tex);
 }
 
-bool RenderInputTextBox(InputTextBoxData *txtBx, SDL_Renderer *renderer)
+bool RenderInputTextBox(InputTextBox *txtBx, SDL_Renderer *renderer)
 {
     SDL_SetRenderDrawColor(renderer, txtBx->colour->r, txtBx->colour->g, txtBx->colour->b, txtBx->colour->a);
     SDL_RenderRect(renderer, &txtBx->textBox);
@@ -238,7 +238,7 @@ bool RenderInputTextBox(InputTextBoxData *txtBx, SDL_Renderer *renderer)
     return true;
 }
 
-void SizeTextBoxToMaxCharInput(InputTextBoxData *txtBx, SDL_Renderer *renderer)
+void SizeTextBoxToMaxCharInput(InputTextBox *txtBx, SDL_Renderer *renderer)
 {
     SDL_Surface *surf = TTF_RenderText_Solid(txtBx->font, txtBx->input, txtBx->maxInputLength, *txtBx->colour);
     SDL_Texture *text = SDL_CreateTextureFromSurface(renderer, surf);
@@ -248,7 +248,7 @@ void SizeTextBoxToMaxCharInput(InputTextBoxData *txtBx, SDL_Renderer *renderer)
     SDL_DestroyTexture(text);
 }
 
-bool InsertCharacter(InputTextBoxData *txtBx, const char *input)
+bool InsertCharacter(InputTextBox *txtBx, const char *input)
 {
     if (txtBx->currentPos >= txtBx->maxInputLength)
         return false;

@@ -4,36 +4,42 @@
 
 #pragma once
 
-typedef enum
+typedef enum UIType
 {
-    BUTTON,
+    ITYPE_BUTTON_TEXT,
+    ITYPE_BUTTON_IMAGE,
+    ITYPE_BUTTON_BOX,
+    ITYPE_DISPLAY_TEXT,
+    ITYPE_DISPLAY_BOX,
+    ITYPE_INPUT_TEXTBOX,
+} UIType;
 
-} Input_Type;
-
-typedef enum
+typedef enum InputAction
 {
-    SHOW_CHILDREN,
+    IACTION_NONE,
+    IACTION_SHOW_CHILDREN,
 
-} Input_Action;
+} InputAction;
 
-typedef enum
+typedef enum ButtonState
 {
-    PRESSED,
-    RELEASED,
-    HOVERING,
-    NORMAL,
-    NONE,
-} E_ButtonState;
+    BSTATE_PRESSED,
+    BSTATE_RELEASED,
+    BSTATE_HOVERING,
+    BSTATE_NORMAL,
+    BSTATE_NONE,
+} ButtonState;
 
-typedef struct
+typedef struct UIType_ID
 {
-    Input_Type type;
-    Input_Action action;
+    UIType type;
+    InputAction action;
+    uint16_t childrenCount;
+    void *children;
     void *data;
-    InputTypeIdentifier *children;
-} InputTypeIdentifier;
+} UIType_ID;
 
-typedef struct
+typedef struct TextDisplay
 {
     char *text;
     SDL_Texture *texture;
@@ -41,17 +47,17 @@ typedef struct
     float fontSize;
     SDL_Color colour;
     SDL_FRect rect;
-} TextData;
+} TextDisplay;
 
-typedef struct
+typedef struct TextButton
 {
-    TextData textData;
+    TextDisplay textData;
     SDL_Color displayColour;
     SDL_Color highlightColour;
     SDL_Color selectColour;
-    E_ButtonState currentState;
-    E_ButtonState previousState;
-} ButtonData;
+    ButtonState currentState;
+    ButtonState previousState;
+} TextButton;
 
 typedef struct
 {
@@ -63,4 +69,39 @@ typedef struct
     SDL_FRect textBox;
     SDL_FRect cursor;
     SDL_Color *colour;
-} InputTextBoxData;
+} InputTextBox;
+
+typedef struct
+{
+    SDL_FRect box;
+    SDL_Texture *texture;
+    SDL_Color *edgeColour;
+    SDL_Color *fillColor;
+} BoxDisplay;
+
+/***
+ * edgeColours & fillColours - requires an array of 3 SDL_Colors - the first is display colour, the second is highlight colour, and the third is selected colour.
+ */
+typedef struct
+{
+    BoxDisplay boxDisplay;
+    SDL_Color edgeColours[3];
+    SDL_Color fillColours[3];
+    ButtonState currentState;
+    ButtonState previousSate;
+} BoxButton;
+
+typedef struct
+{
+    
+} ImageDisplay;
+
+typedef struct 
+{
+    /* data */
+} ImageButton;
+
+
+
+
+

@@ -21,39 +21,44 @@ SDL_Color red = {255, 0, 0, 255};
 SDL_Color green = {0, 255, 0, 255};
 SDL_Color blue = {0, 0, 255, 255};
 
-ButtonData createLayoutBtn;
+TextButton createLayoutBtn;
 char *createLayoutTxt = "Create Layout";
 
-ButtonData loadLayoutBtn;
+TextButton loadLayoutBtn;
 char *loadLayoutTxt = "Load Layout...";
 
-InputTextBoxData createLayoutInput;
+InputTextBox createLayoutInput;
 
 SDL_FPoint *mousePosPtr = NULL;
 float *mousePos_x = NULL;
 float *mousePos_y = NULL;
 
-InputTypeIdentifier *eventQueue = NULL;
+UIType_ID *eventQueue = NULL;
 
-bool queryAction(InputTypeIdentifier *id)
+bool queryAction(UIType_ID *id)
 {
     switch (id->action)
     {
-    case SHOW_CHILDREN:
-        if(id->children == NULL)
+    case IACTION_SHOW_CHILDREN:
+        if (id->children == NULL)
             break;
-        showChildren(id->children);
+        // showChildren(id->children);
     }
 }
 
-void processInputEvents(InputTypeIdentifier *id)
+void processInputEvents(UIType_ID *id)
 {
     switch (id->type)
     {
-    case BUTTON:
-        if (CheckButtonState((ButtonData *)id->data, NULL, NULL))
-            if (queryAction(id->action))
-                break;
+    case ITYPE_BUTTON_TEXT:
+        TextButton *btnData = (TextButton *)id->data;
+        if (CheckButtonState(btnData, NULL, NULL))
+        {
+            UpdateText(&btnData->textData, renderer);
+            if (btnData->currentState == BSTATE_RELEASED && queryAction(id))
+                ;
+        }
+        break;
     }
 }
 
@@ -76,10 +81,11 @@ bool initSystems()
 
 bool InitAllText()
 {
-    font = TTF_OpenFont("./fonts/PublicPixel.ttf", 20.0f);
+    // font = TTF_OpenFont("./fonts/PublicPixel.ttf", 20.0f);
+    font = TTF_OpenFont("./fonts/VariableFont.ttf", 20.0f);
 
-    AssignButtonData(&createLayoutBtn, white, green, blue, NORMAL, NONE);
-    AssignButtonData(&loadLayoutBtn, white, green, blue, NORMAL, NONE);
+    AssignButtonData(&createLayoutBtn, white, green, blue, BSTATE_NORMAL, BSTATE_NONE);
+    AssignButtonData(&loadLayoutBtn, white, green, blue, BSTATE_NORMAL, BSTATE_NONE);
 
     AssignTextData(&createLayoutBtn.textData, createLayoutTxt, font, 20.0f, createLayoutBtn.displayColour);
     AssignTextData(&loadLayoutBtn.textData, loadLayoutTxt, font, 20.0f, loadLayoutBtn.displayColour);
@@ -175,9 +181,9 @@ bool AppEvent()
             mousePosPtr = &mousePos;
         }
 
-        if (CheckButtonState(&createLayoutBtn, &event, mousePosPtr) && createLayoutBtn.currentState == RELEASED)
+        if (CheckButtonState(&createLayoutBtn, &event, mousePosPtr) && createLayoutBtn.currentState == BSTATE_RELEASED)
             showWindow = true;
-        if (CheckButtonState(&loadLayoutBtn, &event, mousePosPtr) && loadLayoutBtn.currentState == RELEASED)
+        if (CheckButtonState(&loadLayoutBtn, &event, mousePosPtr) && loadLayoutBtn.currentState == BSTATE_RELEASED)
         {
             SDL_Log("clicked on");
             SDL_ShowOpenFileDialog(callback, NULL, window, filters, 0, NULL, false);
