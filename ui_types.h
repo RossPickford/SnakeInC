@@ -93,15 +93,34 @@ typedef struct
 
 typedef struct
 {
-    
+
 } ImageDisplay;
 
-typedef struct 
+typedef struct
 {
     /* data */
 } ImageButton;
 
+typedef struct ButtonData
+{
+    ButtonState currentState;
+    ButtonState previousState;
+    SDL_Color colours[3];
+} ButtonData;
 
+typedef struct Button
+{
+    SDL_Texture *texture;
+    SDL_FRect rect;
+    ButtonData btnData;
+    size_t count;
+    void *displayData;
+    SDL_Color **colours;
+} Button;
 
+void addDisplayToButton(Button *btn, void *displayData, SDL_Color colours[3])
+{
+    //*(sdl_colour *)(arena->current + arena->offset) = colours[i]; doing this after assigning the display data first 
+}
 
-
+//store display data and colour data into an arena

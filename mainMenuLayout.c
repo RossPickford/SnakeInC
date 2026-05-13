@@ -34,7 +34,7 @@ static char *newLayout_cancelText = "cancel";
 - load layout button <- 
 - new layout dialogue box 
 - -> input box for name <-
-- -> image button for folder selection
+- -> Box button for folder selection
 - -> input box for width 
 - -> input box for height
 - -> image or text for the 'x' in 'width x height'

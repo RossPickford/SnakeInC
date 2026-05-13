@@ -30,3 +30,6 @@ BUTTON:
 - Hover Image
 - Selected Image
 - rect ()
+
+
+Create a DrawCommand struct that stores the texture pointer and the rect - then the render buffer can store just the drawcommand structs (from an arena down the line?)

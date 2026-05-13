@@ -35,6 +35,26 @@ float *mousePos_y = NULL;
 
 UIType_ID *eventQueue = NULL;
 
+typedef struct DrawData
+{
+    SDL_Texture *texture;
+    SDL_FRect *rect;
+} DrawData;
+
+DrawData renderBuffer[100];
+size_t rendBuffOffset = 0;
+
+bool processRenderBuffer(DrawData *rendBuff, size_t offset)
+{
+    for (size_t i = 0; i < offset; i++)
+    {
+        if (!SDL_RenderTexture(renderer, (rendBuff + i)->texture, NULL, (rendBuff + i)->rect))
+            return false;
+    }
+
+    return true;
+}
+
 bool queryAction(UIType_ID *id)
 {
     switch (id->action)
@@ -233,6 +253,12 @@ bool AppIterate()
         createLayoutInput.textBox.x = windowRect.x + ((windowRect.w - createLayoutInput.textBox.w) / 2.0f);
         createLayoutInput.textBox.y = windowRect.y + (windowRect.h / 10.0f);
         RenderInputTextBox(&createLayoutInput, renderer);
+    }
+
+    if (!processRenderBuffer(renderBuffer, rendBuffOffset))
+    {
+        SDL_Log("failed to render texture: %s", SDL_GetError());
+        return APP_END;
     }
 
     SDL_RenderPresent(renderer);
