@@ -33,3 +33,8 @@ BUTTON:
 
 
 Create a DrawCommand struct that stores the texture pointer and the rect - then the render buffer can store just the drawcommand structs (from an arena down the line?)
+
+What am I stuck on?
+
+- Allocating widgets to an arena, specifically the order to allocate, and how to allocate (in terms of structs and what data should be used)
+- There are buttons and display widgets.

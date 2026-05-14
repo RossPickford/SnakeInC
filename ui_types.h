@@ -108,19 +108,58 @@ typedef struct ButtonData
     SDL_Color colours[3];
 } ButtonData;
 
+typedef enum displayType
+{
+    TEXT,
+    BOX,
+
+}displayType;
+
 typedef struct Button
 {
     SDL_Texture *texture;
     SDL_FRect rect;
-    ButtonData btnData;
+    ButtonState currentState;
+    ButtonState previousState;
+    SDL_Color colours[3];
     size_t count;
     void *displayData;
-    SDL_Color **colours;
+    SDL_Color **displayColours;
 } Button;
 
-void addDisplayToButton(Button *btn, void *displayData, SDL_Color colours[3])
+
+
+// store display data and colour data into an arena
+
+typedef struct Arena
 {
-    //*(sdl_colour *)(arena->current + arena->offset) = colours[i]; doing this after assigning the display data first 
+    void *start;
+    void *currentPos;
+    // size_t offset;
+} Arena;
+
+void *ArenaAlloc(Arena *arena, size_t size)
+{
+    void *current = arena->currentPos;
+    
+    arena->currentPos = (char *)arena->currentPos + (size - 1);
+    
+    return current;
 }
 
-//store display data and colour data into an arena
+TextDisplay *createText(Arena *arena, SDL_Color colour, TTF_Font *font, size_t fontSize)
+{
+    TextDisplay *text = (TextDisplay *)ArenaAlloc(arena, sizeof(TextDisplay));
+    text->colour = colour;
+    text->font = font;
+    text->fontSize = fontSize;
+}
+
+void addDisplayToButton(Button *btn, void *displayData, SDL_Color *colours)
+{
+    // btn->
+
+    //*(sdl_colour *)(arena->current + arena->offset) = colours[i]; doing this after assigning the display data first
+}
+
+

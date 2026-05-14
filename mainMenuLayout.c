@@ -29,6 +29,13 @@ static char *newLayout_createText = "create";
 BoxButton newLayout_cancelButtonBox;
 static char *newLayout_cancelText = "cancel";
 
+void InitMainMenuWidgets(Arena *arena)
+{
+    TextDisplay *txtDsply = (TextDisplay *)ArenaAlloc(arena, sizeof(TextDisplay) * 2);
+    
+    // AssignTextData(txtDsply, newLayoutTxt,NULL, 20f, )
+}
+
 /*
 - new layout button <- 
 - load layout button <- 
