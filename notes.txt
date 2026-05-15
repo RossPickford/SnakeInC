@@ -38,3 +38,7 @@ What am I stuck on?
 
 - Allocating widgets to an arena, specifically the order to allocate, and how to allocate (in terms of structs and what data should be used)
 - There are buttons and display widgets.
+
+- UI elements in groups are linearly allocated. If a UI element has multiple display types - they should be linearly allocated and pointed 
+    to by the void pointer in the UI elements struct. You should not create different structs for display types that have the same function and
+    are tied together by their function (i.e. they are a button). The colours for a button function 

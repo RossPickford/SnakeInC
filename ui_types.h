@@ -105,7 +105,7 @@ typedef struct ButtonData
 {
     ButtonState currentState;
     ButtonState previousState;
-    SDL_Color colours[3];
+    SDL_Color **colours;
 } ButtonData;
 
 typedef enum displayType
@@ -119,14 +119,11 @@ typedef struct Button
 {
     SDL_Texture *texture;
     SDL_FRect rect;
-    ButtonState currentState;
-    ButtonState previousState;
-    SDL_Color colours[3];
+    ButtonData *btnData;
     size_t count;
     void *displayData;
     SDL_Color **displayColours;
 } Button;
-
 
 
 // store display data and colour data into an arena
@@ -161,5 +158,3 @@ void addDisplayToButton(Button *btn, void *displayData, SDL_Color *colours)
 
     //*(sdl_colour *)(arena->current + arena->offset) = colours[i]; doing this after assigning the display data first
 }
-
-
