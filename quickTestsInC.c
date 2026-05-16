@@ -5,7 +5,12 @@ typedef enum month
 {
     JAN = 4,
     FEB = 7,
-    MAR
+    MAR,
+    APR,
+    MAY,
+    JUN,
+    JUL,
+    AUG,
 } month;
 
 typedef struct info
@@ -49,15 +54,16 @@ int main()
 
     //=============================================================================
 
-    // Very basic arena play testing
-    void *arena = malloc(1024);
+    // Very basic arena play testing ==============================================
+
+    /* void *arena = malloc(1024);
     size_t offset = 0;
 
     int nums[] = {1, 2, 3};
     float fNums[] = {1.2f, 2.3f, 3.4f};
 
     int *numsPtr = (int *)arena;
-    float *fNumsPtr = NULL;    
+    float *fNumsPtr = NULL;
 
     for (int i = 0; i < 3; i++)
     {
@@ -74,7 +80,18 @@ int main()
     }
 
     printf("the int numbers are: %d, %d, %d\n", *numsPtr, *(numsPtr + 1), *(numsPtr + 2));
-    printf("the int numbers are: %f, %f, %f\n", *fNumsPtr, *(fNumsPtr + 1), *(fNumsPtr + 2));
+    printf("the int numbers are: %f, %f, %f\n", *fNumsPtr, *(fNumsPtr + 1), *(fNumsPtr + 2)); */
+
+    month *ids[] = {{JAN}, {FEB}, {MAR, APR}, {MAY}, {JUN}, {JUL}, {JAN, APR}, {FEB, JUL}};
+    size_t idSize[] = {1, 1, 2, 1, 1, 1, 2, 2};
+
+    for (int i = 0; i < 8; i++)
+    {
+        for (int j = 0; j < idSize[j]; j++)
+        {
+            printf("%d\n", *(ids[i] + j));
+        }
+    }
 
     return 1;
 }

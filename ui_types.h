@@ -108,23 +108,29 @@ typedef struct ButtonData
     SDL_Color **colours;
 } ButtonData;
 
-typedef enum displayType
+typedef enum displayType_ID
 {
-    TEXT,
-    BOX,
+    DI_TEXT,
+    DI_BOX,
+    DI_IMAGE,
+} displayType_ID;
 
-}displayType;
+typedef struct DisplayType
+{
+    displayType_ID id;
+    void *displayData;
 
-typedef struct Button
+} displayType;
+
+typedef struct UIElement
 {
     SDL_Texture *texture;
     SDL_FRect rect;
     ButtonData *btnData;
-    size_t count;
-    void *displayData;
-    SDL_Color **displayColours;
-} Button;
-
+    size_t displayCount;
+    displayType *displayData;
+    // SDL_Color **displayColours;
+} UIElement;
 
 // store display data and colour data into an arena
 
@@ -138,9 +144,9 @@ typedef struct Arena
 void *ArenaAlloc(Arena *arena, size_t size)
 {
     void *current = arena->currentPos;
-    
+
     arena->currentPos = (char *)arena->currentPos + (size - 1);
-    
+
     return current;
 }
 
@@ -150,11 +156,4 @@ TextDisplay *createText(Arena *arena, SDL_Color colour, TTF_Font *font, size_t f
     text->colour = colour;
     text->font = font;
     text->fontSize = fontSize;
-}
-
-void addDisplayToButton(Button *btn, void *displayData, SDL_Color *colours)
-{
-    // btn->
-
-    //*(sdl_colour *)(arena->current + arena->offset) = colours[i]; doing this after assigning the display data first
 }
