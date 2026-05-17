@@ -34,10 +34,10 @@ static char *newLayout_cancelText = "cancel";
 
 //===============================================
 
-UIElement *layoutButtons_groupPtr, *dialogueBox_groupPtr;
-UIElement *E_newLayout, *E_loadLayout;
+UI_Element *layoutButtons_groupPtr, *dialogueBox_groupPtr;
+UI_Element *E_newLayout, *E_loadLayout;
 
-UIElement *E_dlgue_box, *E_dlgue_inputBox, *E_dlgue_slctFldr, *E_wdthInpt, *E_hghtInpt, *E_wdthxHght, *E_crtBtn, *E_cnclBtn;
+UI_Element *E_dlgue_box, *E_dlgue_inputBox, *E_dlgue_slctFldr, *E_wdthInpt, *E_hghtInpt, *E_wdthxHght, *E_crtBtn, *E_cnclBtn;
 
 size_t getTypeFromID(displayType_ID id)
 {
@@ -65,11 +65,11 @@ void addDisplayToElement(Arena *arena, displayType *display, displayType_ID id)
 
 void InitMainMenuWidgets(Arena *arena)
 {
-    layoutButtons_groupPtr = (UIElement *)ArenaAlloc(arena, sizeof(UIElement) * LAYOUT_BUTTONS_GROUP_SIZE);
+    layoutButtons_groupPtr = (UI_Element *)ArenaAlloc(arena, sizeof(UI_Element) * LAYOUT_BUTTONS_GROUP_SIZE);
     // 0 - create layout button
     // 1 - load layout button
 
-    dialogueBox_groupPtr = (UIElement *)ArenaAlloc(arena, sizeof(UIElement) * DIALOGUE_BOX_GROUP_SIZE);
+    dialogueBox_groupPtr = (UI_Element *)ArenaAlloc(arena, sizeof(UI_Element) * DIALOGUE_BOX_GROUP_SIZE);
     // 0 - main encapsulating box
     // 1 - name input box
     // 2 - select folder button
@@ -91,17 +91,37 @@ void InitMainMenuWidgets(Arena *arena)
     addDisplayToElement(arena, (layoutButtons_groupPtr + 1)->displayData, DI_TEXT); // allocating text data type for load layout button
     (layoutButtons_groupPtr + 1)->displayCount = 1;
 
-    displayType_ID *ids[] = {{DI_BOX}, {DI_BOX}, {DI_BOX, DI_TEXT}, {DI_BOX}, {DI_BOX}, {DI_TEXT}, {DI_BOX, DI_TEXT}, {DI_BOX, DI_TEXT}};
-    size_t idSize[] = {1, 1, 2, 1, 1, 1, 2, 2};
+    displayType_ID ids[] = {
+        DI_BOX,           /* Main Dialogue Box */
+        DI_BOX,           /* File Name Input Box */
+        DI_BOX, DI_TEXT,  /* Folder Selection Button */
+        DI_BOX,           /* Width Input Box */
+        DI_BOX,           /* Height Input Box */
+        DI_TEXT,          /* Width and Height 'X' */
+        DI_BOX, DI_TEXT,  /* Create button */
+        DI_BOX, DI_TEXT}; /* Cancel Button */
 
-    for (int i = 0; i < DIALOGUE_BOX_GROUP_SIZE; i++)
+    size_t idSize[] = {
+        1,  /* Main Dialogue Box */
+        1,  /* File Name Input Box */
+        2,  /* Folder Selection Button */
+        1,  /* Width Input Box */
+        1,  /* Height Input Box */
+        1,  /* Width and Height 'X' */
+        2,  /* Create button */
+        2}; /* Cancel Button */
+
+    // Allocating the display data type for each UI Element in the dialogue box
+    for (size_t i = 0, j = 0; i < DIALOGUE_BOX_GROUP_SIZE; i++)
     {
-        for (int j = 0; j < idSize[j]; j++)
-        {
-            addDisplayToElement(arena, (dialogueBox_groupPtr + i)->displayData, *(ids[i] + j));
-        }
+        size_t k = 0;
+        (dialogueBox_groupPtr + i)->displayCount = idSize[i];
+        while (k < idSize[i])
+            addDisplayToElement(arena, (dialogueBox_groupPtr + i)->displayData, ids[j + k++]);
+        j += k;
     }
-    addDisplayToElement(arena, (dialogueBox_groupPtr + 1)->displayData, DI_BOX); // allocating box data type for dialogue main box
+
+    // What next  to allocate?
 
     for (int i = 0; i < 10; i++)
     {

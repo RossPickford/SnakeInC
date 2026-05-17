@@ -82,15 +82,26 @@ int main()
     printf("the int numbers are: %d, %d, %d\n", *numsPtr, *(numsPtr + 1), *(numsPtr + 2));
     printf("the int numbers are: %f, %f, %f\n", *fNumsPtr, *(fNumsPtr + 1), *(fNumsPtr + 2)); */
 
-    month *ids[] = {{JAN}, {FEB}, {MAR, APR}, {MAY}, {JUN}, {JUL}, {JAN, APR}, {FEB, JUL}};
+    month ids[] = {
+        JAN,       /* first 4 */
+        FEB,       /* second 7 */
+        MAR, APR,  /* third 8, 9 */
+        MAY,       /* fourth 10 */
+        JUN,       /* fifth 11 */
+        JUL,       /* sixth 12 */
+        JAN, APR,  /* seventh 4, 9 */
+        FEB, JUL}; /*eighth 7, 12 */
+
     size_t idSize[] = {1, 1, 2, 1, 1, 1, 2, 2};
 
-    for (int i = 0; i < 8; i++)
+    for (size_t i = 0, j = 0; i < 8; i++)
     {
-        for (int j = 0; j < idSize[j]; j++)
+        size_t k = 0;
+        while (k < idSize[i])
         {
-            printf("%d\n", *(ids[i] + j));
+            printf("%d\n", ids[j + k++]);
         }
+        j += k;
     }
 
     return 1;

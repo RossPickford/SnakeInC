@@ -122,7 +122,7 @@ typedef struct DisplayType
 
 } displayType;
 
-typedef struct UIElement
+typedef struct UI_Element
 {
     SDL_Texture *texture;
     SDL_FRect rect;
@@ -130,7 +130,7 @@ typedef struct UIElement
     size_t displayCount;
     displayType *displayData;
     // SDL_Color **displayColours;
-} UIElement;
+} UI_Element;
 
 // store display data and colour data into an arena
 
