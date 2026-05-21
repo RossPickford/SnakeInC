@@ -157,3 +157,24 @@ TextDisplay *createText(Arena *arena, SDL_Color colour, TTF_Font *font, size_t f
     text->font = font;
     text->fontSize = fontSize;
 }
+
+typedef struct Text
+{
+    char *text;
+    char **fontFile;
+    float fontSize;
+    SDL_Color *colour;
+} Text;
+
+typedef struct Box
+{
+    float width;
+    float height;
+    SDL_Color *edgeColour;
+    SDL_Color *fillColor;
+} Box;
+
+typedef struct Image
+{
+
+} Image;

@@ -3,6 +3,26 @@
 #define LAYOUT_BUTTONS_GROUP_SIZE 2
 #define DIALOGUE_BOX_GROUP_SIZE 8
 
+#define MAIN_BUTTON_NEWLAYOUT layoutButtons_groupPtr
+#define MAIN_BUTTON_LOADLAYOUT (layoutButtons_groupPtr + 1)
+
+#define DLGBOX_DISPLAY_MAINBOX dialogueBox_groupPtr
+#define DLGBOX_INPUT_NAMEFILE (dialogueBox_groupPtr + 1)
+#define DLGBOX_BUTTON_SELECTFOLDER (dialogueBox_groupPtr + 2)
+#define DLGBOX_INPUT_SCREENWIDTH (dialogueBox_groupPtr + 3)
+#define DLGBOX_INPUT_SCREENHEIGHT (dialogueBox_groupPtr + 4)
+#define DLGBOX_DISPLAY_WXH (dialogueBox_groupPtr + 5)
+#define DLGBOX_BUTTON_CREATELAYOUT (dialogueBox_groupPtr + 6)
+#define DLGBOX_BUTTON_CANCELLAYOUT (dialogueBox_groupPtr + 7)
+
+static SDL_Color black = {0, 0, 0, 255};
+static SDL_Color white = {255, 255, 255, 255};
+static SDL_Color red = {255, 0, 0, 255};
+static SDL_Color green = {0, 255, 0, 255};
+static SDL_Color blue = {0, 0, 255, 255};
+
+static char *publicFont = "./fonts/PublicPixel.ttf";
+
 // First widgets to appear =================
 TextButton newLayoutBtn;
 char *newLayoutTxt = "New Layout";
@@ -17,7 +37,7 @@ BoxDisplay newLayout_DialogueBox;
 
 InputTextBox newLayout_NameInput;
 
-ImageButton newLayout_SelectFolder;
+char *newLayout_SelectFolderTxt = "...";
 
 InputTextBox newLayout_widthInput;
 
@@ -44,17 +64,17 @@ size_t getTypeFromID(displayType_ID id)
     switch (id)
     {
     case DI_BOX:
-        return sizeof(BoxDisplay);
+        return sizeof(Box);
     case DI_IMAGE:
-        return sizeof(ImageDisplay);
+        return sizeof(Image);
     case DI_TEXT:
-        return sizeof(TextDisplay);
+        return sizeof(Text);
     default:
         return 0;
     }
 }
 
-void addDisplayToElement(Arena *arena, displayType *display, displayType_ID id)
+void LinkAllocateDisplayToElement(Arena *arena, displayType *display, displayType_ID id)
 {
     size_t size = getTypeFromID(id);
 
@@ -63,10 +83,26 @@ void addDisplayToElement(Arena *arena, displayType *display, displayType_ID id)
     display->displayData = ArenaAlloc(arena, size);
 }
 
+void AssignText(Text *txt, char *str, char **fontFile, float fontSize, SDL_Color *colour)
+{
+    txt->text = str;
+    txt->fontFile = fontFile;
+    txt->fontSize = fontSize;
+    txt->colour = colour;
+}
+
+void AssignBox(Box *bx, float width, float height, SDL_Color *edgeColour, SDL_Color *fillColour)
+{
+    bx->width = width;
+    bx->height = height;
+    bx->edgeColour = edgeColour;
+    bx->fillColor = fillColour;
+}
+
 void InitMainMenuWidgets(Arena *arena)
 {
     layoutButtons_groupPtr = (UI_Element *)ArenaAlloc(arena, sizeof(UI_Element) * LAYOUT_BUTTONS_GROUP_SIZE);
-    // 0 - create layout button
+    // 0 - new layout button
     // 1 - load layout button
 
     dialogueBox_groupPtr = (UI_Element *)ArenaAlloc(arena, sizeof(UI_Element) * DIALOGUE_BOX_GROUP_SIZE);
@@ -82,14 +118,14 @@ void InitMainMenuWidgets(Arena *arena)
     layoutButtons_groupPtr->btnData = (ButtonData *)ArenaAlloc(arena, sizeof(ButtonData));       // Create layout button data allocation
     (layoutButtons_groupPtr + 1)->btnData = (ButtonData *)ArenaAlloc(arena, sizeof(ButtonData)); // load layout button data allocation
 
-    (dialogueBox_groupPtr + 2)->btnData = (ButtonData *)ArenaAlloc(arena, sizeof(ButtonData)); // select folder button
-    (dialogueBox_groupPtr + 6)->btnData = (ButtonData *)ArenaAlloc(arena, sizeof(ButtonData)); // create layout button
-    (dialogueBox_groupPtr + 7)->btnData = (ButtonData *)ArenaAlloc(arena, sizeof(ButtonData)); // cancel dialogue box button
+    DLGBOX_BUTTON_SELECTFOLDER->btnData = (ButtonData *)ArenaAlloc(arena, sizeof(ButtonData)); // select folder button
+    DLGBOX_BUTTON_CREATELAYOUT->btnData = (ButtonData *)ArenaAlloc(arena, sizeof(ButtonData)); // create layout button
+    DLGBOX_BUTTON_CANCELLAYOUT->btnData = (ButtonData *)ArenaAlloc(arena, sizeof(ButtonData)); // cancel dialogue box button
 
-    addDisplayToElement(arena, layoutButtons_groupPtr->displayData, DI_TEXT); // allocating text data type for create layout button
-    layoutButtons_groupPtr->displayCount = 1;
-    addDisplayToElement(arena, (layoutButtons_groupPtr + 1)->displayData, DI_TEXT); // allocating text data type for load layout button
-    (layoutButtons_groupPtr + 1)->displayCount = 1;
+    LinkAllocateDisplayToElement(arena, MAIN_BUTTON_NEWLAYOUT->displayData, DI_TEXT); // allocating text data type for new layout button
+    MAIN_BUTTON_NEWLAYOUT->displayCount = 1;
+    LinkAllocateDisplayToElement(arena, MAIN_BUTTON_LOADLAYOUT->displayData, DI_TEXT); // allocating text data type for load layout button
+    MAIN_BUTTON_LOADLAYOUT->displayCount = 1;
 
     displayType_ID ids[] = {
         DI_BOX,           /* Main Dialogue Box */
@@ -117,12 +153,11 @@ void InitMainMenuWidgets(Arena *arena)
         size_t k = 0;
         (dialogueBox_groupPtr + i)->displayCount = idSize[i];
         while (k < idSize[i])
-            addDisplayToElement(arena, (dialogueBox_groupPtr + i)->displayData, ids[j + k++]);
+            LinkAllocateDisplayToElement(arena, (dialogueBox_groupPtr + i)->displayData, ids[j + k++]);
         j += k;
     }
 
-    // What next  to allocate?
-
+    // Assign button data to the
     for (int i = 0; i < 10; i++)
     {
         if (!(layoutButtons_groupPtr + i)->btnData)
@@ -132,7 +167,20 @@ void InitMainMenuWidgets(Arena *arena)
         (layoutButtons_groupPtr + i)->btnData->previousState = BSTATE_NONE;
     }
 
-    // AssignTextData(txtDsply, newLayoutTxt,NULL, 20f, )
+    // Assigning New and Load layout display Text data.
+    AssignText((Text *)MAIN_BUTTON_NEWLAYOUT->displayData->displayData, newLayoutTxt, &publicFont, 20.0f, &white);
+    AssignText((Text *)MAIN_BUTTON_LOADLAYOUT->displayData->displayData, newLayoutTxt, &publicFont, 20.0f, &white);
+    
+    AssignBox((Box *)DLGBOX_DISPLAY_MAINBOX->displayData->displayData, 640.0f, 360.0f, &white, &black);
+    AssignBox((Box *)DLGBOX_INPUT_NAMEFILE->displayData->displayData, 400.0f, 20.0f, &white, &black);
+    AssignBox((Box *)DLGBOX_BUTTON_SELECTFOLDER->displayData->displayData, 20.0f, 20.0f, &white, &black);
+    AssignText((((Text *)DLGBOX_BUTTON_SELECTFOLDER->displayData->displayData) + 1), newLayout_SelectFolderTxt, &publicFont, 20.0f, &white);
+    AssignBox((Box *)DLGBOX_INPUT_SCREENWIDTH->displayData->displayData, 200.0f, 20.0f, &white, &black);
+    AssignBox((Box *)DLGBOX_INPUT_SCREENHEIGHT->displayData->displayData, 200.0f, 20.0f, &white, &black);
+    AssignText((Text *)DLGBOX_DISPLAY_WXH->displayData->displayData, newLayout_WxHText, &publicFont, 20.0f, &white);
+    AssignBox((Box *)DLGBOX_BUTTON_CREATELAYOUT->displayData->displayData, 20.0f, 20.0f, &white, &black);
+    
+
 }
 
 /*
