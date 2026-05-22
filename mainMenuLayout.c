@@ -170,7 +170,7 @@ void InitMainMenuWidgets(Arena *arena)
     // Assigning New and Load layout display Text data.
     AssignText((Text *)MAIN_BUTTON_NEWLAYOUT->displayData->displayData, newLayoutTxt, &publicFont, 20.0f, &white);
     AssignText((Text *)MAIN_BUTTON_LOADLAYOUT->displayData->displayData, newLayoutTxt, &publicFont, 20.0f, &white);
-    
+
     AssignBox((Box *)DLGBOX_DISPLAY_MAINBOX->displayData->displayData, 640.0f, 360.0f, &white, &black);
     AssignBox((Box *)DLGBOX_INPUT_NAMEFILE->displayData->displayData, 400.0f, 20.0f, &white, &black);
     AssignBox((Box *)DLGBOX_BUTTON_SELECTFOLDER->displayData->displayData, 20.0f, 20.0f, &white, &black);
@@ -179,8 +179,58 @@ void InitMainMenuWidgets(Arena *arena)
     AssignBox((Box *)DLGBOX_INPUT_SCREENHEIGHT->displayData->displayData, 200.0f, 20.0f, &white, &black);
     AssignText((Text *)DLGBOX_DISPLAY_WXH->displayData->displayData, newLayout_WxHText, &publicFont, 20.0f, &white);
     AssignBox((Box *)DLGBOX_BUTTON_CREATELAYOUT->displayData->displayData, 20.0f, 20.0f, &white, &black);
-    
+}
 
+SDL_Surface *createTextSurface(Text *txt)
+{
+    TTF_Font *font = TTF_OpenFont(*txt->fontFile, txt->fontSize);
+    return TTF_RenderText_Blended(font, txt->text, 0, *txt->colour);
+}
+
+SDL_Surface *createBoxSurface(Box *bx)
+{
+    SDL_Surface *surf = SDL_CreateSurface(bx->width, bx->height, SDL_PIXELFORMAT_ABGR128_FLOAT);
+    Uint32 edgeColour = SDL_MapRGBA(SDL_PIXELFORMAT_ABGR128_FLOAT, NULL, bx->edgeColour->r, bx->edgeColour->g, bx->edgeColour->b, bx->edgeColour->a);
+    SDL_FillSurfaceRect(surf, NULL, edgeColour);
+
+    SDL_Rect rect = {1, 1, (bx->width - 2), (bx->height - 2)};
+    Uint32 fillColour = SDL_MapRGBA(SDL_PIXELFORMAT_ABGR128_FLOAT, NULL, bx->fillColor->r, bx->fillColor->g, bx->fillColor->b, bx->fillColor->a);
+    SDL_FillSurfaceRect(surf, &rect, fillColour);
+
+    return surf;
+}
+
+void renderUITexture(UI_Element *ui, SDL_Renderer *renderer)
+{
+    SDL_Surface *surfs[ui->displayCount];
+
+    size_t offset = 0;
+    for (size_t i = 0; i < ui->displayCount; i++)
+    {
+        switch ((ui->displayData + i)->id)
+        {
+        case DI_TEXT:
+            surfs[i] = createTextSurface((Text *)(ui->displayData + i)->displayData);
+            offset += sizeof(Text);
+            break;
+        case DI_BOX:
+            surfs[i] = createBoxSurface((Box *)(ui->displayData + i)->displayData);
+            offset += sizeof(Box);
+            break;
+        case DI_IMAGE:
+            break;
+        }
+    }
+    SDL_UnlockSurface(*surfs);
+    for (size_t i = 1; i < ui->displayCount; i++)
+    {
+        SDL_UnlockSurface(surfs[i]);
+        SDL_BlitSurface(surfs[i], NULL, NULL, *surfs);
+        SDL_DestroySurface(surfs[i]);
+    }
+
+    ui->texture = SDL_CreateTextureFromSurface(renderer, *surfs);
+    SDL_GetTextureSize(ui->texture, &ui->rect.w, &ui->rect.h);
 }
 
 /*
