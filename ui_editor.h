@@ -1,6 +1,6 @@
-#include "ui_types.h"
-
 #pragma once
+
+#include "ui_types.h"
 
 bool UpdateText(TextDisplay *textData, SDL_Renderer *renderer);
 bool ChangeButtonState(TextButton *btnData, ButtonState state);

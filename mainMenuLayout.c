@@ -215,7 +215,7 @@ void createUITexture(UI_Element *ui, SDL_Renderer *renderer, float x, float y)
     SDL_GetTextureSize(ui->texture, &ui->rect.w, &ui->rect.h);
 }
 
-void InitMainMenuWidgets(Arena *arena, SDL_Renderer *renderer, size_t width, size_t height)
+bool InitMainMenuWidgets(Arena *arena, SDL_Renderer *renderer, size_t width, size_t height)
 {
     layoutButtons_groupPtr = (UI_Element *)ArenaAlloc(arena, sizeof(UI_Element) * LAYOUT_BUTTONS_GROUP_SIZE);
     // 0 - new layout button
@@ -331,6 +331,13 @@ void InitMainMenuWidgets(Arena *arena, SDL_Renderer *renderer, size_t width, siz
     createUITexture(DLGBOX_DISPLAY_WXH, renderer, DB_WXH_X, DB_WXH_Y);
     createUITexture(DLGBOX_BUTTON_CREATELAYOUT, renderer, DB_CREATELAYOUT_X, DB_CREATELAYOUT_Y);
     createUITexture(DLGBOX_BUTTON_CANCELLAYOUT, renderer, DB_CANCELLAYOUT_X, DB_CANCELLAYOUT_Y);
+
+    return true;
+}
+
+UI_Element *getMainMenuElements()
+{
+    return layoutButtons_groupPtr;
 }
 
 /*

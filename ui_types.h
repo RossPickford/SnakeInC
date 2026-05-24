@@ -1,8 +1,7 @@
+#pragma once
 
 #include <SDL3/SDL.h>
 #include <SDL3_ttf/SDL_ttf.h>
-
-#pragma once
 
 typedef enum UIType
 {
@@ -131,32 +130,6 @@ typedef struct UI_Element
     displayType *displayData;
     // SDL_Color **displayColours;
 } UI_Element;
-
-// store display data and colour data into an arena
-
-typedef struct Arena
-{
-    void *start;
-    void *currentPos;
-    // size_t offset;
-} Arena;
-
-void *ArenaAlloc(Arena *arena, size_t size)
-{
-    void *current = arena->currentPos;
-
-    arena->currentPos = (char *)arena->currentPos + (size - 1);
-
-    return current;
-}
-
-TextDisplay *createText(Arena *arena, SDL_Color colour, TTF_Font *font, size_t fontSize)
-{
-    TextDisplay *text = (TextDisplay *)ArenaAlloc(arena, sizeof(TextDisplay));
-    text->colour = colour;
-    text->font = font;
-    text->fontSize = fontSize;
-}
 
 typedef struct Text
 {
