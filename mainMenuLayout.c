@@ -15,6 +15,36 @@
 #define DLGBOX_BUTTON_CREATELAYOUT (dialogueBox_groupPtr + 6)
 #define DLGBOX_BUTTON_CANCELLAYOUT (dialogueBox_groupPtr + 7)
 
+#define M_NEWLAYOUT_X 0.0f
+#define M_NEWLAYOUT_Y 0.0f
+
+#define M_LOADLAYOUT_X 0.0f
+#define M_LOADLAYOUT_Y MAIN_BUTTON_NEWLAYOUT->rect.h * 1.5f
+
+#define DB_MAINBOX_X (width / DLGBOX_DISPLAY_MAINBOX->rect.w) / 2.0f
+#define DB_MAINBOX_Y (height / DLGBOX_DISPLAY_MAINBOX->rect.h) / 2.0f
+
+#define DB_NAMEFILE_X DB_MAINBOX_X + (DLGBOX_DISPLAY_MAINBOX->rect.w - DLGBOX_INPUT_NAMEFILE->rect.w) / 2.0f
+#define DB_NAMEFILE_Y DB_MAINBOX_Y + (DLGBOX_DISPLAY_MAINBOX->rect.h / 3.0f)
+
+#define DB_SELECTFOLDER_X DB_NAMEFILE_X + (DLGBOX_INPUT_NAMEFILE->rect.w * 1.2f)
+#define DB_SELECTFOLDER_Y DB_NAMEFILE_Y
+
+#define DB_SCREENWIDTH_X DB_MAINBOX_X + (DLGBOX_DISPLAY_MAINBOX->rect.w - (DLGBOX_INPUT_SCREENWIDTH->rect.w + DLGBOX_INPUT_SCREENHEIGHT->rect.w + DLGBOX_DISPLAY_WXH->rect.w + 10.0f)) / 2.0f
+#define DB_SCREENWIDTH_Y DB_NAMEFILE_Y + (DLGBOX_DISPLAY_MAINBOX->rect.h / 3.0f)
+
+#define DB_SCREENHEIGHT_X DB_WXH_X + 5.0f
+#define DB_SCREENHEIGHT_Y DB_SCREENWIDTH_Y
+
+#define DB_WXH_X DB_SCREENWIDTH_X + 5.0f
+#define DB_WXH_Y DB_SCREENWIDTH_Y
+
+#define DB_CREATELAYOUT_X DB_MAINBOX_X + (DLGBOX_DISPLAY_MAINBOX->rect.w - (DLGBOX_BUTTON_CREATELAYOUT->rect.w + DLGBOX_BUTTON_CANCELLAYOUT->rect.w + 10.0f)) / 2.0f
+#define DB_CREATELAYOUT_Y DB_SCREENWIDTH_Y + (DLGBOX_DISPLAY_MAINBOX->rect.h / 3.0f)
+
+#define DB_CANCELLAYOUT_X DB_CREATELAYOUT_X + DLGBOX_BUTTON_CREATELAYOUT->rect.w + 10.0f
+#define DB_CANCELLAYOUT_Y DB_CREATELAYOUT_Y
+
 static SDL_Color black = {0, 0, 0, 255};
 static SDL_Color white = {255, 255, 255, 255};
 static SDL_Color red = {255, 0, 0, 255};
@@ -99,7 +129,93 @@ void AssignBox(Box *bx, float width, float height, SDL_Color *edgeColour, SDL_Co
     bx->fillColor = fillColour;
 }
 
-void InitMainMenuWidgets(Arena *arena)
+float getTextHeight(Text *txt, SDL_Renderer *renderer)
+{
+    float height = 0;
+    TTF_Font *font = TTF_OpenFont(*txt->fontFile, txt->fontSize);
+    SDL_Surface *tempSurf = TTF_RenderText_Blended(font, *txt->text, 0, white);
+    SDL_Texture *tempText = SDL_CreateTextureFromSurface(renderer, tempSurf);
+    SDL_DestroySurface(tempSurf);
+    SDL_GetTextureSize(tempText, NULL, &height);
+    SDL_DestroyTexture(tempText);
+    TTF_CloseFont(font);
+    return height;
+}
+
+float getTextWidth(Text *txt, SDL_Renderer *renderer)
+{
+    float width = 0;
+    TTF_Font *font = TTF_OpenFont(*txt->fontFile, txt->fontSize);
+    SDL_Surface *tempSurf = TTF_RenderText_Blended(font, txt->text, 0, white);
+    SDL_Texture *tempText = SDL_CreateTextureFromSurface(renderer, tempSurf);
+    SDL_DestroySurface(tempSurf);
+    SDL_GetTextureSize(tempText, &width, NULL);
+    SDL_DestroyTexture(tempText);
+    TTF_CloseFont(font);
+    return width;
+}
+
+SDL_Surface *createTextSurface(Text *txt)
+{
+    TTF_Font *font = TTF_OpenFont(*txt->fontFile, txt->fontSize);
+    SDL_Surface *surf = TTF_RenderText_Blended(font, txt->text, 0, *txt->colour);
+    TTF_CloseFont(font);
+    return surf;
+}
+
+SDL_Surface *createBoxSurface(Box *bx)
+{
+    SDL_Surface *surf = SDL_CreateSurface(bx->width, bx->height, SDL_PIXELFORMAT_ABGR128_FLOAT);
+    Uint32 edgeColour = SDL_MapRGBA(SDL_PIXELFORMAT_ABGR128_FLOAT, NULL, bx->edgeColour->r, bx->edgeColour->g, bx->edgeColour->b, bx->edgeColour->a);
+    SDL_FillSurfaceRect(surf, NULL, edgeColour);
+
+    SDL_Rect rect = {1, 1, (bx->width - 2), (bx->height - 2)};
+    Uint32 fillColour = SDL_MapRGBA(SDL_PIXELFORMAT_ABGR128_FLOAT, NULL, bx->fillColor->r, bx->fillColor->g, bx->fillColor->b, bx->fillColor->a);
+    SDL_FillSurfaceRect(surf, &rect, fillColour);
+
+    return surf;
+}
+
+void createUITexture(UI_Element *ui, SDL_Renderer *renderer, float x, float y)
+{
+    ui->rect.x = x;
+    ui->rect.y = y;
+
+    SDL_Surface *surfs[ui->displayCount];
+
+    size_t offset = 0;
+    for (size_t i = 0; i < ui->displayCount; i++)
+    {
+        switch ((ui->displayData + i)->id)
+        {
+        case DI_TEXT:
+            surfs[i] = createTextSurface((Text *)(ui->displayData + i)->displayData);
+            offset += sizeof(Text);
+            break;
+        case DI_BOX:
+            surfs[i] = createBoxSurface((Box *)(ui->displayData + i)->displayData);
+            offset += sizeof(Box);
+            break;
+        case DI_IMAGE:
+            break;
+        }
+    }
+
+    SDL_UnlockSurface(*surfs);
+    for (size_t i = 1; i < ui->displayCount; i++)
+    {
+        SDL_UnlockSurface(surfs[i]);
+        SDL_BlitSurface(surfs[i], NULL, NULL, *surfs);
+        SDL_DestroySurface(surfs[i]);
+    }
+    SDL_LockSurface(*surfs);
+
+    ui->texture = SDL_CreateTextureFromSurface(renderer, *surfs);
+    SDL_DestroySurface(*surfs);
+    SDL_GetTextureSize(ui->texture, &ui->rect.w, &ui->rect.h);
+}
+
+void InitMainMenuWidgets(Arena *arena, SDL_Renderer *renderer, size_t width, size_t height)
 {
     layoutButtons_groupPtr = (UI_Element *)ArenaAlloc(arena, sizeof(UI_Element) * LAYOUT_BUTTONS_GROUP_SIZE);
     // 0 - new layout button
@@ -130,12 +246,12 @@ void InitMainMenuWidgets(Arena *arena)
     displayType_ID ids[] = {
         DI_BOX,           /* Main Dialogue Box */
         DI_BOX,           /* File Name Input Box */
-        DI_BOX, DI_TEXT,  /* Folder Selection Button */
+        DI_TEXT, DI_BOX,  /* Folder Selection Button */
         DI_BOX,           /* Width Input Box */
         DI_BOX,           /* Height Input Box */
         DI_TEXT,          /* Width and Height 'X' */
-        DI_BOX, DI_TEXT,  /* Create button */
-        DI_BOX, DI_TEXT}; /* Cancel Button */
+        DI_TEXT, DI_BOX,  /* Create button */
+        DI_TEXT, DI_BOX}; /* Cancel Button */
 
     size_t idSize[] = {
         1,  /* Main Dialogue Box */
@@ -157,7 +273,7 @@ void InitMainMenuWidgets(Arena *arena)
         j += k;
     }
 
-    // Assign button data to the
+    // Assign button data to the coresponding buttons
     for (int i = 0; i < 10; i++)
     {
         if (!(layoutButtons_groupPtr + i)->btnData)
@@ -167,70 +283,54 @@ void InitMainMenuWidgets(Arena *arena)
         (layoutButtons_groupPtr + i)->btnData->previousState = BSTATE_NONE;
     }
 
-    // Assigning New and Load layout display Text data.
-    AssignText((Text *)MAIN_BUTTON_NEWLAYOUT->displayData->displayData, newLayoutTxt, &publicFont, 20.0f, &white);
-    AssignText((Text *)MAIN_BUTTON_LOADLAYOUT->displayData->displayData, newLayoutTxt, &publicFont, 20.0f, &white);
+    // Assigning display data for each element in the same order they were allocated
 
-    AssignBox((Box *)DLGBOX_DISPLAY_MAINBOX->displayData->displayData, 640.0f, 360.0f, &white, &black);
-    AssignBox((Box *)DLGBOX_INPUT_NAMEFILE->displayData->displayData, 400.0f, 20.0f, &white, &black);
-    AssignBox((Box *)DLGBOX_BUTTON_SELECTFOLDER->displayData->displayData, 20.0f, 20.0f, &white, &black);
-    AssignText((((Text *)DLGBOX_BUTTON_SELECTFOLDER->displayData->displayData) + 1), newLayout_SelectFolderTxt, &publicFont, 20.0f, &white);
+    // New and Load layout buttons
+    AssignText((Text *)MAIN_BUTTON_NEWLAYOUT->displayData->displayData, newLayoutTxt, &publicFont, 20.0f, &white);
+    AssignText((Text *)MAIN_BUTTON_LOADLAYOUT->displayData->displayData, loadLayoutTxt, &publicFont, 20.0f, &white);
+
+    // Dialogue box main encapsulating box
+    AssignBox((Box *)DLGBOX_DISPLAY_MAINBOX->displayData->displayData, width / 3.0f, height / 3.0f, &white, &black);
+
+    // Dlg box name file input box
+    AssignBox((Box *)DLGBOX_INPUT_NAMEFILE->displayData->displayData, width / 5.0f, 20.0f, &white, &black);
+
+    // Dlg box select folder button
+    Text *slctFldrText = (Text *)DLGBOX_BUTTON_SELECTFOLDER->displayData->displayData;
+    AssignText(slctFldrText, newLayout_SelectFolderTxt, &publicFont, 20.0f, &white);
+    float bxWidth = getTextWidth(slctFldrText, renderer);
+    float bxHeight = getTextHeight(slctFldrText, renderer);
+    AssignBox((Box *)(slctFldrText + 1), bxWidth, bxHeight, &white, &black);
+
+    // Dlg box input screen width and height
     AssignBox((Box *)DLGBOX_INPUT_SCREENWIDTH->displayData->displayData, 200.0f, 20.0f, &white, &black);
     AssignBox((Box *)DLGBOX_INPUT_SCREENHEIGHT->displayData->displayData, 200.0f, 20.0f, &white, &black);
     AssignText((Text *)DLGBOX_DISPLAY_WXH->displayData->displayData, newLayout_WxHText, &publicFont, 20.0f, &white);
-    AssignBox((Box *)DLGBOX_BUTTON_CREATELAYOUT->displayData->displayData, 20.0f, 20.0f, &white, &black);
-}
 
-SDL_Surface *createTextSurface(Text *txt)
-{
-    TTF_Font *font = TTF_OpenFont(*txt->fontFile, txt->fontSize);
-    return TTF_RenderText_Blended(font, txt->text, 0, *txt->colour);
-}
+    // Dlg box create layout button
+    Text *creatBtnText = (Text *)DLGBOX_BUTTON_CREATELAYOUT->displayData->displayData;
+    AssignText(creatBtnText, newLayout_createText, &publicFont, 20.0f, &white);
+    bxWidth = getTextFontWidth(creatBtnText, renderer);
+    bxHeight = getTextHeight(creatBtnText, renderer);
+    AssignBox((Box *)(creatBtnText + 1), width, height, &white, &black);
 
-SDL_Surface *createBoxSurface(Box *bx)
-{
-    SDL_Surface *surf = SDL_CreateSurface(bx->width, bx->height, SDL_PIXELFORMAT_ABGR128_FLOAT);
-    Uint32 edgeColour = SDL_MapRGBA(SDL_PIXELFORMAT_ABGR128_FLOAT, NULL, bx->edgeColour->r, bx->edgeColour->g, bx->edgeColour->b, bx->edgeColour->a);
-    SDL_FillSurfaceRect(surf, NULL, edgeColour);
+    // Dlg box cancel layout button
+    Text *cnclBtnText = (Text *)DLGBOX_BUTTON_CANCELLAYOUT->displayData->displayData;
+    AssignText(cnclBtnText, newLayout_cancelText, &publicFont, 20.0f, &white);
+    width = getTextWidth(cnclBtnText, renderer);
+    height = getTextHeight(cnclBtnText, renderer);
+    AssignBox((Box *)(cnclBtnText + 1), width, height, &white, &black);
 
-    SDL_Rect rect = {1, 1, (bx->width - 2), (bx->height - 2)};
-    Uint32 fillColour = SDL_MapRGBA(SDL_PIXELFORMAT_ABGR128_FLOAT, NULL, bx->fillColor->r, bx->fillColor->g, bx->fillColor->b, bx->fillColor->a);
-    SDL_FillSurfaceRect(surf, &rect, fillColour);
-
-    return surf;
-}
-
-void renderUITexture(UI_Element *ui, SDL_Renderer *renderer)
-{
-    SDL_Surface *surfs[ui->displayCount];
-
-    size_t offset = 0;
-    for (size_t i = 0; i < ui->displayCount; i++)
-    {
-        switch ((ui->displayData + i)->id)
-        {
-        case DI_TEXT:
-            surfs[i] = createTextSurface((Text *)(ui->displayData + i)->displayData);
-            offset += sizeof(Text);
-            break;
-        case DI_BOX:
-            surfs[i] = createBoxSurface((Box *)(ui->displayData + i)->displayData);
-            offset += sizeof(Box);
-            break;
-        case DI_IMAGE:
-            break;
-        }
-    }
-    SDL_UnlockSurface(*surfs);
-    for (size_t i = 1; i < ui->displayCount; i++)
-    {
-        SDL_UnlockSurface(surfs[i]);
-        SDL_BlitSurface(surfs[i], NULL, NULL, *surfs);
-        SDL_DestroySurface(surfs[i]);
-    }
-
-    ui->texture = SDL_CreateTextureFromSurface(renderer, *surfs);
-    SDL_GetTextureSize(ui->texture, &ui->rect.w, &ui->rect.h);
+    createUITexture(MAIN_BUTTON_NEWLAYOUT, renderer, M_NEWLAYOUT_X, M_NEWLAYOUT_Y);
+    createUITexture(MAIN_BUTTON_LOADLAYOUT, renderer, M_LOADLAYOUT_X, M_LOADLAYOUT_Y);
+    createUITexture(DLGBOX_DISPLAY_MAINBOX, renderer, DB_MAINBOX_X, DB_MAINBOX_Y);
+    createUITexture(DLGBOX_INPUT_NAMEFILE, renderer, DB_NAMEFILE_X, DB_NAMEFILE_Y);
+    createUITexture(DLGBOX_BUTTON_SELECTFOLDER, renderer, DB_SELECTFOLDER_X, DB_SELECTFOLDER_Y);
+    createUITexture(DLGBOX_INPUT_SCREENWIDTH, renderer, DB_SCREENWIDTH_X, DB_SCREENWIDTH_Y);
+    createUITexture(DLGBOX_INPUT_SCREENHEIGHT, renderer, DB_SCREENHEIGHT_X, DB_SCREENHEIGHT_Y);
+    createUITexture(DLGBOX_DISPLAY_WXH, renderer, DB_WXH_X, DB_WXH_Y);
+    createUITexture(DLGBOX_BUTTON_CREATELAYOUT, renderer, DB_CREATELAYOUT_X, DB_CREATELAYOUT_Y);
+    createUITexture(DLGBOX_BUTTON_CANCELLAYOUT, renderer, DB_CANCELLAYOUT_X, DB_CANCELLAYOUT_Y);
 }
 
 /*
