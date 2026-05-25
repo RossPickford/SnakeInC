@@ -1,4 +1,4 @@
-// #include "ui_editor.h"
+#include "ui_editor.h"
 #include "mainMenuLayout.h"
 
 #define APP_CONTINUE true
@@ -16,10 +16,11 @@ SDL_FPoint *mousePosPtr = NULL;
 float *mousePos_x = NULL;
 float *mousePos_y = NULL;
 
-Arena widgetArena;
+static Arena widgetArena;
 
 bool processRenderBuffer(UI_Element *rendBuff, size_t offset)
 {
+    SDL_Log("made it here");
     for (size_t i = 0; i < offset; i++)
     {
         if (!SDL_RenderTexture(renderer, (rendBuff + i)->texture, NULL, &(rendBuff + i)->rect))
@@ -75,6 +76,7 @@ bool initSystems()
 
 bool AppInit()
 {
+
     if (!initSystems())
         return APP_END;
 
@@ -84,12 +86,15 @@ bool AppInit()
         return APP_END;
     }
 
-    createArena(&widgetArena, 1024);
+    createArena(&widgetArena, 5000);
 
     SDL_SetRenderLogicalPresentation(renderer, WINDOW_WIDTH, WINDOW_HEIGHT, SDL_LOGICAL_PRESENTATION_LETTERBOX);
 
     if (!InitMainMenuWidgets(&widgetArena, renderer, WINDOW_WIDTH, WINDOW_HEIGHT))
+    {
+        SDL_Log("Failed to initialse main menu");
         return APP_END;
+    }
 
     return APP_CONTINUE;
 }
@@ -136,17 +141,19 @@ bool showWindow = false;
 
 bool AppEvent()
 {
-     SDL_Event event;
-     while (SDL_PollEvent(&event))
-     {
-
-     }
+    SDL_Event event;
+    while (SDL_PollEvent(&event))
+    {
+        if (event.type == SDL_EVENT_KEY_DOWN && event.key.scancode == SDL_SCANCODE_ESCAPE)
+            return APP_END;
+    }
 
     return APP_CONTINUE;
 }
 
 bool AppIterate()
 {
+    SDL_Log("We're here");
     SDL_SetRenderDrawColor(renderer, 20, 20, 20, SDL_ALPHA_OPAQUE);
     SDL_RenderClear(renderer);
 
@@ -178,6 +185,7 @@ int main(int argc, char *argv[])
     while (status)
         status = AppEvent() && AppIterate();
 
+    destroyArena(&widgetArena);
     SDL_DestroyRenderer(renderer);
     SDL_DestroyWindow(window);
     SDL_QuitSubSystem(SDL_INIT_VIDEO);

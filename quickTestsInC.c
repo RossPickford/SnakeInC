@@ -1,5 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include "arena.h"
+#include "ui_types.h"
 
 typedef enum month
 {
@@ -82,15 +84,19 @@ int main()
     printf("the int numbers are: %d, %d, %d\n", *numsPtr, *(numsPtr + 1), *(numsPtr + 2));
     printf("the int numbers are: %f, %f, %f\n", *fNumsPtr, *(fNumsPtr + 1), *(fNumsPtr + 2)); */
 
-    month ids[] = {
-        JAN,       /* first 4 */
-        FEB,       /* second 7 */
-        MAR, APR,  /* third 8, 9 */
-        MAY,       /* fourth 10 */
-        JUN,       /* fifth 11 */
-        JUL,       /* sixth 12 */
-        JAN, APR,  /* seventh 4, 9 */
-        FEB, JUL}; /*eighth 7, 12 */
+    //=============================================================================
+
+    // Trying to process a pseudo jagged array ====================================
+
+    /* month ids[] = {
+        JAN,       // first 4
+        FEB,       // second 7
+        MAR, APR,  // third 8, 9
+        MAY,       // fourth 10
+        JUN,       // fifth 11
+        JUL,       // sixth 12
+        JAN, APR,  // seventh 4, 9
+        FEB, JUL}; //eighth 7, 12
 
     size_t idSize[] = {1, 1, 2, 1, 1, 1, 2, 2};
 
@@ -102,7 +108,48 @@ int main()
             printf("%d\n", ids[j + k++]);
         }
         j += k;
-    }
+    } */
+
+    //=============================================================================
+
+    // allocating different structs into the same arena ===========================
+
+    /* void *arena = malloc(100);
+    size_t offset = 0;
+
+    info *infPtr = (info *)((char *)arena + offset);
+    offset += sizeof(info);
+
+    moreInfo *morInfPtr = (moreInfo *)((char *)arena + offset);
+
+    infPtr->mon = JAN;
+
+    morInfPtr->number = 435;
+
+    printf("%d, %d\n", infPtr->mon, morInfPtr->number);
+
+    free(arena); */
+
+    //==========================================================================
+
+    // Testing out arena.h to see it if works ==================================
+
+    UI_Element *elementPtr = NULL;
+    Arena arena;
+
+    createArena(&arena, 1024);
+
+    elementPtr = (UI_Element *)ArenaAlloc(&arena, sizeof(UI_Element) * 3);
+
+    elementPtr->btnData = (ButtonData *)ArenaAlloc(&arena, sizeof(ButtonData));
+
+    elementPtr->btnData->currentState = BSTATE_NORMAL;
+
+    elementPtr->rect.x = 45.0f;
+
+    SDL_Log("%f, %d\n", elementPtr->rect.x, elementPtr->btnData->currentState);
+
+    destroyArena(&arena);
 
     return 1;
 }
