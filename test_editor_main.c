@@ -20,7 +20,6 @@ static Arena widgetArena;
 
 bool processRenderBuffer(UI_Element *rendBuff, size_t offset)
 {
-    SDL_Log("made it here");
     for (size_t i = 0; i < offset; i++)
     {
         if (!SDL_RenderTexture(renderer, (rendBuff + i)->texture, NULL, &(rendBuff + i)->rect))
@@ -153,7 +152,6 @@ bool AppEvent()
 
 bool AppIterate()
 {
-    SDL_Log("We're here");
     SDL_SetRenderDrawColor(renderer, 20, 20, 20, SDL_ALPHA_OPAQUE);
     SDL_RenderClear(renderer);
 

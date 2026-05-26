@@ -52,7 +52,7 @@ static SDL_Color red = {255, 0, 0, 255};
 static SDL_Color green = {0, 255, 0, 255};
 static SDL_Color blue = {0, 0, 255, 255};
 
-static char *publicFont = "./fonts/PublicPixel.ttf";
+static char *publicFont = "./fonts/VariableFont.ttf";
 
 // First widgets to appear =================
 TextButton newLayoutBtn;
@@ -107,25 +107,19 @@ size_t getTypeFromID(displayType_ID id)
 
 void LinkAllocateDisplayToElement(Arena *arena, UI_Element *elmnt, displayType_ID *id, size_t displayCount)
 {
-    SDL_Log("%d", MAIN_BUTTON_LOADLAYOUT->displayData);
-
     elmnt->displayCount = displayCount;
     elmnt->displayData = (displayType *)ArenaAlloc(arena, sizeof(displayType) * displayCount);
-
-    SDL_Log("%d", MAIN_BUTTON_LOADLAYOUT->displayData);
 
     for (size_t i = 0; i < displayCount; i++)
     {
         size_t size = getTypeFromID(*(id + i));
         (elmnt->displayData + i)->id = *(id + i);
-        SDL_Log("We are here");
         (elmnt->displayData + i)->displayData = ArenaAlloc(arena, size);
     }
 }
 
 void AssignText(Text *txt, char *str, char *fontFile, float fontSize, SDL_Color *colour)
 {
-    SDL_Log("are we here?");
     txt->text = str;
     txt->fontFile = fontFile;
     txt->fontSize = fontSize;
@@ -159,8 +153,9 @@ float getTextWidth(Text *txt, SDL_Renderer *renderer)
     TTF_Font *font = TTF_OpenFont(txt->fontFile, txt->fontSize);
     SDL_Surface *tempSurf = TTF_RenderText_Blended(font, txt->text, 0, white);
     SDL_Texture *tempText = SDL_CreateTextureFromSurface(renderer, tempSurf);
-    SDL_DestroySurface(tempSurf);
     SDL_GetTextureSize(tempText, &width, NULL);
+    SDL_DestroySurface(tempSurf);
+    SDL_Log("%d", width);
     SDL_DestroyTexture(tempText);
     TTF_CloseFont(font);
     return width;
@@ -200,11 +195,13 @@ void createUITexture(UI_Element *ui, SDL_Renderer *renderer, float x, float y)
         switch ((ui->displayData + i)->id)
         {
         case DI_TEXT:
+
             surfs[i] = createTextSurface((Text *)(ui->displayData + i)->displayData);
             offset += sizeof(Text);
             break;
         case DI_BOX:
             surfs[i] = createBoxSurface((Box *)(ui->displayData + i)->displayData);
+
             offset += sizeof(Box);
             break;
         case DI_IMAGE:
@@ -254,12 +251,12 @@ bool InitMainMenuWidgets(Arena *arena, SDL_Renderer *renderer, size_t width, siz
         return false;
     }
 
-    LinkAllocateDisplayToElement(arena, MAIN_BUTTON_NEWLAYOUT, DI_TEXT, 1); // allocating text data type for new layout button
+    displayType_ID DI_text = DI_TEXT;
+
+    LinkAllocateDisplayToElement(arena, MAIN_BUTTON_NEWLAYOUT, &DI_text, 1); // allocating text data type for new layout button
     MAIN_BUTTON_NEWLAYOUT->displayCount = 1;
-    // SDL_Log("%d", MAIN_BUTTON_LOADLAYOUT->displayData);
-    LinkAllocateDisplayToElement(arena, MAIN_BUTTON_LOADLAYOUT, DI_TEXT, 1); // allocating text data type for load layout button
+    LinkAllocateDisplayToElement(arena, MAIN_BUTTON_LOADLAYOUT, &DI_text, 1); // allocating text data type for load layout button
     MAIN_BUTTON_LOADLAYOUT->displayCount = 1;
-    SDL_Log("are we here?");
 
     displayType_ID ids[] = {
         DI_BOX,           // Main Dialogue Box
@@ -284,11 +281,8 @@ bool InitMainMenuWidgets(Arena *arena, SDL_Renderer *renderer, size_t width, siz
     // Allocating the display data type for each UI Element in the dialogue box
     for (size_t i = 0, j = 0; i < DIALOGUE_BOX_GROUP_SIZE; i++)
     {
-        size_t k = 0;
-        while (k < idSize[i])
-            LinkAllocateDisplayToElement(arena, (dialogueBox_groupPtr + i), (ids + j + k++), idSize[i]);
-
-        j += k;
+        LinkAllocateDisplayToElement(arena, (dialogueBox_groupPtr + i), (ids + j), idSize[i]);
+        j += idSize[i];
     }
 
     // displayType *type = DLGBOX_DISPLAY_MAINBOX->displayData;
@@ -321,6 +315,7 @@ bool InitMainMenuWidgets(Arena *arena, SDL_Renderer *renderer, size_t width, siz
     AssignText(slctFldrText, newLayout_SelectFolderTxt, publicFont, 20.0f, &white);
     float bxWidth = getTextWidth(slctFldrText, renderer);
     float bxHeight = getTextHeight(slctFldrText, renderer);
+    SDL_Log("width: %d, height: %d", bxWidth, bxHeight);
     AssignBox((Box *)(slctFldrText + 1), bxWidth, bxHeight, &white, &black);
 
     // Dlg box input screen width and height
@@ -346,7 +341,9 @@ bool InitMainMenuWidgets(Arena *arena, SDL_Renderer *renderer, size_t width, siz
     createUITexture(MAIN_BUTTON_LOADLAYOUT, renderer, M_LOADLAYOUT_X, M_LOADLAYOUT_Y);
     createUITexture(DLGBOX_DISPLAY_MAINBOX, renderer, DB_MAINBOX_X, DB_MAINBOX_Y);
     createUITexture(DLGBOX_INPUT_NAMEFILE, renderer, DB_NAMEFILE_X, DB_NAMEFILE_Y);
+
     createUITexture(DLGBOX_BUTTON_SELECTFOLDER, renderer, DB_SELECTFOLDER_X, DB_SELECTFOLDER_Y);
+
     createUITexture(DLGBOX_INPUT_SCREENWIDTH, renderer, DB_SCREENWIDTH_X, DB_SCREENWIDTH_Y);
     createUITexture(DLGBOX_INPUT_SCREENHEIGHT, renderer, DB_SCREENHEIGHT_X, DB_SCREENHEIGHT_Y);
     createUITexture(DLGBOX_DISPLAY_WXH, renderer, DB_WXH_X, DB_WXH_Y);
