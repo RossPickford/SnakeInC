@@ -134,7 +134,7 @@ typedef struct UI_Element
 typedef struct Text
 {
     char *text;
-    char **fontFile;
+    char *fontFile;
     float fontSize;
     SDL_Color *colour;
 } Text;

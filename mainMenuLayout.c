@@ -105,17 +105,27 @@ size_t getTypeFromID(displayType_ID id)
     }
 }
 
-void LinkAllocateDisplayToElement(Arena *arena, displayType *display, displayType_ID id)
+void LinkAllocateDisplayToElement(Arena *arena, UI_Element *elmnt, displayType_ID *id, size_t displayCount)
 {
-    size_t size = getTypeFromID(id);
+    SDL_Log("%d", MAIN_BUTTON_LOADLAYOUT->displayData);
 
-    display = (displayType *)ArenaAlloc(arena, sizeof(displayType));
-    display->id = DI_TEXT;
-    display->displayData = ArenaAlloc(arena, size);
+    elmnt->displayCount = displayCount;
+    elmnt->displayData = (displayType *)ArenaAlloc(arena, sizeof(displayType) * displayCount);
+
+    SDL_Log("%d", MAIN_BUTTON_LOADLAYOUT->displayData);
+
+    for (size_t i = 0; i < displayCount; i++)
+    {
+        size_t size = getTypeFromID(*(id + i));
+        (elmnt->displayData + i)->id = *(id + i);
+        SDL_Log("We are here");
+        (elmnt->displayData + i)->displayData = ArenaAlloc(arena, size);
+    }
 }
 
-void AssignText(Text *txt, char *str, char **fontFile, float fontSize, SDL_Color *colour)
+void AssignText(Text *txt, char *str, char *fontFile, float fontSize, SDL_Color *colour)
 {
+    SDL_Log("are we here?");
     txt->text = str;
     txt->fontFile = fontFile;
     txt->fontSize = fontSize;
@@ -133,7 +143,7 @@ void AssignBox(Box *bx, float width, float height, SDL_Color *edgeColour, SDL_Co
 float getTextHeight(Text *txt, SDL_Renderer *renderer)
 {
     float height = 0;
-    TTF_Font *font = TTF_OpenFont(*txt->fontFile, txt->fontSize);
+    TTF_Font *font = TTF_OpenFont(txt->fontFile, txt->fontSize);
     SDL_Surface *tempSurf = TTF_RenderText_Blended(font, txt->text, 0, white);
     SDL_Texture *tempText = SDL_CreateTextureFromSurface(renderer, tempSurf);
     SDL_DestroySurface(tempSurf);
@@ -146,7 +156,7 @@ float getTextHeight(Text *txt, SDL_Renderer *renderer)
 float getTextWidth(Text *txt, SDL_Renderer *renderer)
 {
     float width = 0;
-    TTF_Font *font = TTF_OpenFont(*txt->fontFile, txt->fontSize);
+    TTF_Font *font = TTF_OpenFont(txt->fontFile, txt->fontSize);
     SDL_Surface *tempSurf = TTF_RenderText_Blended(font, txt->text, 0, white);
     SDL_Texture *tempText = SDL_CreateTextureFromSurface(renderer, tempSurf);
     SDL_DestroySurface(tempSurf);
@@ -158,7 +168,7 @@ float getTextWidth(Text *txt, SDL_Renderer *renderer)
 
 SDL_Surface *createTextSurface(Text *txt)
 {
-    TTF_Font *font = TTF_OpenFont(*txt->fontFile, txt->fontSize);
+    TTF_Font *font = TTF_OpenFont(txt->fontFile, txt->fontSize);
     SDL_Surface *surf = TTF_RenderText_Blended(font, txt->text, 0, *txt->colour);
     TTF_CloseFont(font);
     return surf;
@@ -240,44 +250,49 @@ bool InitMainMenuWidgets(Arena *arena, SDL_Renderer *renderer, size_t width, siz
         !(DLGBOX_BUTTON_CANCELLAYOUT->btnData = (ButtonData *)ArenaAlloc(arena, sizeof(ButtonData)))    // cancel dialogue box button
     )
     {
-        SDL_Log("could not allocate memory");
+        SDL_Log("could not allocate memory for UI elements or button data");
         return false;
     }
 
-    LinkAllocateDisplayToElement(arena, MAIN_BUTTON_NEWLAYOUT->displayData, DI_TEXT); // allocating text data type for new layout button
+    LinkAllocateDisplayToElement(arena, MAIN_BUTTON_NEWLAYOUT, DI_TEXT, 1); // allocating text data type for new layout button
     MAIN_BUTTON_NEWLAYOUT->displayCount = 1;
-    LinkAllocateDisplayToElement(arena, MAIN_BUTTON_LOADLAYOUT->displayData, DI_TEXT); // allocating text data type for load layout button
+    // SDL_Log("%d", MAIN_BUTTON_LOADLAYOUT->displayData);
+    LinkAllocateDisplayToElement(arena, MAIN_BUTTON_LOADLAYOUT, DI_TEXT, 1); // allocating text data type for load layout button
     MAIN_BUTTON_LOADLAYOUT->displayCount = 1;
+    SDL_Log("are we here?");
 
     displayType_ID ids[] = {
-        DI_BOX,           /* Main Dialogue Box */
-        DI_BOX,           /* File Name Input Box */
-        DI_TEXT, DI_BOX,  /* Folder Selection Button */
-        DI_BOX,           /* Width Input Box */
-        DI_BOX,           /* Height Input Box */
-        DI_TEXT,          /* Width and Height 'X' */
-        DI_TEXT, DI_BOX,  /* Create button */
-        DI_TEXT, DI_BOX}; /* Cancel Button */
+        DI_BOX,           // Main Dialogue Box
+        DI_BOX,           // File Name Input Box
+        DI_TEXT, DI_BOX,  // Folder Selection Button
+        DI_BOX,           // Width Input Box
+        DI_BOX,           // Height Input Box
+        DI_TEXT,          // Width and Height 'X'
+        DI_TEXT, DI_BOX,  // Create button
+        DI_TEXT, DI_BOX}; // Cancel Button
 
     size_t idSize[] = {
-        1,  /* Main Dialogue Box */
-        1,  /* File Name Input Box */
-        2,  /* Folder Selection Button */
-        1,  /* Width Input Box */
-        1,  /* Height Input Box */
-        1,  /* Width and Height 'X' */
-        2,  /* Create button */
-        2}; /* Cancel Button */
+        1,  // Main Dialogue Box
+        1,  // File Name Input Box
+        2,  // Folder Selection Button
+        1,  // Width Input Box
+        1,  // Height Input Box
+        1,  // Width and Height 'X'
+        2,  // Create button
+        2}; // Cancel Button
 
     // Allocating the display data type for each UI Element in the dialogue box
     for (size_t i = 0, j = 0; i < DIALOGUE_BOX_GROUP_SIZE; i++)
     {
         size_t k = 0;
-        (dialogueBox_groupPtr + i)->displayCount = idSize[i];
         while (k < idSize[i])
-            LinkAllocateDisplayToElement(arena, (dialogueBox_groupPtr + i)->displayData, ids[j + k++]);
+            LinkAllocateDisplayToElement(arena, (dialogueBox_groupPtr + i), (ids + j + k++), idSize[i]);
+
         j += k;
     }
+
+    // displayType *type = DLGBOX_DISPLAY_MAINBOX->displayData;
+    // LinkAllocateDisplayToElement(arena, DLGBOX_DISPLAY_MAINBOX->displayData, DI_TEXT);
 
     // Assign button data to the coresponding buttons
     for (int i = 0; i < 10; i++)
@@ -289,13 +304,11 @@ bool InitMainMenuWidgets(Arena *arena, SDL_Renderer *renderer, size_t width, siz
         (layoutButtons_groupPtr + i)->btnData->previousState = BSTATE_NONE;
     }
 
-        // Assigning display data for each element in the same order they were allocated
+    // Assigning display data for each element in the same order they were allocated
 
     // New and Load layout buttons
-    AssignText((Text *)MAIN_BUTTON_NEWLAYOUT->displayData->displayData, newLayoutTxt, &publicFont, 20.0f, &white);
-    AssignText((Text *)MAIN_BUTTON_LOADLAYOUT->displayData->displayData, loadLayoutTxt, &publicFont, 20.0f, &white);
-
-    SDL_Log("are we here?");
+    AssignText((Text *)MAIN_BUTTON_NEWLAYOUT->displayData->displayData, newLayoutTxt, publicFont, 20.0f, &white);
+    AssignText((Text *)MAIN_BUTTON_LOADLAYOUT->displayData->displayData, loadLayoutTxt, publicFont, 20.0f, &white);
 
     // Dialogue box main encapsulating box
     AssignBox((Box *)DLGBOX_DISPLAY_MAINBOX->displayData->displayData, width / 3.0f, height / 3.0f, &white, &black);
@@ -305,7 +318,7 @@ bool InitMainMenuWidgets(Arena *arena, SDL_Renderer *renderer, size_t width, siz
 
     // Dlg box select folder button
     Text *slctFldrText = (Text *)DLGBOX_BUTTON_SELECTFOLDER->displayData->displayData;
-    AssignText(slctFldrText, newLayout_SelectFolderTxt, &publicFont, 20.0f, &white);
+    AssignText(slctFldrText, newLayout_SelectFolderTxt, publicFont, 20.0f, &white);
     float bxWidth = getTextWidth(slctFldrText, renderer);
     float bxHeight = getTextHeight(slctFldrText, renderer);
     AssignBox((Box *)(slctFldrText + 1), bxWidth, bxHeight, &white, &black);
@@ -313,18 +326,18 @@ bool InitMainMenuWidgets(Arena *arena, SDL_Renderer *renderer, size_t width, siz
     // Dlg box input screen width and height
     AssignBox((Box *)DLGBOX_INPUT_SCREENWIDTH->displayData->displayData, 200.0f, 20.0f, &white, &black);
     AssignBox((Box *)DLGBOX_INPUT_SCREENHEIGHT->displayData->displayData, 200.0f, 20.0f, &white, &black);
-    AssignText((Text *)DLGBOX_DISPLAY_WXH->displayData->displayData, newLayout_WxHText, &publicFont, 20.0f, &white);
+    AssignText((Text *)DLGBOX_DISPLAY_WXH->displayData->displayData, newLayout_WxHText, publicFont, 20.0f, &white);
 
     // Dlg box create layout button
     Text *creatBtnText = (Text *)DLGBOX_BUTTON_CREATELAYOUT->displayData->displayData;
-    AssignText(creatBtnText, newLayout_createText, &publicFont, 20.0f, &white);
+    AssignText(creatBtnText, newLayout_createText, publicFont, 20.0f, &white);
     bxWidth = getTextWidth(creatBtnText, renderer);
     bxHeight = getTextHeight(creatBtnText, renderer);
     AssignBox((Box *)(creatBtnText + 1), width, height, &white, &black);
 
     // Dlg box cancel layout button
     Text *cnclBtnText = (Text *)DLGBOX_BUTTON_CANCELLAYOUT->displayData->displayData;
-    AssignText(cnclBtnText, newLayout_cancelText, &publicFont, 20.0f, &white);
+    AssignText(cnclBtnText, newLayout_cancelText, publicFont, 20.0f, &white);
     width = getTextWidth(cnclBtnText, renderer);
     height = getTextHeight(cnclBtnText, renderer);
     AssignBox((Box *)(cnclBtnText + 1), width, height, &white, &black);

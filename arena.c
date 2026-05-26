@@ -10,7 +10,7 @@ void createArena(Arena *arena, size_t size)
 
 void *ArenaAlloc(Arena *arena, size_t size)
 {
-    SDL_Log("%d", size);
+    SDL_Log("%d", arena->offset);
 
     if ((arena->offset + size) >= arena->size)
     {

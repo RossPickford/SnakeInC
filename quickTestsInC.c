@@ -29,6 +29,34 @@ typedef struct moreInfo
     double wow;
 } moreInfo;
 
+size_t getTypeFromID(displayType_ID id)
+{
+    switch (id)
+    {
+    case DI_BOX:
+        return sizeof(Box);
+    case DI_IMAGE:
+        return sizeof(Image);
+    case DI_TEXT:
+        return sizeof(Text);
+    default:
+        return 0;
+    }
+}
+
+void LinkAllocateDisplayToElement(Arena *arena, UI_Element *elmnt, displayType_ID *id, size_t displayCount)
+{
+    elmnt->displayCount = displayCount;
+    elmnt->displayData = (displayType *)ArenaAlloc(arena, sizeof(displayType) * displayCount);
+
+    for (size_t i = 0; i < displayCount; i++)
+    {
+        size_t size = getTypeFromID(*(id + i));
+        (elmnt->displayData + i)->id = *(id + i);
+        (elmnt->displayData + i)->displayData = ArenaAlloc(arena, size);
+    }
+}
+
 int main()
 {
 
@@ -134,22 +162,74 @@ int main()
 
     // Testing out arena.h to see it if works ==================================
 
-    UI_Element *elementPtr = NULL;
+    /*  UI_Element *elementPtr = NULL;
+     Arena arena;
+
+     createArena(&arena, 1024);
+
+     elementPtr = (UI_Element *)ArenaAlloc(&arena, sizeof(UI_Element) * 3);
+
+     elementPtr->btnData = (ButtonData *)ArenaAlloc(&arena, sizeof(ButtonData));
+
+     elementPtr->btnData->currentState = BSTATE_NORMAL;
+
+     elementPtr->rect.x = 45.0f;
+
+     SDL_Log("%f, %d\n", elementPtr->rect.x, elementPtr->btnData->currentState);
+
+     destroyArena(&arena); */
+
+    //==========================================================================
+
+    // Checking allocating for display types ===================================
+
     Arena arena;
 
-    createArena(&arena, 1024);
+    createArena(&arena, 1000);
 
-    elementPtr = (UI_Element *)ArenaAlloc(&arena, sizeof(UI_Element) * 3);
+    displayType_ID ids[] = {
+        DI_TEXT, DI_BOX,
+        DI_TEXT};
 
-    elementPtr->btnData = (ButtonData *)ArenaAlloc(&arena, sizeof(ButtonData));
+    size_t idSize[] = {
+        2,
+        1};
 
-    elementPtr->btnData->currentState = BSTATE_NORMAL;
+    char *test = "testing";
 
-    elementPtr->rect.x = 45.0f;
+    UI_Element *elmnts = (UI_Element *)ArenaAlloc(&arena, sizeof(UI_Element) * 2);
 
-    SDL_Log("%f, %d\n", elementPtr->rect.x, elementPtr->btnData->currentState);
+    for (size_t i = 0, j = 0; i < 2; i++)
+    {
+        size_t k = 0;
+        while (k < idSize[i])
+        {
+            LinkAllocateDisplayToElement(&arena, (elmnts + i), (ids + j + k++), idSize[i]);
+        }
+        j += k;
+    }
+
+    for (size_t i = 0; i < 2; i++)
+    {
+        for (size_t j = 0; j < (elmnts + i)->displayCount; j++)
+        {
+            if (((elmnts + i)->displayData + j)->id == DI_TEXT)
+            {
+                ((Text *)((elmnts + i)->displayData + j)->displayData)->text = test;
+            }
+        }
+    }
+
+    for (size_t i = 0; i < 2; i++)
+    {
+        for (size_t j = 0; j < (elmnts + i)->displayCount; j++)
+        {
+            if (((elmnts + i)->displayData + j)->id == DI_TEXT)
+                SDL_Log("Test: %s\n", ((Text *)((elmnts + i)->displayData + j)->displayData)->text);
+        }
+    }
 
     destroyArena(&arena);
 
-    return 1;
+    return 0;
 }
