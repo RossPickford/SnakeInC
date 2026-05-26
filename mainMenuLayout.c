@@ -55,40 +55,21 @@ static SDL_Color blue = {0, 0, 255, 255};
 static char *publicFont = "./fonts/VariableFont.ttf";
 
 // First widgets to appear =================
-TextButton newLayoutBtn;
 static char *newLayoutTxt = "New Layout";
-
-TextButton loadLayoutBtn;
 char *loadLayoutTxt = "Load Layout...";
 
 // =========================================
 
 // New Layout dialogue box widgets =========
-BoxDisplay newLayout_DialogueBox;
-
-InputTextBox newLayout_NameInput;
-
 char *newLayout_SelectFolderTxt = "...";
-
-InputTextBox newLayout_widthInput;
-
-InputTextBox newLayout_heightInput;
-
-TextDisplay newLayout_WxH;
 static char *newLayout_WxHText = "X";
-
-BoxButton newLayout_createButtonBox;
 static char *newLayout_createText = "create";
-
-BoxButton newLayout_cancelButtonBox;
 static char *newLayout_cancelText = "cancel";
 
 //===============================================
 
 static UI_Element *layoutButtons_groupPtr, *dialogueBox_groupPtr;
 static UI_Element *E_newLayout, *E_loadLayout;
-
-static UI_Element *E_dlgue_box, *E_dlgue_inputBox, *E_dlgue_slctFldr, *E_wdthInpt, *E_hghtInpt, *E_wdthxHght, *E_crtBtn, *E_cnclBtn;
 
 size_t getTypeFromID(displayType_ID id)
 {
@@ -285,9 +266,6 @@ bool InitMainMenuWidgets(Arena *arena, SDL_Renderer *renderer, size_t width, siz
         j += idSize[i];
     }
 
-    // displayType *type = DLGBOX_DISPLAY_MAINBOX->displayData;
-    // LinkAllocateDisplayToElement(arena, DLGBOX_DISPLAY_MAINBOX->displayData, DI_TEXT);
-
     // Assign button data to the coresponding buttons
     for (int i = 0; i < 10; i++)
     {
@@ -357,16 +335,3 @@ UI_Element *getMainMenuElements()
 {
     return layoutButtons_groupPtr;
 }
-
-/*
-- new layout button <-
-- load layout button <-
-- new layout dialogue box
-- -> input box for name <-
-- -> Box button for folder selection
-- -> input box for width
-- -> input box for height
-- -> image or text for the 'x' in 'width x height'
-- -> create button
-- -> cancel button
-*/
