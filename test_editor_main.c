@@ -18,9 +18,9 @@ float *mousePos_y = NULL;
 
 static Arena widgetArena;
 
-bool processRenderBuffer(UI_Element *rendBuff, size_t offset)
+bool processRenderBuffer(UI_Element *rendBuff, size_t size)
 {
-    for (size_t i = 0; i < offset; i++)
+    for (size_t i = 0; i < size; i++)
     {
         if (!SDL_RenderTexture(renderer, (rendBuff + i)->texture, NULL, &(rendBuff + i)->rect))
             return false;
