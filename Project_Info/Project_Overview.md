@@ -19,9 +19,9 @@ The editor should be able to create the following widgets:
 - Slider
 - Dropdown
 
-The user can then edit the following data for each wdiget they create:
+The user can then edit the following data for each widget they create:
 - position (by either typing it in the widget settings or dragging the widget)
 - Scale
 - Rotation.
 
-<span style="color:cyan">*I am thinking of adding in motion - most likely for display widgets only for the time being.*</span>.
+<span style="color:cyan">*I am thinking of adding in motion - most likely for display widgets only for the time being.*</span>

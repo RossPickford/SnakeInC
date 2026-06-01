@@ -89,7 +89,7 @@ bool AppInit()
 
     SDL_SetRenderLogicalPresentation(renderer, WINDOW_WIDTH, WINDOW_HEIGHT, SDL_LOGICAL_PRESENTATION_LETTERBOX);
 
-    if (!InitMainMenuWidgets(&widgetArena, renderer, WINDOW_WIDTH, WINDOW_HEIGHT))
+    if (!initMainMenuWidgets(&widgetArena, renderer, WINDOW_WIDTH, WINDOW_HEIGHT))
     {
         SDL_Log("Failed to initialse main menu");
         return APP_END;
@@ -164,7 +164,7 @@ bool AppIterate()
     SDL_SetRenderDrawColor(renderer, 0, 0, 0, SDL_ALPHA_OPAQUE);
     SDL_RenderFillRect(renderer, &rect);
 
-    if (!processRenderBuffer(getMainMenuElements(), MAINMENU_ELEMENT_COUNT))
+    if (!processRenderBuffer(layoutButtons_groupPtr, MAINMENU_ELEMENT_COUNT))
     {
         SDL_Log("failed to render texture: %s", SDL_GetError());
         return APP_END;

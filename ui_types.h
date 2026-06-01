@@ -2,6 +2,7 @@
 
 #include <SDL3/SDL.h>
 #include <SDL3_ttf/SDL_ttf.h>
+#include "arena.h"
 
 typedef enum UIType
 {
@@ -75,7 +76,7 @@ typedef struct
     SDL_FRect box;
     SDL_Texture *texture;
     SDL_Color *edgeColour;
-    SDL_Color *fillColor;
+    SDL_Color *fillColour;
 } BoxDisplay;
 
 /***
@@ -125,9 +126,9 @@ typedef struct UI_Element
 {
     SDL_Texture *texture;
     SDL_FRect rect;
-    ButtonData *btnData;
     size_t displayCount;
     displayType *displayData;
+    ButtonData *btnData;
     // SDL_Color **displayColours;
 } UI_Element;
 
@@ -144,10 +145,30 @@ typedef struct Box
     float width;
     float height;
     SDL_Color *edgeColour;
-    SDL_Color *fillColor;
+    SDL_Color *fillColour;
 } Box;
 
 typedef struct Image
 {
 
 } Image;
+
+size_t getTypeFromID(displayType_ID id);
+
+void LinkAllocateDisplayToElement(Arena *arena, UI_Element *elmnt, displayType_ID *id, size_t displayCount);
+
+void AssignText(Text *txt, char *str, char *fontFile, float fontSize, SDL_Color *colour);
+
+void AssignBox(Box *bx, float width, float height, SDL_Color *edgeColour, SDL_Color *fillColour);
+
+float getTextHeight(Text *txt, SDL_Renderer *renderer);
+
+float getTextWidth(Text *txt, SDL_Renderer *renderer);
+
+SDL_Surface *createTextSurface(Text *txt);
+
+SDL_Surface *createBoxSurface(Box *bx);
+
+void createUITexture(UI_Element *ui, SDL_Renderer *renderer);
+
+void setUITextureCoords(UI_Element *ui, float x, float y);

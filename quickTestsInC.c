@@ -47,13 +47,13 @@ size_t getTypeFromID(displayType_ID id)
 void LinkAllocateDisplayToElement(Arena *arena, UI_Element *elmnt, displayType_ID *id, size_t displayCount)
 {
     elmnt->displayCount = displayCount;
-    elmnt->displayData = (displayType *)ArenaAlloc(arena, sizeof(displayType) * displayCount);
+    elmnt->displayData = (displayType *)arenaAlloc(arena, sizeof(displayType) * displayCount);
 
     for (size_t i = 0; i < displayCount; i++)
     {
         size_t size = getTypeFromID(*(id + i));
         (elmnt->displayData + i)->id = *(id + i);
-        (elmnt->displayData + i)->displayData = ArenaAlloc(arena, size);
+        (elmnt->displayData + i)->displayData = arenaAlloc(arena, size);
     }
 }
 
@@ -167,9 +167,9 @@ int main()
 
      createArena(&arena, 1024);
 
-     elementPtr = (UI_Element *)ArenaAlloc(&arena, sizeof(UI_Element) * 3);
+     elementPtr = (UI_Element *)arenaAlloc(&arena, sizeof(UI_Element) * 3);
 
-     elementPtr->btnData = (ButtonData *)ArenaAlloc(&arena, sizeof(ButtonData));
+     elementPtr->btnData = (ButtonData *)arenaAlloc(&arena, sizeof(ButtonData));
 
      elementPtr->btnData->currentState = BSTATE_NORMAL;
 
@@ -197,7 +197,7 @@ int main()
 
     char *test = "testing";
 
-    UI_Element *elmnts = (UI_Element *)ArenaAlloc(&arena, sizeof(UI_Element) * 2);
+    UI_Element *elmnts = (UI_Element *)arenaAlloc(&arena, sizeof(UI_Element) * 2);
 
     for (size_t i = 0, j = 0; i < 2; i++)
     {

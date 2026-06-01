@@ -8,9 +8,9 @@ void createArena(Arena *arena, size_t size)
     arena->offset = 0;
 }
 
-void *ArenaAlloc(Arena *arena, size_t size)
+void *arenaAlloc(Arena *arena, size_t size)
 {
-    SDL_Log("%d", arena->offset);
+    // SDL_Log("%d", arena->offset);
 
     if ((arena->offset + size) >= arena->size)
     {
@@ -25,7 +25,6 @@ void *ArenaAlloc(Arena *arena, size_t size)
 
 void freeArena(Arena *arena)
 {
-    arena->currentPos = arena->start;
     arena->offset = 0;
 }
 void destroyArena(Arena *arena)
