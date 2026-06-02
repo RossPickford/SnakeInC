@@ -172,4 +172,85 @@ This will allocate memory for the display types for a given UI_Element based on 
 
 | Parameters        | Description      |
 | ----------------- | ---------------- |
-| 
+| Arena *arena      | The arena to allocate memory |
+| UI_Element *elmnt | The ui element to link and allocate the display data for |
+| DisplayType_ID *id | An array of ids to link the display types to |
+| size_t displayCount | The number of display data to allocate for |
+
+### void AssignText(Text *txt, char *str, char *fontFile, float fontSize, SDL_Color *colour)
+
+
+Assigns all variables in the given Text struct.
+
+| Parameters        | Description      |
+| ----------------- | ---------------- |
+| Text *txt         | The Text struct to assign values to |
+| char *str         | The string to point to |
+| char *fontFile    | The font file to point to |
+| float fontSize    | The font size to assign |
+| SDL_Color *colour | The colour to point to |
+
+### void AssignBox(Box *bx, float width, float height, SDL_Color *edgeColour, SDL_Color *fillColour)
+
+Assign all variables in the given Box struct
+
+| Parameters        | Description      |
+| ----------------- | ---------------- |
+| Box *bx           | The Box struct to assign values to |
+| float width       | The width of the box |
+| float height      | The height of the box |
+| SDL_Color *edgeColour | The edge colour of the box |
+| SDL_Color *fillColour | The fill colour of the box |
+
+### float getTextHeight(Text *txt, SDL_Renderer *renderer)
+
+Returns the height of the Text in the context of the renderer.
+
+| Parameters        | Description      |
+| ----------------- | ---------------- |
+| Text *txt         | The Text to get the height from |
+| SDL_Renderer *renderer | The rendering context the text is based in
+
+### getTextWidth(Text *txt, SDL_Renderer *renderer)
+
+Returns the width of the Text in the context of the renderer.
+
+| Parameters        | Description      |
+| ----------------- | ---------------- |
+| Text *txt         | The Text to get the width from |
+| SDL_Renderer *renderer | The rendering context the text is based in
+
+### SDL_Surface *createTextSurface(Text *txt)
+
+Returns a pointer to a SDL_Surface created from the inputed Text struct.
+
+| Parameters        | Description      |
+| ----------------- | ---------------- |
+| Text *txt         | The Text to create a surface from |
+
+### SDL_Surface *createBoxSurface(Box *bx)
+
+Returns a pointer to a SDL_Surface created from the inputed Box struct
+
+| Parameters        | Description      |
+| ----------------- | ---------------- |
+| Box *bx           | The Box to create a surface from |
+
+### void createUITexture(UI_Element *ui, SDL_Renderer *renderer)
+
+Creates and assigns a pointer to a texture to the UI_Element *texutre variable. The texture is created from all Display data assigned to the UI_Element.
+
+| Parameters        | Description      |
+| ----------------- | ---------------- |
+| UI_Element *ui    | The UI element to create a texture from |
+| SDL_Renderer *renderer | the rendering context to create the texture for |
+
+### void setUITextureCoords(UI_Element *ui, float x, float y)
+
+Assigns the inputed x and y coordinates to the UI_Element. This will be used when rendering the texture
+
+| Parameters        | Description      |
+| ----------------- | ---------------- |
+| UI_Element *ui    | The UI_Element to assign the coordinates to |
+| float x           | The X coordinate |
+| float y           | The Y coordinate |
