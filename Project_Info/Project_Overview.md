@@ -25,3 +25,8 @@ The user can then edit the following data for each widget they create:
 - Rotation.
 
 <span style="color:cyan">*I am thinking of adding in motion - most likely for display widgets only for the time being.*</span>
+
+
+## TO DO (Whenever I come back to this)
+
+<span style="color:red">**Next task is to make the "new Layout" and "load layout" buttons to change colour and to aslo function as intended (open their respective dialogue boxes)**</span>
